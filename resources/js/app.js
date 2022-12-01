@@ -1,4 +1,5 @@
 import '../css/app.css';
+import 'flowbite';
 // import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap"
 
