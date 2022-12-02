@@ -15,12 +15,12 @@
         </div>
         <PopoverGroup as="nav" class="hidden space-x-10 md:flex">
 
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Pricing</a>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Docs</a>
+          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Naslovi</a>
+          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">O biblioteci</a>
 
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
-              <span>More</span>
+              <span>Više</span>
               <ChevronDownIcon :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']" aria-hidden="true" />
             </PopoverButton>
 
@@ -36,9 +36,9 @@
                       </div>
                     </a>
                   </div>
-                  <div class="bg-gray-50 px-5 py-5 sm:px-8 sm:py-8">
+                  <div class="bg-gray-50 px-5 py-3 sm:px-8 sm:py-3">
                     <div>
-                      <h3 class="text-base font-medium text-gray-500">Recent Posts</h3>
+                      <h3 class="text-base font-medium text-gray-500">Priče iz biblioteke</h3>
                       <ul role="list" class="mt-4 space-y-4">
                         <li v-for="post in recentPosts" :key="post.id" class="truncate text-base">
                           <a :href="post.href" class="font-medium text-gray-900 hover:text-gray-700">{{ post.name }}</a>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="mt-5 text-sm">
                       <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-                        View all posts
+                        Pogledaj sve priče...
                         <span aria-hidden="true"> &rarr;</span>
                       </a>
                     </div>
@@ -116,17 +116,19 @@ import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/
 import {
   ArrowPathIcon,
   Bars3Icon,
-  BookmarkSquareIcon,
-  CalendarIcon,
+  BookOpenIcon,
+  PencilIcon,
   ChartBarIcon,
   CursorArrowRaysIcon,
-  LifebuoyIcon,
+  QuestionMarkCircleIcon,
   PhoneIcon,
   PlayIcon,
-  ShieldCheckIcon,
+  LightBulbIcon,
   Squares2X2Icon,
   XMarkIcon,
+  CheckCircleIcon
 } from '@heroicons/vue/24/outline'
+// import { DocumentSearchIcon } from "@vue-hero-icons/outline"
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 
@@ -143,7 +145,7 @@ const solutions = [
     href: '#',
     icon: CursorArrowRaysIcon,
   },
-  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
+  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: LightBulbIcon },
   {
     name: 'Integrations',
     description: "Connect with third-party tools that you're already using.",
@@ -163,29 +165,41 @@ const callsToAction = [
 ]
 const resources = [
   {
-    name: 'Help Center',
-    description: 'Get all of your questions answered in our forums or contact support.',
+    name: 'Naslovi',
+    description: 'Pretražite naslove koje posjeduje naša biblioteka',
     href: '#',
-    icon: LifebuoyIcon,
+    icon: BookOpenIcon,
   },
   {
-    name: 'Guides',
-    description: 'Learn how to maximize our platform to get the most out of it.',
+    name: 'Pridruži se',
+    description: 'Postanite član naše biblioteke',
     href: '#',
-    icon: BookmarkSquareIcon,
+    icon: PencilIcon,
+  },
+  { 
+    name: 'Pošalji upit', 
+    description: 'Postavite nam pitanje', 
+    href: '#', 
+    icon: QuestionMarkCircleIcon
   },
   {
-    name: 'Events',
-    description: 'See what meet-ups and other events we might be planning near you.',
+    name: 'FAQ',
+    description: 'Odgovori na često postavljena pitanja',
     href: '#',
-    icon: CalendarIcon,
+    icon: LightBulbIcon,
   },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
+  {
+    name: 'Doniraj knjigu',
+    description: 'Doprinesite našoj biblioteci',
+    href: '#',
+    icon: CheckCircleIcon,
+  },
 ]
 const recentPosts = [
-  { id: 1, name: 'Boost your conversion rate', href: '#' },
-  { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-  { id: 3, name: 'Improve your customer experience', href: '#' },
+  
+  { id: 1, name: 'Lorem ipsum dolor sit amet.', href: '#' },
+  { id: 2, name: 'Lorem ipsum dolor sit amet.', href: '#' },
+  { id: 3, name: 'Lorem ipsum dolor sit amet.', href: '#' },
 ]
 </script>
 

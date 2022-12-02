@@ -12,6 +12,8 @@ class HomeController extends Controller
         return Inertia::render('Home',
             [
                 'logo_url' => Vite::asset('resources/images/logo-head.png'),
+                'full_logo_url' => Vite::asset('resources/images/logo.png'),
+                'background_photo_url' => Vite::asset('resources/images/background.jpg')
             ]
         );
     }

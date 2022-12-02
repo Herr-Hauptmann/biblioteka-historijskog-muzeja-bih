@@ -1,14 +1,16 @@
 <template>
-  <div class="isolate bg-white">
+  <div class="isolate background" :style="{'background-image': background}">
     <main>
       <div class="relative px-6 lg:px-8">
-        <div class="mx-auto max-w-4xl pt-20 pb-32 sm:pt-48 sm:pb-40">
+        <div class="mx-auto max-w-4xl pt-10 pb-32 sm:pt-5 sm:pb-40">
           <div>
             <div>
-              <img src="" alt="">
-              <h1 class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">Biblioteka Historijskog muzeja Bosne i Hercegovine</h1>
+                <div class="flex gap-x-4 sm:justify-center">
+                    <img :src="logo_url" alt="Historijski Muzej BiH" class="h-12 w-auto sm:h-96 img-bg">
+                </div>
+              <h1 class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl sr-only">Biblioteka Historijskog muzeja Bosne i Hercegovine</h1>
               <div class="mt-8 flex gap-x-4 sm:justify-center">
-                <form class="flex items-center">   
+                <form class="flex items-center w-7/12">   
                     <label for="simple-search" class="sr-only">Pretraži biblioteku...</label>
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -30,27 +32,31 @@
   </div>
 </template>
 
+<script>
+  export default{
+    props: ['logo_url', 'background_url'],
+    computed: {
+        background() {
+            return 'url('+this.background_url+')';
+        }
+    }
+  }
+</script>
+
 <script setup>
 import { ref } from 'vue'
-import { Dialog, DialogPanel } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
-]
-
 const mobileMenuOpen = ref(false)
 </script>
 
-<script>
-export default {
 
+<style scoped>
+.background{
+    background-size: 100%;
 }
-</script>
 
-<style>
-
+.img-bg{
+    
+    background-color: rgb(255, 255, 255, 0.85);
+    border-radius: 200px;  
+}
 </style>
