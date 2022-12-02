@@ -6,10 +6,13 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import Navbar from '../../Shared/Navbar.vue'
 
 defineProps({
     canResetPassword: Boolean,
     status: String,
+    logo_url: String,
+    small_logo_url: String,
 });
 
 const form = useForm({
@@ -26,7 +29,9 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <div class="min-h-screen flex flex-col">
+        <Navbar id="navbar" :logo_url="small_logo_url"/>
+    <GuestLayout class="flex-1" id="guestLayout" :logo_url="logo_url">
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -87,4 +92,5 @@ const submit = () => {
             </div>
         </form>
     </GuestLayout>
+    </div>
 </template>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Vite;
 
 class RegisteredUserController extends Controller
 {
@@ -21,7 +22,10 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register',[
+            'logo_url' => Vite::asset('resources/images/logo.png'),
+            'small_logo_url' => Vite::asset('resources/images/logo-head.png'),
+        ]);
     }
 
     /**

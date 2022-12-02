@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Vite;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -22,6 +23,8 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'logo_url' => Vite::asset('resources/images/logo.png'),
+            'small_logo_url' => Vite::asset('resources/images/logo-head.png'),
         ]);
     }
 
