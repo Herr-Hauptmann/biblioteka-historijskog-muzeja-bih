@@ -12,6 +12,7 @@ const form = useForm({
   email: "",
   password: "",
   password_confirmation: "",
+  keyword:"",
   terms: false,
 });
 
@@ -32,11 +33,11 @@ defineProps({
   <div class="min-h-screen flex flex-col">
     <Navbar id="navbar" :logo_url="small_logo_url" />
     <GuestLayout class="flex-1" id="guestLayout" :logo_url="logo_url">
-      <Head title="Register" />
+      <Head title="Registruj se" />
 
       <form @submit.prevent="submit">
         <div>
-          <InputLabel for="name" value="Name" />
+          <InputLabel for="name" value="Ime" />
 
           <TextInput
             id="name"
@@ -67,7 +68,7 @@ defineProps({
         </div>
 
         <div class="mt-4">
-          <InputLabel for="password" value="Password" />
+          <InputLabel for="password" value="Lozinka" />
 
           <TextInput
             id="password"
@@ -82,7 +83,7 @@ defineProps({
         </div>
 
         <div class="mt-4">
-          <InputLabel for="password_confirmation" value="Confirm Password" />
+          <InputLabel for="password_confirmation" value="Potvrda lozinke" />
 
           <TextInput
             id="password_confirmation"
@@ -99,6 +100,22 @@ defineProps({
           />
         </div>
 
+        <div class="mt-4">
+          <InputLabel for="keyword" value="Ključna riječ" />
+
+          <TextInput
+            id="keyword"
+            type="text"
+            class="mt-1 block w-full"
+            v-model="form.keyword"
+            required
+            autofocus
+            autocomplete="keyword"
+          />
+
+          <InputError class="mt-2" :message="form.errors.keyword" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
           <Link
             :href="route('login')"
@@ -113,7 +130,7 @@ defineProps({
               focus:ring-indigo-500
             "
           >
-            Already registered?
+            Već posjedujete račun?
           </Link>
 
           <PrimaryButton
@@ -121,7 +138,7 @@ defineProps({
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           >
-            Register
+            Registruj se
           </PrimaryButton>
         </div>
       </form>
