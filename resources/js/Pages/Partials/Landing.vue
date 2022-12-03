@@ -77,6 +77,10 @@ const mobileMenuOpen = ref(false);
   .img-bg {
     background-color: rgb(255, 255, 255, 0.85);
     border-radius: 200px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    user-select: none;
   }
 }
 </style>
