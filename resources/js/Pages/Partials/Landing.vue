@@ -1,9 +1,9 @@
 <template>
-    <div class="isolate background z-0" :style="{ 'background-image': background }">
+    <div class="isolate background z-0 " :style="{ 'background-image': background }">
         <main>
             <div class="relative px-6 lg:px-8">
                 <div class="mx-auto max-w-4xl pt-10 pb-32 sm:pt-5 sm:pb-40">
-                    <div>
+                    <div class="md:pt-16">
                         <div>
                             <div class="flex gap-x-4 sm:justify-center">
                                 <img :src="logo_url" alt="Historijski Muzej BiH" class="h-96 w-auto sm:h-96 img-bg" />
@@ -12,8 +12,8 @@
                                 Biblioteka Historijskog muzeja Bosne i
                                 Hercegovine
                             </h1>
-                            <div class="mt-8 flex gap-x-4 sm:justify-center">
-                                <form class="flex items-center w-7/12">
+                            <div class="mt-8 flex gap-x-4 sm:justify-center ">
+                                <form class="flex items-center w-7/12 min-w-full">
                                     <label for="simple-search" class="sr-only">Pretraži biblioteku...</label>
                                     <div class="relative w-full">
                                         <div

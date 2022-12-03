@@ -58,8 +58,30 @@
           </Popover>
         </PopoverGroup>
         <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-          <Link :href="route('login')" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Admin</Link>
-          
+          <div v-if="$page.props.auth.user">
+            <Popover class="relative" v-slot="{ open }">
+            <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
+              <span>{{$page.props.auth.user.name}}</span>
+              <ChevronDownIcon :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']" aria-hidden="true" />
+            </PopoverButton>
+
+            <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+              <PopoverPanel class="absolute left-1/2 z-10 mt-3 w-screen max-w-max -translate-x-1/2 transform px-2 sm:px-0">
+                <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                    <Link v-for="item in admin" :key="item.name" :href="item.href" :as="item.as" :method="item.method" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
+                      <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true" />
+                      <div class="ml-4">
+                        <p class="text-base font-medium text-gray-900">{{ item.name }}</p>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </PopoverPanel>
+            </transition>
+          </Popover>
+          </div>
+          <Link v-else :href="route('login')" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Admin</Link>
         </div>
       </div>
     </div>
@@ -93,7 +115,7 @@
               <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Pricing</a>
 
               <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Docs</a>
-              <a v-for="item in resources" :key="item.name" :href="item.href" class="text-base font-medium text-gray-900 hover:text-gray-700">{{ item.name }}</a>
+              <Link v-for="item in resources" :key="item.name" :href="item.href"  class="text-base font-medium text-gray-900 hover:text-gray-700">{{ item.name }}</Link>
             </div>
             <div>
               <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
@@ -112,10 +134,11 @@
 </template>
 
 <script setup>
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
+import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
 import {
   ArrowPathIcon,
   Bars3Icon,
+  XMarkIcon,
   BookOpenIcon,
   PencilIcon,
   ChartBarIcon,
@@ -125,12 +148,14 @@ import {
   PlayIcon,
   LightBulbIcon,
   Squares2X2Icon,
-  XMarkIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
+  UserIcon,
+  PencilSquareIcon
 } from '@heroicons/vue/24/outline'
-// import { DocumentSearchIcon } from "@vue-hero-icons/outline"
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-
+import { 
+  ChevronDownIcon,
+  ArrowLeftOnRectangleIcon,
+ } from '@heroicons/vue/24/solid'
 
 const solutions = [
   {
@@ -201,11 +226,32 @@ const recentPosts = [
   { id: 2, name: 'Lorem ipsum dolor sit amet.', href: '#' },
   { id: 3, name: 'Lorem ipsum dolor sit amet.', href: '#' },
 ]
+
+const admin = [
+  {
+    name: 'Kontrolna ploča',
+    href: route('dashboard'),
+    icon: PencilSquareIcon,
+  },
+  {
+    name: 'Postavke profila',
+    href: route('profile.edit'),
+    icon: UserIcon,
+  },
+  {
+    name: 'Logout',
+    href: route('logout'),
+    method: 'POST',
+    type: 'button',
+    as: 'button',
+    icon: ArrowLeftOnRectangleIcon,
+  },
+];
 </script>
 
 <script>
   import {Link} from '@inertiajs/inertia-vue3';
-  
+
   export default{
     props: ['logo_url'],
     components: {Link}

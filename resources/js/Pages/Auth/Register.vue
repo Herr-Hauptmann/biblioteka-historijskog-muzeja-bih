@@ -32,7 +32,7 @@ defineProps({
 <template>
   <div class="min-h-screen flex flex-col">
     <Navbar id="navbar" :logo_url="small_logo_url" />
-    <GuestLayout class="flex-1" id="guestLayout" :logo_url="logo_url">
+    <GuestLayout class="flex-1 pb-12" id="guestLayout" :logo_url="logo_url">
       <Head title="Registruj se" />
 
       <form @submit.prevent="submit">

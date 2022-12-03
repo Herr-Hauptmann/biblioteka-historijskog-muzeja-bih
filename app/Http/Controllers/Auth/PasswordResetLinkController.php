@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Vite;
 
 class PasswordResetLinkController extends Controller
 {
@@ -19,6 +20,8 @@ class PasswordResetLinkController extends Controller
     {
         return Inertia::render('Auth/ForgotPassword', [
             'status' => session('status'),
+            'small_logo_url' => Vite::asset('resources/images/logo-head.png'),
+            'logo_url' => Vite::asset('resources/images/logo.png'),
         ]);
     }
 
