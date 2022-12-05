@@ -5,7 +5,7 @@
         <div class="flex justify-start lg:w-0 lg:flex-1">
           <Link :href="route('home')">
             <span class="sr-only">Historijski muzej BiH</span>
-            <img class="h-8 w-auto sm:h-10" :src="logo_url" alt="Historijski muzej BiH" />
+            <img class="h-8 w-auto sm:h-10" :src="$page.props.images.logoSmall" alt="Historijski muzej BiH" />
           </Link>
         </div>
         <div class="-my-2 -mr-2 md:hidden">
@@ -134,6 +134,7 @@
 </template>
 
 <script setup>
+import {Link} from '@inertiajs/inertia-vue3';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
 import {
   ArrowPathIcon,
@@ -239,7 +240,7 @@ const admin = [
     icon: UserIcon,
   },
   {
-    name: 'Logout',
+    name: 'Odjavi se',
     href: route('logout'),
     method: 'POST',
     type: 'button',
@@ -247,15 +248,6 @@ const admin = [
     icon: ArrowLeftOnRectangleIcon,
   },
 ];
-</script>
-
-<script>
-  import {Link} from '@inertiajs/inertia-vue3';
-
-  export default{
-    props: ['logo_url'],
-    components: {Link}
-  }
 </script>
 
 <style>

@@ -1,24 +1,17 @@
 <template>
-  <Navbar :logo_url="logo_url"/>
-  <Landing :logo_url="full_logo_url" :background_url="background_photo_url"/>
+  <GuestLayout>
+    <Landing :background_url="background_photo_url"/>
+  </GuestLayout>
 </template>
 
-<script>
-import Navbar from '../Shared/Navbar.vue'
+<script setup>
 import Landing from './Partials/Landing.vue'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
 
-export default {
-    name: 'Home',
-    components: {Navbar, Landing},
-    props: [
-      'logo_url', 
-      'full_logo_url', 
-      'background_photo_url'
-    ],
-    setup(){
+defineProps({
+  'background_photo_url' : String
+});
 
-    }
-}
 </script>
 
 <style>

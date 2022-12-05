@@ -6,9 +6,6 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/inertia-vue3';
-defineProps({
-    logo_url: String,
-});
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -23,7 +20,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
-                                    <ApplicationLogo :logo_url="logo_url"
+                                    <img :src="$page.props.images.logoSmall" alt="Historijski muzej Bosne i Hercegovine"
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
@@ -71,7 +68,7 @@ const showingNavigationDropdown = ref(false);
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Profil </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Logout
+                                            Odjavi se
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
