@@ -14,7 +14,9 @@ use Inertia\Inertia;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home'); 
+Route::get('/about', [HomeController::class, 'about'])->name('about'); 
+
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/books', [BookController::class, 'index'])->name('books.index');

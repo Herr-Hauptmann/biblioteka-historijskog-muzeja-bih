@@ -15,8 +15,8 @@
         </div>
         <PopoverGroup as="nav" class="hidden space-x-10 md:flex">
 
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Naslovi</a>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">O biblioteci</a>
+          <Link href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Naslovi</Link>
+          <Link :href="route('about')" class="text-base font-medium text-gray-500 hover:text-gray-900">O biblioteci</Link>
 
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
