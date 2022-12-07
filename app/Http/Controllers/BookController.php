@@ -6,11 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use Illuminate\Validation\Rules;
 
+// Ovo izbrisati kasnije
+use Illuminate\Support\Str;
+
 class BookController extends Controller
 {
     public function index(){
         return Inertia::render('Books/BooksIndex',[
-            'books' => Book::all(),
+            'books' => Book::paginate(20)->through(fn($book)=>[
+                'id' => $book->id,
+                'title' => $book->title,
+                'year_published' => $book->year_published,
+                'author' => $book->writer,
+                'inventory_number' => Str::random(15),
+            ]),
         ]);
     }
 

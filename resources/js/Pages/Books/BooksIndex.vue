@@ -1,19 +1,26 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
-import {Link} from '@inertiajs/inertia-vue3'
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import Pagination from '@/Shared/Pagination.vue';
+</script>
 
-defineProps({
-    logo_url: String,
-    books: Array,
-});
-
+<script>
+export default {
+    props: ['books'],
+    computed: {
+        paginationData(){
+            let pag = JSON.parse(JSON.stringify(this.books));;
+            delete pag.data;
+            return pag;
+        }
+    }
+}
 </script>
 
 <template>
     <Head title="Knjige" />
 
-    <AuthenticatedLayout :logo_url="logo_url">
+    <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">Knjige</h2>
@@ -86,20 +93,20 @@ defineProps({
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="book in books" :key="book.id"
+                            <tr v-for="book in books.data" :key="book.id"
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{book.title}}
                                 </th>
                                 <td class="py-4 px-6">
-                                    {{book.writer}}
+                                    {{book.author}}
                                 </td>
                                 <td class="py-4 px-6">
                                     {{book.year_published}}
                                 </td>
                                 <td class="py-4 px-6">
-                                    $2999
+                                    {{book.inventory_number}}
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <a href="#"
@@ -110,6 +117,7 @@ defineProps({
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :data="paginationData"/>
                 </div>
             </div>
         </div>

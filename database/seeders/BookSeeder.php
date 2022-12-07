@@ -13,8 +13,8 @@ class BookSeeder extends Seeder
     public function run()
     {
         Book::factory()
-            ->count(10)
-            ->has(Keyword::factory()->count(3))
+            ->count(2400)
+            // ->has(Keyword::factory()->count(3))
             ->create();
     }
 }
