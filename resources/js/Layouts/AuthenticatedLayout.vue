@@ -117,6 +117,9 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Kontrolna ploča
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('books.index')" :active="route().current('books.index')">
+                            Knjige
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
