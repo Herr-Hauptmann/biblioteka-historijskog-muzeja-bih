@@ -34,7 +34,7 @@ export default {
 
         <div class="pb-12 pt-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                     <div class="p-4 bg-white dark:bg-gray-900">
                         <label for="table-search" class="sr-only">Pretraga</label>
                         <div class="relative mt-1">
@@ -51,13 +51,13 @@ export default {
                                 placeholder="Pretraži knjige">
                         </div>
                     </div>
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="py-3 px-6">
+                                <th scope="col" class="py-3 px-6 max-w-18">
                                     Naslov
                                 </th>
-                                <th scope="col" class="py-3 px-6">
+                                <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                     <div class="flex items-center">
                                         Autor
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
@@ -67,7 +67,7 @@ export default {
                                             </svg></a>
                                     </div>
                                 </th>
-                                <th scope="col" class="py-3 px-6">
+                                <th scope="col" class="py-3 px-6  hidden md:table-cell">
                                     <div class="flex items-center">
                                         Godina
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
@@ -77,7 +77,7 @@ export default {
                                             </svg></a>
                                     </div>
                                 </th>
-                                <th scope="col" class="py-3 px-6">
+                                <th scope="col" class="py-3 px-6  hidden md:table-cell">
                                     <div class="flex items-center">
                                         Inv. broj
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
@@ -88,24 +88,24 @@ export default {
                                     </div>
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    <span class="sr-only">Edit</span>
+                                    <span class="sr-only">Uredi</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="book in books.data" :key="book.id"
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200">
                                 <th scope="row"
-                                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap dark:text-white">
                                     {{book.title}}
                                 </th>
-                                <td class="py-4 px-6">
+                                <td class="py-4 px-6  hidden md:table-cell">
                                     {{book.author}}
                                 </td>
-                                <td class="py-4 px-6">
+                                <td class="py-4 px-6  hidden md:table-cell">
                                     {{book.year_published}}
                                 </td>
-                                <td class="py-4 px-6">
+                                <td class="py-4 px-6  hidden md:table-cell">
                                     {{book.inventory_number}}
                                 </td>
                                 <td class="py-4 px-6 text-right">
