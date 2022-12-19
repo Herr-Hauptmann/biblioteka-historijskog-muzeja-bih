@@ -1,20 +1,34 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import Pagination from '@/Shared/Pagination.vue';
-</script>
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import {Inertia} from "@inertiajs/inertia"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Pagination from "@/Shared/Pagination.vue";
+import SearchBar from "@/Components/SearchBar.vue";
+import { ref, watch, computed } from "vue";
 
-<script>
-export default {
-    props: ['books'],
-    computed: {
-        paginationData(){
-            let pag = JSON.parse(JSON.stringify(this.books));;
-            delete pag.data;
-            return pag;
-        }
-    }
-}
+let props = defineProps({
+    filters: Object,
+    books: Object
+});
+
+let placeholder = "Pretraži knjige";
+let search = ref(props.filters.search);
+
+let paginationData = computed(()=>{
+    let pag = JSON.parse(JSON.stringify(props.books));
+    delete pag.data;
+    return pag;
+});
+
+watch(search, value => {
+    Inertia.get(route('books.index'), {
+        search: value
+    }, {
+        preserveState: true,
+        replace: true
+    });
+})
+
 </script>
 
 <template>
@@ -23,11 +37,14 @@ export default {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">Knjige</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
+                    Knjige
+                </h2>
                 <Link :href="route('books.create')">
                 <button
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dodaj
-                    knjigu</button>
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Dodaj knjigu
+                </button>
                 </Link>
             </div>
         </template>
@@ -39,8 +56,8 @@ export default {
                         <label for="table-search" class="sr-only">Pretraga</label>
                         <div class="relative mt-1">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                         clip-rule="evenodd"></path>
@@ -48,7 +65,7 @@ export default {
                             </div>
                             <input type="text" id="table-search"
                                 class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Pretraži knjige">
+                                v-model="search" :placeholder="placeholder"/>
                         </div>
                     </div>
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -67,7 +84,7 @@ export default {
                                             </svg></a>
                                     </div>
                                 </th>
-                                <th scope="col" class="py-3 px-6  hidden md:table-cell">
+                                <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                     <div class="flex items-center">
                                         Godina
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
@@ -77,7 +94,7 @@ export default {
                                             </svg></a>
                                     </div>
                                 </th>
-                                <th scope="col" class="py-3 px-6  hidden md:table-cell">
+                                <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                     <div class="flex items-center">
                                         Inv. broj
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
@@ -97,16 +114,16 @@ export default {
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap dark:text-white">
-                                    {{book.title}}
+                                    {{ book.title }}
                                 </th>
-                                <td class="py-4 px-6  hidden md:table-cell">
-                                    {{book.author}}
+                                <td class="py-4 px-6 hidden md:table-cell">
+                                    {{ book.author }}
                                 </td>
-                                <td class="py-4 px-6  hidden md:table-cell">
-                                    {{book.year_published}}
+                                <td class="py-4 px-6 hidden md:table-cell">
+                                    {{ book.year_published }}
                                 </td>
-                                <td class="py-4 px-6  hidden md:table-cell">
-                                    {{book.inventory_number}}
+                                <td class="py-4 px-6 hidden md:table-cell">
+                                    {{ book.inventory_number }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <a href="#"
@@ -117,7 +134,7 @@ export default {
                             </tr>
                         </tbody>
                     </table>
-                    <Pagination :data="paginationData"/>
+                    <Pagination :data="paginationData" />
                 </div>
             </div>
         </div>
