@@ -2,24 +2,20 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from "@/Components/InputError.vue";
 import { Head } from '@inertiajs/inertia-vue3';
-import {Link} from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3";
-import {ref} from 'vue';
 
-const form = useForm({
-  title: ref(""),
-  author: ref(""),
-  year_published: ref(""),
+let form = useForm({
+  title: '',
+  author: '',
+  year_published: ''
 });
 
 const submit = () => {
-  form.post(route("books.store"), {
-    onFinish: () => form.reset(),
-  });
+  form.post(route("books.store"))
 };
 
 defineProps({
-    logo_url: String,
+    logo_url: String
 });
 
 </script>
@@ -40,7 +36,7 @@ defineProps({
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <label for="title"   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Naziv djela</label>
-                                <input type="text" name="title" id="title" v-model="form.title" :ref="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <input type="text" name="title" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                 <InputError class="mt-2" :message="form.errors.title" />
                             </div>
                             <div>
@@ -51,7 +47,7 @@ defineProps({
                             <div>
                                 <label for="year_published" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Godina izdavanja</label>
                                 <input type="number" name="year_published" id="year_published" v-model="form.year_published" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
-                                <InputError class="mt-2" :message="form.errors.year_published" />
+                                <InputError class="mt-2" :message="form.errors.year_published" :disabled="form.processing"/>
                             </div>
                         </div>
 

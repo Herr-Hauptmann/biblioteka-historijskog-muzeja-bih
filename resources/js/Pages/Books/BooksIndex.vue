@@ -3,8 +3,8 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import {Inertia} from "@inertiajs/inertia"
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Pagination from "@/Shared/Pagination.vue";
-import SearchBar from "@/Components/SearchBar.vue";
 import { ref, watch, computed } from "vue";
+import debounce from 'lodash/debounce';
 
 let props = defineProps({
     filters: Object,
@@ -20,14 +20,16 @@ let paginationData = computed(()=>{
     return pag;
 });
 
-watch(search, value => {
+watch(search, debounce (function (value){
     Inertia.get(route('books.index'), {
         search: value
     }, {
         preserveState: true,
         replace: true
     });
-})
+}, 250));
+
+
 
 </script>
 

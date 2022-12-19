@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Inertia\Inertia;
-use Request;
+use Illuminate\Http\Request;
 use App\Models\Book;
 use Illuminate\Validation\Rules;
 
@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         return Inertia::render('Books/BooksIndex',[
             'books' => Book::query()
-                ->when(Request::input('search'), function ($query, $search){
+                ->when($request->input('search'), function ($query, $search){
                     $query->where('title', 'like', '%'.$search.'%')
                     ->orWhere('writer', 'like', '%'.$search.'%')
                     ->orWhere('year_published', '=', $search );
@@ -28,7 +28,7 @@ class BookController extends Controller
                     'author' => $book->writer,
                     'inventory_number' => Str::random(15),
                     ]),
-            'filters' => Request::only(['search']),
+            'filters' => $request->only(['search']),
         ]);
 
     }
@@ -39,7 +39,6 @@ class BookController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request);
         $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
@@ -50,5 +49,7 @@ class BookController extends Controller
             'writer' => $request->author,
             'year_published' => $request->year_published
         ]);
+
+        return redirect(route("books.index"));
     }
 }
