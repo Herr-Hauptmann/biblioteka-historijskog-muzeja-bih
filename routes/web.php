@@ -5,6 +5,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\AuthorController;
 
 // Middleware
 use Illuminate\Foundation\Application;
@@ -27,6 +28,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('/books', [BookController::class, 'store'])->name('books.store');
     Route::put('/books/{id}', [BookController::class, 'update']);
     Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+    
+    Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
+    Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');
+    Route::get('/authors/edit/{id}', [AuthorController::class, 'edit']);
+    Route::get('/authors/create', [AuthorController::class, 'create'])->name('authors.create');
+    Route::get('/authors/{id}', [AuthorController::class, 'show']);
+    Route::post('/authors', [AuthorController::class, 'store'])->name('authors.store');
+    Route::put('/authors/{id}', [AuthorController::class, 'update']);
+    Route::delete('/authors/{id}', [AuthorController::class, 'destroy'])->name('authors.destroy');
 });
 
 Route::get('/dashboard', function () {

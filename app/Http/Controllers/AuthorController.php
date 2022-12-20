@@ -3,40 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
-use App\Http\Requests\StoreAuthorRequest;
-use App\Http\Requests\UpdateAuthorRequest;
+use App\Models\Book;
+
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Inertia\Inertia;
+
+
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Inertia::render('Authors/AuthorsIndex',[
+            'authors' => Author::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('name', 'like', '%'.$search.'%');
+                })
+                ->paginate(20)
+                ->withQueryString()
+                ->through(fn($author)=>[
+                    'id' => $author->id,
+                    'name' => $author->name,
+                    ]),
+            'filters' => $request->only(['search']),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return Inertia::render('Authors/AuthorsCreate');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAuthorRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreAuthorRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $author = Author::create([
+            'name' => $request->name,
+        ]);
+        dd($author);
     }
 
     /**
