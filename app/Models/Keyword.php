@@ -11,7 +11,7 @@ class Keyword extends Model
 
     protected $fillable = ['book_id', 'title'];
 
-    public function book(){
-        return $this->belongsTo(Book::class);
+    public function books(){
+        return $this->belongsToMany(Book::class, 'books_keywords');
     }
 }
