@@ -1,25 +1,51 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Shared/Pagination.vue";
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue";
+import DeleteModal from "@/Components/DeleteModal.vue";
 
+//DELETE
+let deleteInfo = reactive({
+    id: null,
+    deleteMessage : 'autora ',
+    deleteRoute : 'authors.destroy',
+    isOpen : false,
+})
+
+function setIsOpen(value) {
+    deleteInfo.isOpen = value
+}
+
+function processDelete(authorName, authorId){
+    deleteInfo.id = authorId;
+    deleteInfo.deleteMessage= "autora " + authorName;
+    setIsOpen(true);
+}
+
+
+//PROPS
 let props = defineProps({
     filters: Object,
     authors: Object
 });
 
+//SEARCH
 const placeholder = "Pretraži autore";
 
-let paginationData = computed(()=>{
+//PAGINATION
+let paginationData = computed(() => {
     let pag = JSON.parse(JSON.stringify(props.authors));
     delete pag.data;
     return pag;
 });
+
+
 </script>
 
 <template>
+
     <Head title="Autori" />
 
     <AuthenticatedLayout>
@@ -33,12 +59,16 @@ let paginationData = computed(()=>{
             </div>
         </template>
 
+
+       <DeleteModal :deleteInfo="deleteInfo"/>
+
         <!-- Main content -->
         <div class="pb-12 pt-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
+                    
                     <!-- Search bar -->
-                    <SearchBar :placeholder="placeholder" :filters="filters" :route="route('authors.index')"/>
+                    <SearchBar :placeholder="placeholder" :filters="filters" :route="route('authors.index')" />
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -68,8 +98,9 @@ let paginationData = computed(()=>{
                                 <td class="py-4 px-6 text-right">
                                     <a href="#"
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Uredi</a>
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Obriši</a>
+                                    <a @click="processDelete(author.name, author.id)" href="#"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Izbriši</a>
+                                    
                                 </td>
                             </tr>
                         </tbody>
