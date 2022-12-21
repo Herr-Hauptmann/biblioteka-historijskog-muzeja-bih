@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\Book;
 use Illuminate\Validation\Rules;
+use Inertia\Inertia;
+
+use App\Models\Book;
+use App\Models\Author;
 
 // Ovo izbrisati kasnije
 use Illuminate\Support\Str;
@@ -35,6 +37,10 @@ class BookController extends Controller
 
     public function create(){
         return Inertia::render('Books/BooksCreate',[
+            'authors' => Author::orderBy('name')->get()->map(fn($author)=>[
+                'id' => $author->id,
+                'name' => $author->name,
+            ]),
         ]);
     }
 
