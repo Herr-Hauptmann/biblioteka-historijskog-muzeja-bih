@@ -1,36 +1,50 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import InputError from "@/Components/InputError.vue";
-import FormInputLabel from "@/Components/FormInputLabel.vue";
-import { Head } from '@inertiajs/inertia-vue3';
-import {useForm } from "@inertiajs/inertia-vue3";
-import AuthorsInput from "@/Components/Authors/AuthorsInput.vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import InputError from "@/Components/InputError.vue"
+import FormInputLabel from "@/Components/FormInputLabel.vue"
+import { Head } from '@inertiajs/inertia-vue3'
+import {useForm } from "@inertiajs/inertia-vue3"
+import AuthorsInput from "@/Components/Authors/AuthorsInput.vue"
 import { ref } from 'vue'
 
 //PROPS
 let props = defineProps({
     authors: Array
-});
+})
 
 //Form submitting
 let form = useForm({
   title: '',
-  authorIds: [],
+  authors: [],
+  newAuthors: [],
   year_published: ''
-});
+})
 
 const submit = () => {
   form.post(route("books.store"))
-};
+}
 
-//Adding authors
 let authorList = ref([]);
 let selected = ref(props.authors[0]);
 
+const changeSelection = (newSelected) =>{
+    selected.value = newSelected;
+}
+
 function addAuthor(){
-    authorList.value.push(selected.value);
-    form.authorIds.push(selected.value.id);
-    selected.value = props.authors[0];
+    if (authorList.value.includes(selected.value.name))
+        return;
+    
+    authorList.value.push(selected.value.name);
+    
+    if (selected.value.id != null)
+        form.authors.push(selected.value);
+    else 
+        form.newAuthors.push(selected.value.name);
+}
+
+function removeFromList(name){
+    
 }
 
 </script>
@@ -67,16 +81,23 @@ function addAuthor(){
                             <!-- Desna kolona forme -->
                             <div>
                                 <!-- Spisak autora -->
-                                <FormInputLabel what="author" msg="Autori djela"/>
-                                <div v-for="author in authorList" :key="author.id">
-                                    <p>{{author.name}}</p>
-                                </div>
-
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                                    <tbody>
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+                                            Autori djela
+                                        </thead>
+                                        <tr v-for="author in authorList" :key="author" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:bg-gray-200">
+                                                {{ author }}
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                  
                                 <!-- Unos autora -->
                                 <div class="grid gap-6 mb-6 grid-cols-3">
                                     <div class="col-span-2">
-                                        
-                                        <AuthorsInput :selected="selected" @update:selected="selected = $event" :authors="authors" class="d-inline"/>
+                                        <AuthorsInput :people="authors" @writer-selected="changeSelection"/>
                                         <InputError class="mt-2" :message="form.errors.authorIds" />
                                     </div>
                                     <div class="pt-2">
