@@ -59,6 +59,7 @@ function addAuthor(){
         form.authors.push(selectedAuthor.value);
     else 
         form.newAuthors.push(selectedAuthor.value.name);
+    changeHeight(50)
 }
 function addKeyword(){
     if (keywordList.value.includes(selectedKeyword.value.name)){
@@ -72,6 +73,8 @@ function addKeyword(){
         form.keywords.push(selectedKeyword.value);
     else 
         form.newKeywords.push(selectedKeyword.value.name);
+    
+    changeHeight(50);
 }
 
 function removeAuthorFromList(name){
@@ -88,6 +91,7 @@ function removeAuthorFromList(name){
         index = form.newAuthors.indexOf(name)
         form.newAuthors.splice(index, 1);
     }
+    changeHeight(-50)
 }
 
 function removeKeywordFromList(name){
@@ -95,7 +99,7 @@ function removeKeywordFromList(name){
     let index = keywordList.value.indexOf(name);
     keywordList.value.splice(index, 1);
     //Remove from form parameters
-    index = form.keywords.findIndex(function(author){
+    index = form.keywords.findIndex(function(keyword){
         return keyword.name === name
     })
     if (index > -1)
@@ -104,6 +108,14 @@ function removeKeywordFromList(name){
         index = form.newKeywords.indexOf(name)
         form.newKeywords.splice(index, 1);
     }
+    changeHeight(-50)
+}
+
+const main = ref(null);
+
+function changeHeight(value){
+    let visina = main.value.offsetHeight;
+    main.value.style.height = visina+value+"px";
 }
 </script>
 
@@ -116,9 +128,8 @@ function removeKeywordFromList(name){
         </template>
 
         <div class="pt-4 pb-12">
-            <div class=" max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-                <!-- izbaci ovaj minh -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+            <div class=" max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4" ref="main">
                     <form @submit.prevent="submit">
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <!-- Lijeva kolona forme -->
@@ -164,7 +175,7 @@ function removeKeywordFromList(name){
                                 </div>
                             </div>
                             <!-- Desna kolona forme -->
-                            <div>
+                            <div ref="dynamicColumn">
                                 <!-- Spisak autora -->
                                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
                                     <tbody>
@@ -230,7 +241,7 @@ function removeKeywordFromList(name){
                             </div>
                         </div>
 
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kreiraj knjigu</button>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Kreiraj knjigu</button>
                     </form>
                 </div>
             </div>
