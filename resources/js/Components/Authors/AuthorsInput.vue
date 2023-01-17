@@ -14,7 +14,6 @@ const props = defineProps({
     people: Array
 })
 
-
 let selected = ref(props.people[0])
 let query = ref('')
 
@@ -38,7 +37,6 @@ const emit = defineEmits(['writerSelected'])
 watch(selected, ()=>{
   emit('writerSelected', selected.value)
 })
-
 
 let addBackground = function(){
   document.getElementById("create").parentElement.parentElement.classList.add('hover');

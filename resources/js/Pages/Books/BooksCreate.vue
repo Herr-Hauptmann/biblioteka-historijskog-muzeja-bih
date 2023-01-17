@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3"
 import AuthorsInput from "@/Components/Authors/AuthorsInput.vue"
 import { ref } from 'vue'
+import { XMarkIcon } from "@heroicons/vue/24/solid"
 
 //PROPS
 let props = defineProps({
@@ -32,8 +33,10 @@ const changeSelection = (newSelected) =>{
 }
 
 function addAuthor(){
-    if (authorList.value.includes(selected.value.name))
+    if (authorList.value.includes(selected.value.name)){
+        alert("Autor " + selected.value.name + " je vec dodan!")
         return;
+    }
     
     authorList.value.push(selected.value.name);
     
@@ -44,9 +47,20 @@ function addAuthor(){
 }
 
 function removeFromList(name){
-    
+    //Remove from view
+    let index = authorList.value.indexOf(name);
+    authorList.value.splice(index, 1);
+    //Remove from form parameters
+    index = form.authors.findIndex(function(author){
+        return author.name === name
+    })
+    if (index > -1)
+        form.authors.splice(index, 1)
+    else{
+        index = form.newAuthors.indexOf(name)
+        form.newAuthors.splice(index, 1);
+    }
 }
-
 </script>
 
 <template>
@@ -61,7 +75,6 @@ function removeFromList(name){
             <div class=" max-w-7xl mx-auto sm:px-6 lg:px-8 ">
                 <!-- izbaci ovaj minh -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 min-h-screen">
-                    
                     <form @submit.prevent="submit">
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <!-- Lijeva kolona forme -->
@@ -88,8 +101,15 @@ function removeFromList(name){
                                         </thead>
                                         <tr v-for="author in authorList" :key="author" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:bg-gray-200">
-                                                {{ author }}
-                                            </th>
+                                                <div class="flex">
+                                                    <span>
+                                                        <p class="inline">{{author}}</p>
+                                                    </span>
+                                                    <span class="ml-auto">
+                                                        <XMarkIcon @click="removeFromList(author)" class="h-4 w-4 inline rm-bg" />
+                                                    </span>
+                                                </div>
+                                            </th>                                            
                                         </tr>
                                     </tbody>
                                 </table>
@@ -114,3 +134,11 @@ function removeFromList(name){
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.rm-bg:hover{
+    background-color: red;
+    color:white;
+    border-radius: 20px;
+}
+</style>
