@@ -4,7 +4,7 @@ import InputError from "@/Components/InputError.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
 import { Head } from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3"
-import AuthorsInput from "@/Components/Authors/AuthorsInput.vue"
+import AuthorsInput from "@/Components/SelectWithSearch.vue"
 import { ref } from 'vue'
 import { XMarkIcon } from "@heroicons/vue/24/solid"
 
@@ -150,7 +150,7 @@ function removeFromList(name){
                                 <!-- Unos autora -->
                                 <div class="grid gap-6 mb-6 grid-cols-3">
                                     <div class="col-span-2">
-                                        <AuthorsInput :people="authors" @writer-selected="changeSelection"/>
+                                        <AuthorsInput :content="authors" @item-selected="changeSelection"/>
                                         <InputError class="mt-2" :message="form.errors.authorIds" />
                                     </div>
                                     <div class="pt-2">

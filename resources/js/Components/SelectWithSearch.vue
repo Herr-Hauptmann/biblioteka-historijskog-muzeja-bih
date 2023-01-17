@@ -11,31 +11,31 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
-    people: Array
+    content: Array
 })
 
-let selected = ref(props.people[0])
+let selected = ref(props.content[0])
 let query = ref('')
 
-const queryPerson = computed(() => {
+const queryItem = computed(() => {
     return query.value === '' ? null : { id: null, name: query.value }
   })
 
 let filteredPeople = computed(() =>
   query.value === ''
-    ? props.people
-    : props.people.filter((person) =>
-        person.name
+    ? props.content
+    : props.content.filter((item) =>
+        item.name
           .toLowerCase()
           .replace(/\s+/g, '')
           .includes(query.value.toLowerCase().replace(/\s+/g, ''))
       )
 )
 
-const emit = defineEmits(['writerSelected'])
+const emit = defineEmits(['itemSelected'])
 
 watch(selected, ()=>{
-  emit('writerSelected', selected.value)
+  emit('itemSelected', selected.value)
 })
 
 let addBackground = function(){
@@ -56,7 +56,7 @@ let removeBackground = function(){
           >
             <ComboboxInput
               class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              :displayValue="(person) => person?.name"
+              :displayValue="(item) => item?.name"
               @change="query = $event.target.value"
             />
             <ComboboxButton
@@ -81,16 +81,16 @@ let removeBackground = function(){
                 v-if="filteredPeople.length === 0 && query !== ''"
                 class="relative cursor-default select-none py-2 px-4 text-gray-700"
               >
-              <ComboboxOption v-if="queryPerson" :value="queryPerson" id="create" @mouseover="addBackground" @mouseleave="removeBackground">
+              <ComboboxOption v-if="queryItem" :value="queryItem" id="create" @mouseover="addBackground" @mouseleave="removeBackground">
                 Kreiraj autora: "{{ query }}"
               </ComboboxOption>
             </div>
             
               <ComboboxOption
-                v-for="person in filteredPeople"
+                v-for="item in filteredPeople"
                 as="template"
-                :key="person.id"
-                :value="person"
+                :key="item.id"
+                :value="item"
                 v-slot="{ selected, active }"
               >
                 <li
@@ -104,7 +104,7 @@ let removeBackground = function(){
                     class="block truncate"
                     :class="{ 'font-medium': selected, 'font-normal': !selected }"
                   >
-                    {{ person.name }}
+                    {{ item.name }}
                   </span>
                   <span
                     v-if="selected"
