@@ -4,54 +4,77 @@ import InputError from "@/Components/InputError.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
 import { Head } from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3"
-import AuthorsInput from "@/Components/SelectWithSearch.vue"
+import SelectWithSearch from "@/Components/SelectWithSearch.vue"
 import { ref } from 'vue'
 import { XMarkIcon } from "@heroicons/vue/24/solid"
 
 //PROPS
 let props = defineProps({
-    authors: Array
+    authors: Array,
+    keywords: Array
 })
 
 //Form submitting
 let form = useForm({
   title: '',
-  authors: [],
-  newAuthors: [],
   year_published: '',
   inventory_number: null,
   signature: '',
   number_of_units: null,
   publisher: '',
   location_published: '',
+  authors: [],
+  newAuthors: [],
+  keywords: [],
+  newKeywords: [],
 })
 
 const submit = () => {
   form.post(route("books.store"))
 }
 
-let authorList = ref([]);
-let selected = ref(props.authors[0]);
+let authorList = ref([])
+let selectedAuthor = ref(props.authors[0])
 
-const changeSelection = (newSelected) =>{
-    selected.value = newSelected;
+let keywordList = ref([]);
+let selectedKeyword = ref(props.keywords[0])
+
+const changeAuthorSelection = (newselectedAuthor) =>{
+    selectedAuthor.value = newselectedAuthor
+}
+
+const changeKeywordSelection = (newSelectedKeyword) =>{
+    selectedKeyword.value = newSelectedKeyword
 }
 
 function addAuthor(){
-    if (authorList.value.includes(selected.value.name)){
-        alert("Autor " + selected.value.name + " je vec dodan!")
+    if (authorList.value.includes(selectedAuthor.value.name)){
+        alert("Autor " + selectedAuthor.value.name + " je već dodan!")
         return;
     }
     
-    authorList.value.push(selected.value.name);
+    authorList.value.push(selectedAuthor.value.name);
     
-    if (selected.value.id != null)
-        form.authors.push(selected.value);
+    if (selectedAuthor.value.id != null)
+        form.authors.push(selectedAuthor.value);
     else 
-        form.newAuthors.push(selected.value.name);
+        form.newAuthors.push(selectedAuthor.value.name);
+}
+function addKeyword(){
+    if (keywordList.value.includes(selectedKeyword.value.name)){
+        alert("Ključna riječ " + selectedKeyword.value.name + " je već dodana!")
+        return;
+    }
+    
+    keywordList.value.push(selectedKeyword.value.name);
+    
+    if (selectedKeyword.value.id != null)
+        form.keywords.push(selectedKeyword.value);
+    else 
+        form.newKeywords.push(selectedKeyword.value.name);
 }
 
-function removeFromList(name){
+function removeAuthorFromList(name){
     //Remove from view
     let index = authorList.value.indexOf(name);
     authorList.value.splice(index, 1);
@@ -64,6 +87,22 @@ function removeFromList(name){
     else{
         index = form.newAuthors.indexOf(name)
         form.newAuthors.splice(index, 1);
+    }
+}
+
+function removeKeywordFromList(name){
+    //Remove from view
+    let index = keywordList.value.indexOf(name);
+    keywordList.value.splice(index, 1);
+    //Remove from form parameters
+    index = form.keywords.findIndex(function(author){
+        return keyword.name === name
+    })
+    if (index > -1)
+        form.keywords.splice(index, 1)
+    else{
+        index = form.newKeywords.indexOf(name)
+        form.newKeywords.splice(index, 1);
     }
 }
 </script>
@@ -79,7 +118,7 @@ function removeFromList(name){
         <div class="pt-4 pb-12">
             <div class=" max-w-7xl mx-auto sm:px-6 lg:px-8 ">
                 <!-- izbaci ovaj minh -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 min-h-screen">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
                     <form @submit.prevent="submit">
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <!-- Lijeva kolona forme -->
@@ -139,7 +178,7 @@ function removeFromList(name){
                                                         <p class="inline">{{author}}</p>
                                                     </span>
                                                     <span class="ml-auto">
-                                                        <XMarkIcon @click="removeFromList(author)" class="h-4 w-4 inline rm-bg" />
+                                                        <XMarkIcon @click="removeAuthorFromList(author)" class="h-4 w-4 inline rm-bg" />
                                                     </span>
                                                 </div>
                                             </th>                                            
@@ -150,11 +189,42 @@ function removeFromList(name){
                                 <!-- Unos autora -->
                                 <div class="grid gap-6 mb-6 grid-cols-3">
                                     <div class="col-span-2">
-                                        <AuthorsInput :content="authors" @item-selected="changeSelection"/>
+                                        <SelectWithSearch what="autora" :content="authors" @item-selected="changeAuthorSelection"/>
                                         <InputError class="mt-2" :message="form.errors.authorIds" />
                                     </div>
                                     <div class="pt-2">
-                                        <button @click="addAuthor" type="button" class="py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dodaj autora</button>
+                                        <button @click="addAuthor" type="button" class="py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 w-full">Dodaj autora</button>
+                                    </div>
+                                </div>
+                                <!-- Spisak tagova -->
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                                    <tbody>
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+                                            Ključne riječi
+                                        </thead>
+                                        <tr v-for="keyword in keywordList" :key="keyword" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:bg-gray-200">
+                                                <div class="flex">
+                                                    <span>
+                                                        <p class="inline">{{keyword}}</p>
+                                                    </span>
+                                                    <span class="ml-auto">
+                                                        <XMarkIcon @click="removeKeywordFromList(keyword)" class="h-4 w-4 inline rm-bg" />
+                                                    </span>
+                                                </div>
+                                            </th>                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            
+                                <!-- Unos autora -->
+                                <div class="grid gap-6 mb-6 grid-cols-3">
+                                    <div class="col-span-2">
+                                        <SelectWithSearch what="ključnu riječ" :content="keywords" @item-selected="changeKeywordSelection"/>
+                                        <InputError class="mt-2" :message="form.errors.authorIds" />
+                                    </div>
+                                    <div class="pt-2">
+                                        <button @click="addKeyword" type="button" class="py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 w-full">Dodaj ključnu riječ</button>
                                     </div>
                                 </div>
                             </div>

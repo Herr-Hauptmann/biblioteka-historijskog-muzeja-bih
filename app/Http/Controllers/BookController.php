@@ -7,6 +7,7 @@ use Inertia\Inertia;
 
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\Keyword;
 
 // Ovo izbrisati kasnije
 use Illuminate\Support\Str;
@@ -40,6 +41,10 @@ class BookController extends Controller
             'authors' => Author::orderBy('name')->get()->map(fn($author)=>[
                 'id' => $author->id,
                 'name' => $author->name,
+            ]),
+            'keywords' => Keyword::orderBy('title')->get()->map(fn($keyword)=>[
+                'id' => $keyword->id,
+                'name' => $keyword->title,
             ]),
         ]);
     }

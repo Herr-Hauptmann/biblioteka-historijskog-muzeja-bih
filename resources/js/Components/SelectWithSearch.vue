@@ -11,7 +11,8 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
-    content: Array
+    content: Array,
+    what: String,
 })
 
 let selected = ref(props.content[0])
@@ -82,7 +83,7 @@ let removeBackground = function(){
                 class="relative cursor-default select-none py-2 px-4 text-gray-700"
               >
               <ComboboxOption v-if="queryItem" :value="queryItem" id="create" @mouseover="addBackground" @mouseleave="removeBackground">
-                Kreiraj autora: "{{ query }}"
+                Kreiraj {{ what }}: "{{ query }}"
               </ComboboxOption>
             </div>
             
