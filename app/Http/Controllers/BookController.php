@@ -44,7 +44,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request){               
         $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',

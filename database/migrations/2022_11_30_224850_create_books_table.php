@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('location_published');
             $table->integer('year_published');
             $table->integer('inventory_number');
+            $table->integer('number_of_units');
             $table->timestamps();
         });
     }
