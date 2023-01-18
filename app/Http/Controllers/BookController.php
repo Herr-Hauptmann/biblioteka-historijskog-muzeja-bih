@@ -70,15 +70,21 @@ class BookController extends Controller
             "newKeywords" => "required_without:keywords|array",
             "newKeywords.*.name" => "string|distinct|unique:keywords,title|max:255",
         ]);
+        //Create new authors and keywords and merge with existing
         $authorIds = $authorService->createAuthorsFromArray($request->newAuthors, $validatedRequest["authors"]);
         $keywordIds = $keywordService->createKeywordsFromArray($request->newKeywords, $validatedRequest["keywords"]);
+        
+        //Fields containing author and keyword info are no longer neccessary, remove them
         unset($validatedRequest["keywords"]);
         unset($validatedRequest["newKeywords"]);
         unset($validatedRequest["authors"]);
         unset($validatedRequest["newAuthors"]);
+        
+        //Create the book and it's relationship with keywords and authors
         $book = Book::create($validatedRequest);
         $authorService->addAuthorsToBook($authorIds, $book);
         $keywordService->addKeywordsToBook($keywordIds, $book);
+        
         return redirect(route("books.index"));
     }
 }
