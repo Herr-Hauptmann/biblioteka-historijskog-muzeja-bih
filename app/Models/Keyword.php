@@ -12,6 +12,6 @@ class Keyword extends Model
     protected $guarded = [];
 
     public function books(){
-        return $this->belongsToMany(Book::class, 'books_keywords');
+        return $this->belongsToMany(Book::class, 'books_keywords', 'keyword_id','book_id');
     }
 }

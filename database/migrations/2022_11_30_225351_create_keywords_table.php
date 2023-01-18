@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('keywords', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('book_id');
-            // $table->foreign('book_id')->references('id')->on('books');
             $table->string('title');
             $table->timestamps();
         });

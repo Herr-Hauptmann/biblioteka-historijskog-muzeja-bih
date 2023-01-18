@@ -10,6 +10,7 @@ use App\Models\Author;
 use App\Models\Keyword;
 
 use App\Http\Services\AuthorService;
+use App\Http\Services\KeywordService;
 
 class BookController extends Controller
 {
@@ -49,7 +50,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request, AuthorService $authorService){               
+    public function store(Request $request, AuthorService $authorService, KeywordService $keywordService){               
         $validatedRequest = $request->validate([
             "title" => "required|unique:books|max:255",
             "year_published" => "required|integer|min:1500|max:".date('Y'),
@@ -70,12 +71,14 @@ class BookController extends Controller
             "newKeywords.*.name" => "string|distinct|unique:keywords,title|max:255",
         ]);
         $authorIds = $authorService->createAuthorsFromArray($request->newAuthors, $validatedRequest["authors"]);
+        $keywordIds = $keywordService->createKeywordsFromArray($request->newKeywords, $validatedRequest["keywords"]);
         unset($validatedRequest["keywords"]);
         unset($validatedRequest["newKeywords"]);
         unset($validatedRequest["authors"]);
         unset($validatedRequest["newAuthors"]);
         $book = Book::create($validatedRequest);
         $authorService->addAuthorsToBook($authorIds, $book);
+        $keywordService->addKeywordsToBook($keywordIds, $book);
         return redirect(route("books.index"));
     }
 }
