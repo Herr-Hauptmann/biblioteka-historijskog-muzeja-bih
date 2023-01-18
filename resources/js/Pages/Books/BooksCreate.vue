@@ -17,7 +17,7 @@ let props = defineProps({
 //Form submitting
 let form = useForm({
   title: '',
-  year_published: '',
+  year_published: null,
   inventory_number: null,
   signature: '',
   number_of_units: null,
@@ -169,7 +169,7 @@ function changeHeight(value){
                                     </div>
                                     <div>
                                         <FormInputLabel what="number_of_units" msg="Broj jedinica"/>
-                                        <input type="integer" name="number_of_units" id="number_of_units" v-model="form.number_of_units" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                        <input type="number" name="number_of_units" id="number_of_units" v-model="form.number_of_units" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
                                         <InputError class="mt-2" :message="form.errors.number_of_units" :disabled="form.processing"/>
                                     </div>
                                 </div>

@@ -9,12 +9,11 @@ use App\Models\Book;
 use App\Models\Author;
 use App\Models\Keyword;
 
-// Ovo izbrisati kasnije
-use Illuminate\Support\Str;
+use App\Http\Services\AuthorService;
 
 class BookController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request, AuthorService $authorService){
         return Inertia::render('Books/BooksIndex',[
             'books' => Book::query()
                 ->when($request->input('search'), function ($query, $search){
@@ -22,14 +21,15 @@ class BookController extends Controller
                     ->orWhere('writer', 'like', '%'.$search.'%')
                     ->orWhere('year_published', '=', $search );
                 })
+                ->with('authors')
                 ->paginate(20)
                 ->withQueryString()
                 ->through(fn($book)=>[
                     'id' => $book->id,
                     'title' => $book->title,
                     'year_published' => $book->year_published,
-                    'author' => $book->writer,
-                    'inventory_number' => Str::random(15),
+                    'author' => $authorService->listAuthors($book->authors),
+                    'inventory_number' => $book->inventory_number,
                     ]),
             'filters' => $request->only(['search']),
         ]);
@@ -49,18 +49,46 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request){               
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year_published' => 'required|integer|min:1700|max:2100',
+    public function store(Request $request, AuthorService $authorService){               
+        
+        $validatedRequest = $request->validate([
+            "title" => "required|unique:books|max:255",
+            "year_published" => "required|integer|min:1500|max:".date('Y'),
+            "inventory_number" => "required|integer|min:0|unique:books",
+            "signature" => "required|string|unique:books|max:255",
+            "number_of_units" => "required|integer|min:0",
+            "publisher" => "required|string|max:255",
+            "location_published" => "required|string|max:255",
+            "authors" => "required_without:newAuthors|array",
+            "authors.*.id" => "integer|distinct|exists:authors,id",
+            "authors.*.name" => "string|distinct|max:255|exists:authors,name",
+            "newAuthors" => "required_without:authors|array",
+            "newAuthors.*.name" => "string|distinct|unique:authors,name|max:255",
+            "keywords" => "array",
+            "keywords.*.id" => "integer|distinct|exists:keywords,id",
+            "keywords.*.name" => "string|distinct|max:255|exists:keywords,title",
+            "newKeywords" => "array",
+            "newKeywords.*.name" => "string|distinct|unique:keywords,title|max:255",
         ]);
-        $book = Book::create([
-            'title' => $request->title,
-            'writer' => $request->author,
-            'year_published' => $request->year_published
-        ]);
-
+        $authorIds = $authorService->createAuthorsFromArray($request->newAuthors);
+        $authorIds = array_merge
+        (
+            $authorIds, 
+            array_map 
+            (
+                function ($author) 
+                {
+                    return $author["id"];
+                }, 
+                $validatedRequest["authors"]
+            )
+        );
+        unset($validatedRequest["keywords"]);
+        unset($validatedRequest["newKeywords"]);
+        unset($validatedRequest["authors"]);
+        unset($validatedRequest["newAuthors"]);
+        $book = Book::create($validatedRequest);
+        $authorService->addAuthorsToBook($authorIds, $book);
         return redirect(route("books.index"));
     }
 }

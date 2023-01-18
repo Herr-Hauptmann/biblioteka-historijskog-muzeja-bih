@@ -46,46 +46,23 @@ class AuthorController extends Controller
         dd($author);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Author  $author
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Author $author)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Author  $author
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Author $author)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAuthorRequest  $request
-     * @param  \App\Models\Author  $author
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(UpdateAuthorRequest $request, Author $author)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Author  $author
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $author = Author::destroy($id);
