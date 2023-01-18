@@ -201,7 +201,11 @@ function changeHeight(value){
                                 <div class="grid gap-6 mb-6 grid-cols-3">
                                     <div class="col-span-2">
                                         <SelectWithSearch what="autora" :content="authors" @item-selected="changeAuthorSelection"/>
-                                        <InputError class="mt-2" :message="form.errors.authorIds" />
+                                        <div v-show="form.errors.authors || form.errors.newAuthors">
+                                            <p class="text-sm text-red-600 mt-2">
+                                                Morate unijeti minimalno jednog autora!
+                                            </p>
+                                        </div>
                                     </div>
                                     <div class="pt-2">
                                         <button @click="addAuthor" type="button" class="py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 w-full">Dodaj autora</button>
@@ -228,11 +232,15 @@ function changeHeight(value){
                                     </tbody>
                                 </table>
                             
-                                <!-- Unos autora -->
+                                <!-- Unos tagova -->
                                 <div class="grid gap-6 mb-6 grid-cols-3">
                                     <div class="col-span-2">
                                         <SelectWithSearch what="ključnu riječ" :content="keywords" @item-selected="changeKeywordSelection"/>
-                                        <InputError class="mt-2" :message="form.errors.authorIds" />
+                                        <div v-show="form.errors.keywords || form.errors.newKeywords">
+                                            <p class="text-sm text-red-600 mt-2">
+                                                Morate unijeti minimalno jednu ključnu riječ!
+                                            </p>
+                                        </div>
                                     </div>
                                     <div class="pt-2">
                                         <button @click="addKeyword" type="button" class="py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 w-full">Dodaj ključnu riječ</button>

@@ -50,7 +50,6 @@ class BookController extends Controller
     }
 
     public function store(Request $request, AuthorService $authorService){               
-        
         $validatedRequest = $request->validate([
             "title" => "required|unique:books|max:255",
             "year_published" => "required|integer|min:1500|max:".date('Y'),
@@ -64,25 +63,13 @@ class BookController extends Controller
             "authors.*.name" => "string|distinct|max:255|exists:authors,name",
             "newAuthors" => "required_without:authors|array",
             "newAuthors.*.name" => "string|distinct|unique:authors,name|max:255",
-            "keywords" => "array",
+            "keywords" => "required_without:newKeywords|array",
             "keywords.*.id" => "integer|distinct|exists:keywords,id",
             "keywords.*.name" => "string|distinct|max:255|exists:keywords,title",
-            "newKeywords" => "array",
+            "newKeywords" => "required_without:keywords|array",
             "newKeywords.*.name" => "string|distinct|unique:keywords,title|max:255",
         ]);
-        $authorIds = $authorService->createAuthorsFromArray($request->newAuthors);
-        $authorIds = array_merge
-        (
-            $authorIds, 
-            array_map 
-            (
-                function ($author) 
-                {
-                    return $author["id"];
-                }, 
-                $validatedRequest["authors"]
-            )
-        );
+        $authorIds = $authorService->createAuthorsFromArray($request->newAuthors, $validatedRequest["authors"]);
         unset($validatedRequest["keywords"]);
         unset($validatedRequest["newKeywords"]);
         unset($validatedRequest["authors"]);

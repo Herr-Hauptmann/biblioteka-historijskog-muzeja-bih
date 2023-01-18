@@ -13,12 +13,26 @@ class AuthorService{
         return $author;
     }
     
-    public function createAuthorsFromArray($authors){
+    public function createAuthorsFromArray($newAuthors, $existingAuthors){
         $ids = [];
-        foreach($authors as $author){
+        foreach($newAuthors as $author){
             $newAuthor = $this->createAuthor($author);
             array_push($ids, $newAuthor->id);
         }
+
+        $ids = array_merge
+        (
+            $ids, 
+            array_map 
+            (
+                function ($author) 
+                {
+                    return $author["id"];
+                }, 
+                $existingAuthors
+            )
+        );
+
         return $ids;
     }
 
@@ -29,9 +43,9 @@ class AuthorService{
     public function listAuthors($authors){
         $output = "";
         foreach($authors as $author){
-            $output.="".$author->name." ";
+            $output.="".$author->name.", ";
         }
-        return substr($output, 0, -1);
+        return substr($output, 0, -2);
     }
 
 
