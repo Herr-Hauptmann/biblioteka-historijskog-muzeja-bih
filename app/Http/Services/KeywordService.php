@@ -38,4 +38,8 @@ class KeywordService{
     public function addKeywordsToBook($keywordIds, Book $book){
         $book->keywords()->attach($keywordIds);
     }
+
+    public function updateBookKeywords($keywordIds, Book $book){
+        $book->keywords()->sync($keywordIds);
+    }
 }

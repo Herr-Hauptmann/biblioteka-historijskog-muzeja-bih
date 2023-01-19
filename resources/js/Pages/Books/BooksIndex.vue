@@ -104,10 +104,10 @@ let paginationData = computed(()=>{
                                     {{ book.inventory_number }}
                                 </td>
                                 <td class="py-4 px-6 text-right">
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Uredi</a>
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Obriši</a>
+                                    <Link :href="route('books.edit', book.id)"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Uredi</Link>
+                                    <Link href="#"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Obriši</Link>
                                 </td>
                             </tr>
                         </tbody>

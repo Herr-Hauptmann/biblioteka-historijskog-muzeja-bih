@@ -20,14 +20,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
-    Route::get('/books/edit/{id}', [BookController::class, 'edit']);
-    Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
-    Route::get('/books/{id}', [BookController::class, 'show']);
-    Route::post('/books', [BookController::class, 'store'])->name('books.store');
-    Route::put('/books/{id}', [BookController::class, 'update']);
-    Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::resource('books', BookController::class);
     
     Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
     Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');

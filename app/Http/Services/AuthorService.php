@@ -39,6 +39,10 @@ class AuthorService{
     public function addAuthorsToBook($authorIds, Book $book){
         $book->authors()->attach($authorIds);
     }
+    
+    public function updateBookAuthors($authorIds, Book $book){
+        $book->authors()->sync($authorIds);
+    }
 
     public function listAuthors($authors){
         $output = "";
