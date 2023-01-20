@@ -1,9 +1,10 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Shared/Pagination.vue";
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue";
+import DeleteModal from "@/Components/DeleteModal.vue";
 
 let props = defineProps({
     filters: Object,
@@ -17,6 +18,22 @@ let paginationData = computed(()=>{
     delete pag.data;
     return pag;
 });
+
+//DELETE
+let deleteInfo = reactive({
+    id: null,
+    deleteMessage : 'knjigu ',
+    deleteRoute : 'books.destroy',
+    isOpen : false,
+})
+
+function processDelete(bookTitle, bookId){
+    deleteInfo.id = bookId;
+    deleteInfo.deleteMessage= "knjigu " + bookTitle;
+    console.log(bookTitle);
+    deleteInfo.isOpen = true
+}
+
 </script>
 
 <template>
@@ -38,6 +55,8 @@ let paginationData = computed(()=>{
                 </Link>
             </div>
         </template>
+
+        <DeleteModal :deleteInfo="deleteInfo"/>
 
         <!-- Main content -->
         <div class="pb-12 pt-4">
@@ -105,9 +124,10 @@ let paginationData = computed(()=>{
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <Link :href="route('books.edit', book.id)"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Uredi</Link>
-                                    <Link href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Obriši</Link>
+                                        class="font-medium text-blue-600 hover:underline px-2">Uredi</Link>
+                                    <a href="#"  @click="processDelete(book.title, book.id)"
+                                        class="font-medium text-red-600 hover:underline px-2">Obriši
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

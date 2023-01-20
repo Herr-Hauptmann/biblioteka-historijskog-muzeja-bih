@@ -144,4 +144,9 @@ class BookController extends Controller
 
         return redirect(route("books.index"));
     }
+
+    public function destroy($id){
+        Book::destroy($id);
+        return redirect(route("books.index"));
+    }
 }
