@@ -6,12 +6,12 @@ import {Inertia} from "@inertiajs/inertia";
 let props = defineProps({
     placeholder: String,
     filters: Object,
-    route: String
+    path: String
 })
 let search = ref(props.filters.search);
 
 watch(search, debounce (function (value){
-    Inertia.get(props.route, {
+    Inertia.get(route(props.path), {
         search: value
     }, {
         preserveState: true,

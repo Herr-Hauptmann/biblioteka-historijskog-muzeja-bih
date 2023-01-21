@@ -18,9 +18,7 @@ class BookController extends Controller
         return Inertia::render('Books/BooksIndex',[
             'books' => Book::query()
                 ->when($request->input('search'), function ($query, $search){
-                    $query->where('title', 'like', '%'.$search.'%')
-                    ->orWhere('writer', 'like', '%'.$search.'%')
-                    ->orWhere('year_published', '=', $search );
+                    $query->where('title', 'like', '%'.$search.'%');
                 })
                 ->with('authors')
                 ->paginate(20)

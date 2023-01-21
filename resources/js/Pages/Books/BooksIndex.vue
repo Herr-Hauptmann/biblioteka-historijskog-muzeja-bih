@@ -5,13 +5,16 @@ import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue";
 import DeleteModal from "@/Components/DeleteModal.vue";
+import Content from "@/Components/Content.vue"
 
 let props = defineProps({
     filters: Object,
     books: Object
 });
 
-const placeholder = "Pretraži knjige";
+//Search
+const placeholder = "Pretraži knjige"
+const path = "books.index"
 
 let paginationData = computed(()=>{
     let pag = JSON.parse(JSON.stringify(props.books));
@@ -34,15 +37,15 @@ function processDelete(bookTitle, bookId){
     deleteInfo.isOpen = true
 }
 
+defineOptions({ layout: AuthenticatedLayout })
+
 </script>
 
 <template>
-    <Head title="Knjige" />
-
-    <AuthenticatedLayout>
-
+    <Content>
+        <Head title="Knjige" />
         <!-- Layout header -->
-        <template #header>
+        <template v-slot:header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
                     Knjige
@@ -55,7 +58,6 @@ function processDelete(bookTitle, bookId){
                 </Link>
             </div>
         </template>
-
         <DeleteModal :deleteInfo="deleteInfo"/>
 
         <!-- Main content -->
@@ -63,7 +65,7 @@ function processDelete(bookTitle, bookId){
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                     <!-- Search bar -->
-                    <SearchBar :placeholder="placeholder" :filters="filters" :route="route('books.index')"/>
+                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path"/>
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -136,5 +138,5 @@ function processDelete(bookTitle, bookId){
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Content>
 </template>

@@ -33,9 +33,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard',[
-        'logo_url' => Vite::asset('resources/images/logo-head.png'),
-    ]);
+    return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

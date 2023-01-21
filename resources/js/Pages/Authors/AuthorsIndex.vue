@@ -4,6 +4,7 @@ import Pagination from "@/Shared/Pagination.vue";
 import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue";
+import Content from "@/Components/Content.vue";
 import DeleteModal from "@/Components/DeleteModal.vue";
 
 //DELETE
@@ -32,7 +33,9 @@ let props = defineProps({
 });
 
 //SEARCH
-const placeholder = "Pretraži autore";
+const placeholder = "Pretraži autore"
+const path = 'authors.index'
+
 
 //PAGINATION
 let paginationData = computed(() => {
@@ -41,21 +44,24 @@ let paginationData = computed(() => {
     return pag;
 });
 
-
+defineOptions({ layout: AuthenticatedLayout })
 </script>
 
 <template>
-
-    <Head title="Autori" />
-
-    <AuthenticatedLayout>
-
+    <Content>
+        <Head title="Autori" />
         <!-- Layout header -->
         <template #header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
                     Autori
                 </h2>
+                <Link :href="route('authors.create')">
+                <button
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Dodaj autora
+                </button>
+                </Link>
             </div>
         </template>
 
@@ -68,7 +74,7 @@ let paginationData = computed(() => {
                 <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                     
                     <!-- Search bar -->
-                    <SearchBar :placeholder="placeholder" :filters="filters" :route="route('authors.index')" />
+                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -97,9 +103,9 @@ let paginationData = computed(() => {
                                 </th>
                                 <td class="py-4 px-6 text-right">
                                     <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Uredi</a>
+                                        class="font-medium text-blue-600 hover:underline px-2">Uredi</a>
                                     <a @click="processDelete(author.name, author.id)" href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2">Izbriši</a>
+                                        class="font-medium text-red-600 hover:underline px-2">Izbriši</a>
                                     
                                 </td>
                             </tr>
@@ -109,5 +115,5 @@ let paginationData = computed(() => {
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Content>
 </template>

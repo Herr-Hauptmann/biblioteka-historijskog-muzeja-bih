@@ -7,6 +7,10 @@ import {useForm } from "@inertiajs/inertia-vue3"
 import SelectWithSearch from "@/Components/SelectWithSearch.vue"
 import { ref, onMounted } from 'vue'
 import { XMarkIcon } from "@heroicons/vue/24/solid"
+import Content from "@/Components/Content.vue"
+
+//Layout
+defineOptions({ layout: AuthenticatedLayout })
 
 //PROPS
 let props = defineProps({
@@ -135,9 +139,8 @@ function changeHeight(value){
 </script>
 
 <template>
-    <Head title="Unos knjige" />
-
-    <AuthenticatedLayout>
+    <Content>
+        <Head title="Unos knjige" />
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Unos knjige</h2>
         </template>
@@ -269,7 +272,7 @@ function changeHeight(value){
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Content>
 </template>
 
 <style scoped>
