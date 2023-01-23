@@ -64,4 +64,11 @@ class KeywordController extends Controller
         $keyword->save();
         return redirect()->route('keywords.index')->with('message', 'Uspješno ste izmijenili ključnu riječ "'.$keyword->title .'"!' );
     }
+
+    public function destroy(Keyword $keyword)
+    {
+        $keywordTitle = $keyword->title;
+        $keyword->delete();
+        return redirect()->route("keywords.index")->with('message', 'Uspješno ste izbrisali ključnu riječ "'.$keywordTitle .'"!' );
+    }
 }

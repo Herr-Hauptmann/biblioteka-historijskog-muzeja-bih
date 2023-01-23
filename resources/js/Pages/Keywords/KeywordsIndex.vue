@@ -104,7 +104,7 @@ defineOptions({ layout: AuthenticatedLayout })
                                 <td class="py-4 px-6 text-right">
                                     <Link :href="route('keywords.edit', keyword.id)"
                                         class="font-medium text-blue-600 hover:underline px-2">Uredi</Link>
-                                    <a @click="processDelete(keyword.title, author.id)" href="#"
+                                    <a @click="processDelete(keyword.title, keyword.id)" href="#"
                                         class="font-medium text-red-600 hover:underline px-2">Izbriši</a>
                                 </td>
                             </tr>
