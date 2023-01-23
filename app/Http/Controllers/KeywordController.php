@@ -27,4 +27,19 @@ class KeywordController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('Keywords/KeywordsCreate');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|unique:keywords,title|max:255',
+        ]);
+        $keyword = Keyword::create([
+            'title' => $request->title,
+        ]);
+        return redirect()->route('keywords.index')->with('message', 'Uspješno ste dodali ključnu riječ "'.$keyword->title .'"!' );
+    }
 }
