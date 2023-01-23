@@ -1,20 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Content from '@/Components/Content.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 
-defineProps({
-    logo_url: String,
-});
-
+//Layout
+defineOptions({ layout: AuthenticatedLayout })
 </script>
 
 <template>
     <Head title="Kontrolna ploča" />
-
-    <AuthenticatedLayout :logo_url="logo_url">
-        <!-- <template #header>
+    <Content>
+        <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template> -->
+        </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,5 +21,5 @@ defineProps({
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Content>
 </template>

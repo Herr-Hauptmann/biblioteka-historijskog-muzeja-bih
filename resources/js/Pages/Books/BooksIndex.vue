@@ -42,8 +42,8 @@ defineOptions({ layout: AuthenticatedLayout })
 </script>
 
 <template>
+    <Head title="Knjige" />
     <Content>
-        <Head title="Knjige" />
         <!-- Layout header -->
         <template v-slot:header>
             <div class="flex justify-between">
