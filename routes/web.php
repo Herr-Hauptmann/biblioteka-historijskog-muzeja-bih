@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\KeywordController;
 
 // Middleware
 use Illuminate\Foundation\Application;
@@ -22,6 +23,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('books', BookController::class);
     Route::resource('authors', AuthorController::class);
+    Route::resource('keywords', KeywordController::class);
 });
 
 Route::get('/dashboard', function () {
