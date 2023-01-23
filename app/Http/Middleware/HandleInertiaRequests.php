@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Facades\Session;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -47,6 +48,9 @@ class HandleInertiaRequests extends Middleware
             'images' => [
                 'logo' => Vite::asset('resources/images/logo.png'),
                 'logoSmall' => Vite::asset('resources/images/logo-head.png'),
+            ],
+            'flash' => [
+                'message' => Session::get('message')
             ]
         ]);
     }

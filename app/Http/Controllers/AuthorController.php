@@ -38,12 +38,12 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:authors,name|max:255',
         ]);
         $author = Author::create([
             'name' => $request->name,
         ]);
-        dd($author);
+        return redirect()->route('authors.index')->with('message', 'Uspješno ste dodali novog autora.');
     }
 
     
@@ -54,18 +54,25 @@ class AuthorController extends Controller
 
     public function edit(Author $author)
     {
-        //
+        return Inertia::render('Authors/AuthorsEdit',[
+            'author' => $author,
+        ]);
     }
 
     
-    public function update(UpdateAuthorRequest $request, Author $author)
+    public function update(Request $request, Author $author)
     {
-        //
+        $validatedRequest = $request->validate([
+            'name' => 'required|string|unique:authors,name|max:255',
+        ]);
+        $author->name = $validatedRequest["name"];
+        $author->save();
+        return redirect()->route('authors.index')->with('message', 'Uspješno ste izmjenili autora.');
     }
 
     public function destroy($id)
     {
         $author = Author::destroy($id);
-        return redirect(route("authors.index"));
+        return redirect()->route("authors.index")->with('message', 'Uspješno ste izbrisali autora.');
     }
 }

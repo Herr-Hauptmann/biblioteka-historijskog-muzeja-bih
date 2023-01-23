@@ -1,27 +1,31 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import InputError from "@/Components/InputError.vue"
-import Content from "@/Components/Content.vue"
-import FormInputLabel from "@/Components/FormInputLabel.vue"
-import { Head } from '@inertiajs/inertia-vue3'
-import {useForm } from "@inertiajs/inertia-vue3"
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InputError from "@/Components/InputError.vue";
+import Content from "@/Components/Content.vue";
+import FormInputLabel from "@/Components/FormInputLabel.vue";
+import { Head } from '@inertiajs/inertia-vue3';
+import {useForm } from "@inertiajs/inertia-vue3";
 
 defineOptions({ layout: AuthenticatedLayout })
 
+const props = defineProps({
+    author: Object
+})
+
 let form = useForm({
-  name: '',
+  name: props.author.name,
 })
 
 const submit = () => {
-  form.post(route("authors.store"))
+  form.patch(route("authors.update", props.author.id));
 }
 </script>
 
 <template>
-    <Head title="Unos autora" />
+    <Head title="Izmjena autora" />
     <Content>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Unos autora</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Izmjena autora</h2>
         </template>
 
         <div class="pt-4 pb-12">
@@ -37,7 +41,7 @@ const submit = () => {
                             </div>
                         </div>      
 
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kreiraj autora</button>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Izmijeni autora</button>
                     </form>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Shared/Pagination.vue";
 import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
@@ -48,8 +48,8 @@ defineOptions({ layout: AuthenticatedLayout })
 </script>
 
 <template>
+    <Head title="Autori" />
     <Content>
-        <Head title="Autori" />
         <!-- Layout header -->
         <template #header>
             <div class="flex justify-between">
@@ -102,11 +102,10 @@ defineOptions({ layout: AuthenticatedLayout })
                                     {{ author.name }}
                                 </th>
                                 <td class="py-4 px-6 text-right">
-                                    <a href="#"
-                                        class="font-medium text-blue-600 hover:underline px-2">Uredi</a>
+                                    <Link :href="route('authors.edit', author.id)"
+                                        class="font-medium text-blue-600 hover:underline px-2">Uredi</Link>
                                     <a @click="processDelete(author.name, author.id)" href="#"
                                         class="font-medium text-red-600 hover:underline px-2">Izbriši</a>
-                                    
                                 </td>
                             </tr>
                         </tbody>
