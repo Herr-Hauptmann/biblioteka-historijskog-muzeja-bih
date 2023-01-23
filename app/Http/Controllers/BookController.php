@@ -83,7 +83,7 @@ class BookController extends Controller
         $authorService->addAuthorsToBook($authorIds, $book);
         $keywordService->addKeywordsToBook($keywordIds, $book);
         
-        return redirect(route("books.index"));
+        return redirect()->route("books.index")->with('message', 'Uspješno ste kreirali knjigu "'.$book->title .'"!');
     }
 
     public function edit($id){
@@ -103,8 +103,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function update(AuthorService $authorService, KeywordService $keywordService, Request $request, $id){
-        $book = Book::findOrFail($id);
+    public function update(AuthorService $authorService, KeywordService $keywordService, Request $request, Book $book){
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "year_published" => "required|integer|min:1500|max:".date('Y'),
@@ -140,11 +139,12 @@ class BookController extends Controller
         $authorService->updateBookAuthors($authorIds, $book);
         $keywordService->updateBookKeywords($keywordIds, $book);
 
-        return redirect(route("books.index"));
+        return redirect()->route("books.index")->with('message', 'Uspješno ste uredili knjigu "'.$book->title .'"!');
     }
 
-    public function destroy($id){
-        Book::destroy($id);
-        return redirect(route("books.index"));
+    public function destroy(Book $book){
+        $bookName = $book->title;
+        $book->delete();
+        return redirect()->route("books.index")->with('message', 'Uspješno ste obrisali knjigu "'.$bookName .'"!');
     }
 }
