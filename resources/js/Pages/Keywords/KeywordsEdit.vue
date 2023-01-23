@@ -9,23 +9,23 @@ import {useForm } from "@inertiajs/inertia-vue3";
 defineOptions({ layout: AuthenticatedLayout })
 
 const props = defineProps({
-    author: Object
+    keyword: Object
 })
 
 let form = useForm({
-  name: props.author.name,
+  title: props.keyword.title,
 })
 
 const submit = () => {
-  form.patch(route("authors.update", props.author.id));
+  form.patch(route("keywords.update", props.keyword.id));
 }
 </script>
 
 <template>
-    <Head title="Izmjena autora" />
+    <Head title="Izmjena ključne riječi" />
     <Content>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Izmjena autora</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Izmjena ključne riječi</h2>
         </template>
 
         <div class="pt-4 pb-12">
@@ -35,13 +35,13 @@ const submit = () => {
                     <form @submit.prevent="submit">
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <FormInputLabel what="name" msg="Ime autora"/>
-                                <input type="text" name="name" id="name" v-model="form.name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                <InputError class="mt-2" :message="form.errors.name" />
+                                <FormInputLabel what="title" msg="Naslov ključne riječi"/>
+                                <input type="text" name="title" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <InputError class="mt-2" :message="form.errors.title" />
                             </div>
                         </div>      
 
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Izmijeni autora</button>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Izmijeni ključnu riječ</button>
                     </form>
                 </div>
             </div>

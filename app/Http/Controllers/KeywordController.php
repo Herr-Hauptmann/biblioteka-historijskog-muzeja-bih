@@ -42,4 +42,26 @@ class KeywordController extends Controller
         ]);
         return redirect()->route('keywords.index')->with('message', 'Uspješno ste dodali ključnu riječ "'.$keyword->title .'"!' );
     }
+
+    public function show(Keyword $keyword)
+    {
+        //
+    }
+
+    public function edit(Keyword $keyword)
+    {
+        return Inertia::render('Keywords/KeywordsEdit',[
+            'keyword' => $keyword,
+        ]);
+    }
+
+    public function update(Request $request, Keyword $keyword)
+    {
+        $validatedRequest = $request->validate([
+            'title' => 'required|string|unique:keywords,title|max:255',
+        ]);
+        $keyword->title = $validatedRequest["title"];
+        $keyword->save();
+        return redirect()->route('keywords.index')->with('message', 'Uspješno ste izmijenili ključnu riječ "'.$keyword->title .'"!' );
+    }
 }
