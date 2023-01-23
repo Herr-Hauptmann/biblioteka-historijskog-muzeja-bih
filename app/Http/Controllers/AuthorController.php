@@ -43,7 +43,7 @@ class AuthorController extends Controller
         $author = Author::create([
             'name' => $request->name,
         ]);
-        return redirect()->route('authors.index')->with('message', 'Uspješno ste dodali novog autora.');
+        return redirect()->route('authors.index')->with('message', 'Uspješno ste dodali autora "'.$author->name .'"!' );
     }
 
     
@@ -67,12 +67,13 @@ class AuthorController extends Controller
         ]);
         $author->name = $validatedRequest["name"];
         $author->save();
-        return redirect()->route('authors.index')->with('message', 'Uspješno ste izmjenili autora.');
+        return redirect()->route('authors.index')->with('message', 'Uspješno ste izmijenili autora "'.$author->name .'"!' );
     }
 
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        $author = Author::destroy($id);
-        return redirect()->route("authors.index")->with('message', 'Uspješno ste izbrisali autora.');
+        $authorName = $author->name;
+        $author->delete();
+        return redirect()->route("authors.index")->with('message', 'Uspješno ste izbrisali autora "'.$authorName .'"!' );
     }
 }
