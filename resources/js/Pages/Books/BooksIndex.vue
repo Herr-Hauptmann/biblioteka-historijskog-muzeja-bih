@@ -32,7 +32,7 @@ let deleteInfo = reactive({
 
 function processDelete(bookTitle, bookId){
     deleteInfo.id = bookId;
-    deleteInfo.deleteMessage= "knjigu " + bookTitle;
+    deleteInfo.deleteMessage= 'knjigu "' + bookTitle + '"';
     console.log(bookTitle);
     deleteInfo.isOpen = true
 }

@@ -21,7 +21,7 @@ function setIsOpen(value) {
 
 function processDelete(authorName, authorId){
     deleteInfo.id = authorId;
-    deleteInfo.deleteMessage= "autora " + authorName;
+    deleteInfo.deleteMessage= 'autora "' + authorName + '"';
     setIsOpen(true);
 }
 
