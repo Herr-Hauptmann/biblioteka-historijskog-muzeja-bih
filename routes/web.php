@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 Route::get('/', [HomeController::class, 'index'])->name('home'); 
 Route::get('/about', [HomeController::class, 'about'])->name('about'); 
 Route::get('/books/list', [BookController::class, 'list'])->name('books.list');
+Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');

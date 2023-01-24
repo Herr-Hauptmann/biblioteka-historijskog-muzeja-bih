@@ -1,3 +1,28 @@
+<script setup>
+import { ref, computed, watch } from "vue"
+import {useForm } from "@inertiajs/inertia-vue3"
+const mobileMenuOpen = ref(false)
+
+const props = defineProps({
+  background_url : String
+})
+
+const background = computed(() => {
+  if (screen.width > 640) 
+    return "url(" + props.background_url + ")";
+  return "";
+})
+
+let form = useForm({
+  search: "",
+})
+
+const submit = () => {
+  form.get(route("books.search"));
+}
+
+</script>
+
 <template>
   <div class="flex-1">
     <div
@@ -28,7 +53,7 @@
                   Biblioteka Historijskog muzeja Bosne i Hercegovine
                 </h1>
                 <div class="mt-8 flex gap-x-4 sm:justify-center">
-                  <form class="flex items-center w-7/12 min-w-full">
+                  <form class="flex items-center w-7/12 min-w-full" @submit.prevent="submit">
                     <label for="simple-search" class="sr-only"
                       >Pretraži biblioteku...</label
                     >
@@ -59,6 +84,8 @@
                         </svg>
                       </div>
                       <input
+                        v-model="form.search"
+                        name="search"
                         type="text"
                         id="simple-search"
                         class="
@@ -126,24 +153,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: ["logo_url", "background_url"],
-  computed: {
-    background() {
-      if (screen.width > 640) return "url(" + this.background_url + ")";
-      return "";
-    },
-  },
-};
-</script>
-
-<script setup>
-import { ref } from "vue";
-const mobileMenuOpen = ref(false);
-</script>
-
 
 <style scoped>
 .background {

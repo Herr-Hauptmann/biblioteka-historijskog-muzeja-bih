@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Services;
-use Illuminate\Validation\Rules;
 
 use App\Http\Services\AuthorService;
+
 
 use App\Models\Author;
 use App\Models\Book;
@@ -32,8 +32,6 @@ class BookService{
                 $related->points++;
             $bothBooks = [$book, $related];
         }
-
-        
         usort($relatedBooks, fn($a, $b) => $a->points < $b->points);
     }
 
@@ -61,6 +59,17 @@ class BookService{
         return false;
     }
 
+    private function addPointIfContains($bookId, $bookArray){
+        foreach($bookArray as $book)
+        {
+            if ($book->id == $bookId){
+                $book->points++;
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public function getRelated($bookId){
         $book = Book::findOrFail($bookId);
         
@@ -107,6 +116,85 @@ class BookService{
             unset($book['created_at']);
             unset($book['updated_at']);
             unset($book['points']);
+        }
+        return $books;
+    }
+
+    public function advancedSearch($query)
+    {
+        $books = [];
+        
+        //Add by title
+        $byTitle = Book::query()->where('title', 'like', '%'.$query.'%')->get();
+        foreach($byTitle as $book)
+        {
+            $book["points"] = 0;
+            array_push($books, $book);
+        }
+        
+        //Add by author
+        $byAuthor = Author::query()->where('name', 'like', '%'.$query.'%')->get();
+        foreach($byAuthor as $author)
+        {
+            
+            $booksOfAuthor = $author->books;
+            foreach($booksOfAuthor as $book)
+            {
+
+                if (!$this->addPointIfContains($book->id, $books))
+                {
+                    $book['points'] = 0;
+                    array_push($books, $book);
+                }
+            }
+        }
+
+        //Add by tag
+        $byTag = Keyword::query()->where('title', 'like', '%'.$query.'%')->get();
+        foreach($byTag as $tag)
+        {
+            $booksWithTag = $tag->books;
+            foreach($booksWithTag as $book)
+            {
+                if (!$this->addPointIfContains($book->id, $books))
+                {
+                    $book['points'] = 0;
+                    array_push($books, $book);
+                }
+            }
+        }
+
+        $byPublisher = Book::query()->where('publisher', 'like', '%'.$query.'%')->get();
+        foreach($byPublisher as $book)
+        {
+            if (!$this->addPointIfContains($book->id, $books)){
+                $book['points'] = 0;
+                array_push($books, $book);
+            }
+        }
+
+        $byPlacePublished = Book::query()->where('location_published', 'like', '%'.$query.'%')->get();
+        foreach($byPlacePublished as $book)
+        {
+            if (!$this->addPointIfContains($book->id, $books)){
+                $book['points'] = 0;
+                array_push($books, $book);
+            }
+        }
+
+        usort($books, fn($a, $b) => $a->points < $b->points);
+        
+        $authorService = new AuthorService();
+        foreach($books as $book)
+        {
+            $book["author"] = $authorService->listAuthors($book->authors);
+            unset($book["authors"]);
+            unset($book["keywords"]);
+            unset($book["readableAuthors"]);
+            unset($book['location_published']);
+            unset($book['publisher']);
+            unset($book['signature']);
+            unset($book['number_of_units']);
         }
         return $books;
     }
