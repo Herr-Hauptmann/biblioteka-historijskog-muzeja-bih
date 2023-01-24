@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AuthorSeeder::class,
             KeywordSeeder::class,
+            //Very important for book seeder to be after keyword and author seeder
+            BookSeeder::class
         ]);
 
     }
