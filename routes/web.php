@@ -13,13 +13,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Vite;
 use Inertia\Inertia;
 
-
-
 //Admin panel
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('books', BookController::class)->except(['show']);
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
+    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
 //Public routes
@@ -30,10 +29,6 @@ Route::get('/books/search', [BookController::class, 'search'])->name('books.sear
 Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
