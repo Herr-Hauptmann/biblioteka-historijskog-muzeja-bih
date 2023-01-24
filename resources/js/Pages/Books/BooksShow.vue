@@ -16,7 +16,7 @@ console.log(props.related);
     <div class="container mx-auto px-7">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Informacije o {{book.title}}</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Informacije o naslovu "{{book.title}}"</h3>
             </div>
             <div class="border-t border-gray-200">
                 <dl>
@@ -34,7 +34,7 @@ console.log(props.related);
                                         <span class="ml-2 w-0 flex-1 truncate">{{author.name}}</span>
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
-                                        <Link href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Pregledaj ostala djela autora</Link>
+                                        <Link :href="route('authors.show', author.id)" class="font-medium text-indigo-600 hover:text-indigo-500">Pregledaj ostala djela autora</Link>
                                     </div>
                                 </li>
                             </ul>
@@ -68,10 +68,10 @@ console.log(props.related);
     <div class="container mx-auto px-7 my-4">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Ostali naslovi relevantni za {{book.title}}</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Ostali naslovi relevantni za naslov "{{book.title}}"</h3>
             </div>
-            <div class="border-t border-gray-200 py-3 flex justify-items-center">
-                <Card v-for="relevantBook in related" 
+            <div class="border-t border-gray-200 py-3 md:flex justify-items-center">
+                <Card class="my-3" v-for="relevantBook in related" 
                 :key="relevantBook.id" 
                 :title="relevantBook.title" 
                 :description="relevantBook.readableAuthors" 
