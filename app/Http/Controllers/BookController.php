@@ -86,6 +86,16 @@ class BookController extends Controller
         return redirect()->route("books.index")->with('message', 'Uspješno ste kreirali knjigu "'.$book->title .'"!');
     }
 
+    public function show($id){
+        return Inertia::render('Books/BooksShow',
+            [
+                'book' => Book::with('authors')
+                            ->with('keywords')
+                            ->findOrFail($id),
+            ]
+        );
+    }
+
     public function edit($id){
         return Inertia::render('Books/BooksEdit',[
             'book' => Book::findOrFail($id)

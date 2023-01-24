@@ -139,10 +139,10 @@ function changeHeight(value){
 </script>
 
 <template>
-    <Head title="Unos knjige" />
+    <Head title="Izmjena knjige" />
     <Content>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Unos knjige</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Izmjena knjige</h2>
         </template>
 
         <div class="pt-4 pb-12">

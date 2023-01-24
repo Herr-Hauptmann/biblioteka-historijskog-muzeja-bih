@@ -10,12 +10,12 @@ class BookFactory extends Factory
     {
         return [
             "title" => $this->faker->unique()->bs,
-            "year_published" => $this->faker->year($max = 'now'),
-            "inventory_number" => $this->faker->unique()->randomNumber,
             "signature" => $this->faker->unique()->ean8,
-            "number_of_units" => $this->faker->randomDigit,
+            "inventory_number" => $this->faker->unique()->randomNumber,
             "publisher" => $this->faker->company,
+            "year_published" => $this->faker->year($max = 'now'),
             "location_published" => $this->faker->city,
+            "number_of_units" => $this->faker->randomDigit,
         ];
     }
 }
