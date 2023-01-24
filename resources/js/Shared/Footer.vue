@@ -11,10 +11,10 @@ import {Link} from "@inertiajs/inertia-vue3"
             </Link>
             <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                 <li>
-                    <Link :href="route('home')" class="mr-4 hover:underline md:mr-6 ">About</Link>
+                    <Link :href="route('about')" class="mr-4 hover:underline md:mr-6 ">O biblioteci</Link>
                 </li>
                 <li>
-                    <Link :href="route('home')" class="mr-4 hover:underline md:mr-6">Privacy Policy</Link>
+                    <Link :href="route('books.list')" class="mr-4 hover:underline md:mr-6">Naslovi</Link>
                 </li>
                 <li>
                     <Link :href="route('home')" class="mr-4 hover:underline md:mr-6 ">Licensing</Link>
