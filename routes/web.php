@@ -14,14 +14,6 @@ use Illuminate\Support\Facades\Vite;
 use Inertia\Inertia;
 
 
-//Public routes
-Route::get('/', [HomeController::class, 'index'])->name('home'); 
-Route::get('/about', [HomeController::class, 'about'])->name('about'); 
-Route::get('/books/list', [BookController::class, 'list'])->name('books.list');
-Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
-Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
-Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
-
 
 //Admin panel
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
@@ -29,6 +21,16 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
 });
+
+
+//Public routes
+Route::get('/', [HomeController::class, 'index'])->name('home'); 
+Route::get('/about', [HomeController::class, 'about'])->name('about'); 
+Route::get('/books/list', [BookController::class, 'list'])->name('books.list');
+Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
+Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
+Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
