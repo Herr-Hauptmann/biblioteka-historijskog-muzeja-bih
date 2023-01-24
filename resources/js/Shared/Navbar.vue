@@ -15,7 +15,7 @@
         </div>
         <PopoverGroup as="nav" class="hidden space-x-10 md:flex">
 
-          <Link href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Naslovi</Link>
+          <Link :href="route('books.list')" class="text-base font-medium text-gray-500 hover:text-gray-900">Naslovi</Link>
           <Link :href="route('about')" class="text-base font-medium text-gray-500 hover:text-gray-900">O biblioteci</Link>
 
           <Popover class="relative" v-slot="{ open }">
@@ -193,7 +193,7 @@ const resources = [
   {
     name: 'Naslovi',
     description: 'Pretražite naslove koje posjeduje naša biblioteka',
-    href: '#',
+    href: route("books.list"),
     icon: BookOpenIcon,
   },
   {

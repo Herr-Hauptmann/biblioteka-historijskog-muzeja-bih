@@ -32,7 +32,26 @@ class BookController extends Controller
                     ]),
             'filters' => $request->only(['search']),
         ]);
+    }
 
+    public function list(Request $request, AuthorService $authorService){
+        return Inertia::render('Books/BooksList',[
+            'books' => Book::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('title', 'like', '%'.$search.'%');
+                })
+                ->with('authors')
+                ->paginate(20)
+                ->withQueryString()
+                ->through(fn($book)=>[
+                    'id' => $book->id,
+                    'title' => $book->title,
+                    'year_published' => $book->year_published,
+                    'author' => $authorService->listAuthors($book->authors),
+                    'inventory_number' => $book->inventory_number,
+                    ]),
+            'filters' => $request->only(['search']),
+        ]);
     }
 
     public function create(){
