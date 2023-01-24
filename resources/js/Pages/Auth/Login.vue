@@ -51,6 +51,7 @@ const submit = () => {
           mt-6
           px-6
           py-4
+          mb-12
           bg-white
           shadow-md
           overflow-hidden

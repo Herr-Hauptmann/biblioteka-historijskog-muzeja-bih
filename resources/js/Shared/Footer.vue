@@ -3,7 +3,7 @@ import {Link} from "@inertiajs/inertia-vue3"
 </script>
 
 <template>
-    <footer class="p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900">
+    <footer class="mt-5 p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900">
         <div class="sm:flex sm:items-center sm:justify-between">
             <Link :href="route('home')" class="flex items-center mb-4 sm:mb-0">
                 <img :src="$page.props.images.logoSmall" class="h-8 mr-3" alt="Historijski muzej BiH" />

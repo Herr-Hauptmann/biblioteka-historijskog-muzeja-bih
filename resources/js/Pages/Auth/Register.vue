@@ -33,6 +33,7 @@ const submit = () => {
           sm:justify-center
           items-center
           py-6
+          mb-12
           sm:pt-0
           bg-gray-100
         "
