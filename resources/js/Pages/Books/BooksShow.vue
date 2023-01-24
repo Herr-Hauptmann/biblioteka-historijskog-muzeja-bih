@@ -2,11 +2,14 @@
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import { UserIcon } from '@heroicons/vue/20/solid'
 import {Link} from "@inertiajs/inertia-vue3"
-
+import Card from "@/Components/Card.vue"
 defineOptions({ layout: GuestLayout })
 const props = defineProps({
     book: Object,
+    related: Object
 })
+
+console.log(props.related);
 </script>
 
 <template>
@@ -61,6 +64,22 @@ const props = defineProps({
             </div>
         </div>
     </div>
+
+    <div class="container mx-auto px-7 my-4">
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Ostali naslovi relevantni za {{book.title}}</h3>
+            </div>
+            <div class="border-t border-gray-200 py-3 flex justify-items-center">
+                <Card v-for="relevantBook in related" 
+                :key="relevantBook.id" 
+                :title="relevantBook.title" 
+                :description="relevantBook.readableAuthors" 
+                :link="route('books.show', relevantBook.id)"/>
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 <style scoped>

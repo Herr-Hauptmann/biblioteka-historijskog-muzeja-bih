@@ -92,11 +92,11 @@
           <div class="px-5 pt-5 pb-6">
             <div class="flex items-center justify-between">
               <div>
-                <img class="h-8 w-auto" :src="logo_url" alt="Your Company" />
+                <img class="h-8 w-auto" :src="$page.props.logo_url" alt="Biblioteka Historijskog muzeja BiH" />
               </div>
               <div class="-mr-2">
                 <PopoverButton class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                  <span class="sr-only">Close menu</span>
+                  <span class="sr-only">Zatvori meni</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </PopoverButton>
               </div>
@@ -149,7 +149,6 @@ import {
   PlayIcon,
   LightBulbIcon,
   Squares2X2Icon,
-  CheckCircleIcon,
   UserIcon,
   PencilSquareIcon
 } from '@heroicons/vue/24/outline'
@@ -191,12 +190,6 @@ const callsToAction = [
 ]
 const resources = [
   {
-    name: 'Naslovi',
-    description: 'Pretražite naslove koje posjeduje naša biblioteka',
-    href: route("books.list"),
-    icon: BookOpenIcon,
-  },
-  {
     name: 'Pridruži se',
     description: 'Postanite član naše biblioteke',
     href: '#',
@@ -218,7 +211,7 @@ const resources = [
     name: 'Doniraj knjigu',
     description: 'Doprinesite našoj biblioteci',
     href: '#',
-    icon: CheckCircleIcon,
+    icon: BookOpenIcon,
   },
 ]
 const recentPosts = [

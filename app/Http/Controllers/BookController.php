@@ -11,6 +11,7 @@ use App\Models\Keyword;
 
 use App\Http\Services\AuthorService;
 use App\Http\Services\KeywordService;
+use App\Http\Services\BookService;
 
 class BookController extends Controller
 {
@@ -105,12 +106,13 @@ class BookController extends Controller
         return redirect()->route("books.index")->with('message', 'Uspješno ste kreirali knjigu "'.$book->title .'"!');
     }
 
-    public function show($id){
+    public function show($id, BookService $bookService){
         return Inertia::render('Books/BooksShow',
             [
                 'book' => Book::with('authors')
                             ->with('keywords')
                             ->findOrFail($id),
+                'related' => $bookService->getRelated($id),
             ]
         );
     }
