@@ -4,7 +4,7 @@ import { computed } from "vue";
 import Pagination from "@/Shared/Pagination.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue";
-import Content from "@/Components/Content.vue"
+import BackButton from "@/Components/BackButton.vue"
 defineOptions({ layout: GuestLayout })
 
 let props = defineProps({
@@ -32,7 +32,11 @@ let paginationData = computed(() => {
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                 <!-- Search bar -->
-                <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
+                <div class="py-5 sm:px-6 flex justify-between items-center">
+                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
+                    <BackButton />
+                </div>
+                
                 <!-- Table -->
                 <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

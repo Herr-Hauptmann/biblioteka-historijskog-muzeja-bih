@@ -3,20 +3,27 @@ import GuestLayout from "@/Layouts/GuestLayout.vue"
 import { UserIcon } from '@heroicons/vue/20/solid'
 import {Link} from "@inertiajs/inertia-vue3"
 import Card from "@/Components/Card.vue"
+import BackButton from "@/Components/BackButton.vue"
 defineOptions({ layout: GuestLayout })
 const props = defineProps({
     book: Object,
     related: Object
 })
-
+const links = [
+    {
+        name: "Naslovi",
+        url: route('books.index')
+    },
+]
 console.log(props.related);
 </script>
 
 <template>
     <div class="container mx-auto px-7">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Informacije o naslovu "{{book.title}}"</h3>
+            <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+                <h3 class="text-2xl  font-medium leading-6 text-gray-900 ">Informacije o naslovu "{{book.title}}"</h3>
+                <BackButton />
             </div>
             <div class="border-t border-gray-200">
                 <dl>
