@@ -14,35 +14,35 @@ defineOptions({ layout: AuthenticatedLayout })
 
 //PROPS
 let props = defineProps({
-    book: Array,
+    book: Object,
     authors: Array,
     keywords: Array
 })
 
 //Form submitting
 let form = useForm({
-  title: props.book[0].title,
-  year_published: props.book[0].year_published,
-  inventory_number: props.book[0].inventory_number,
-  signature: props.book[0].signature,
-  number_of_units: props.book[0].number_of_units,
-  publisher: props.book[0].publisher,
-  location_published: props.book[0].location_published,
-  authors: props.book[0].authors,
+  title: props.book.title,
+  year_published: props.book.year_published,
+  inventory_number: props.book.inventory_number,
+  signature: props.book.signature,
+  number_of_units: props.book.number_of_units,
+  publisher: props.book.publisher,
+  location_published: props.book.location_published,
+  authors: props.book.authors,
   newAuthors: [],
-  keywords: props.book[0].keywords,
+  keywords: props.book.keywords,
   newKeywords: [],
 })
 
 const submit = () => {
-  form.patch(route("books.update", props.book[0].id))
+  form.patch(route("books.update", props.book.id))
 }
 
-let authorList = ref(props.book[0].authors.map(x => x.name))
-let selectedAuthor = ref(props.authors[0])
+let authorList = ref(props.book.authors.map(x => x.name))
+let selectedAuthor = ref(props.authors)
 
-let keywordList = ref(props.book[0].keywords.map(x => x.title))
-let selectedKeyword = ref(props.keywords[0])
+let keywordList = ref(props.book.keywords.map(x => x.title))
+let selectedKeyword = ref(props.keywords)
 
 const changeAuthorSelection = (newselectedAuthor) =>{
     selectedAuthor.value = newselectedAuthor
