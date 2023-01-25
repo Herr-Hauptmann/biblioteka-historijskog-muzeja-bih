@@ -60,14 +60,16 @@ class BookController extends Controller
                     'inventory_number' => $book->inventory_number,
                     ]),
             'filters' => $request->only(['search']),
+            'path' => 'books.search',
         ]);
     }
 
     public function search(Request $request, BookService $bookService){
         
-        return Inertia::render('Books/BooksSearch',[
+        return Inertia::render('Books/BooksList',[
             'books' => $this->paginate($bookService->advancedSearch($request->search), $this->perPage, $request->page, $request->search),
             'filters' => $request->only(['search']),
+            'path' => 'books.search'
         ]);
     }
 

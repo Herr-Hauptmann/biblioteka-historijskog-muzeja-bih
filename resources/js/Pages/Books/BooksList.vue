@@ -9,12 +9,12 @@ defineOptions({ layout: GuestLayout })
 
 let props = defineProps({
     filters: Object,
-    books: Object
+    books: Object,
+    path: String
 });
 
 //Search
 const placeholder = "Pretraži naslove"
-const path = "books.list"
 
 let paginationData = computed(() => {
     let pag = JSON.parse(JSON.stringify(props.books));
