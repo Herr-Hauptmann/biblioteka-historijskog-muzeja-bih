@@ -20,6 +20,7 @@ class AuthorController extends Controller
                 ->when($request->input('search'), function ($query, $search){
                     $query->where('name', 'like', '%'.$search.'%');
                 })
+                ->orderBy('name', 'asc')
                 ->paginate(20)
                 ->withQueryString()
                 ->through(fn($author)=>[

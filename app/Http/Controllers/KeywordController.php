@@ -17,6 +17,7 @@ class KeywordController extends Controller
                 ->when($request->input('search'), function ($query, $search){
                     $query->where('title', 'like', '%'.$search.'%');
                 })
+                ->orderBy('title', 'asc')
                 ->paginate(20)
                 ->withQueryString()
                 ->through(fn($keyword)=>[

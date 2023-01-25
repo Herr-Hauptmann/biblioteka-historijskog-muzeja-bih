@@ -28,6 +28,7 @@ class BookController extends Controller
                     $query->where('title', 'like', '%'.$search.'%');
                 })
                 ->with('authors')
+                ->orderBy('title', 'asc')
                 ->paginate($this->perPage)
                 ->withQueryString()
                 ->through(fn($book)=>[
@@ -48,6 +49,7 @@ class BookController extends Controller
                     $query->where('title', 'like', '%'.$search.'%');
                 })
                 ->with('authors')
+                ->orderBy('title', 'asc')
                 ->paginate(20)
                 ->withQueryString()
                 ->through(fn($book)=>[
