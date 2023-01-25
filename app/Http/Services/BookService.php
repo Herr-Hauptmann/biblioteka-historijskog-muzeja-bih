@@ -190,9 +190,7 @@ class BookService{
             $book["author"] = $authorService->listAuthors($book->authors);
             unset($book["authors"]);
             unset($book["keywords"]);
-            unset($book["readableAuthors"]);
-            unset($book['location_published']);
-            unset($book['publisher']);
+            unset($book['inventory_number']);
             unset($book['signature']);
             unset($book['number_of_units']);
         }
