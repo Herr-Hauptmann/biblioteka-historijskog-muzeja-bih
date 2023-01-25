@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('signature')->unique();
             $table->string('title');
-            $table->string('publisher');
-            $table->string('location_published');
-            $table->integer('year_published');
+            $table->string('publisher')->nullable();
+            $table->string('location_published')->nullable();
+            $table->integer('year_published')->nullable();
             $table->integer('inventory_number')->unique();
             $table->integer('number_of_units');
             $table->timestamps();

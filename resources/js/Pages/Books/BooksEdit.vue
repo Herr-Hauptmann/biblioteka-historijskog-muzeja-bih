@@ -154,40 +154,40 @@ function changeHeight(value){
                             <div>
                                 <div class="mb-3">
                                     <FormInputLabel what="signature" msg="Signatura"/>
-                                    <input type="text" name="signature" id="signature" v-model="form.signature"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <input type="text" name="signature" id="signature" v-model="form.signature"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                     <InputError class="mt-2" :message="form.errors.signature" />
                                 </div>
                                 <div class="mb-3">
                                     <FormInputLabel what="title" msg="Naziv djela"/>
-                                    <input type="text" name="title" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <input type="text" name="title" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                     <InputError class="mt-2" :message="form.errors.title" />
                                 </div>
                                 <div class="mb-3">
                                     <FormInputLabel what="publisher" msg="Izdavač"/>
-                                    <input type="text" name="publisher" id="publisher" v-model="form.publisher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                    <input type="text" name="publisher" id="publisher" v-model="form.publisher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="">
                                     <InputError class="mt-2" :message="form.errors.publisher" :disabled="form.processing"/>
                                 </div>
                                 <div class="mb-3 grid gap-2 md:grid-cols-2">
                                     <div>
                                         <FormInputLabel what="location_published" msg="Mjesto izdavanja"/>
-                                        <input type="text" name="location_published" id="location_published" v-model="form.location_published" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                        <input type="text" name="location_published" id="location_published" v-model="form.location_published" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="">
                                         <InputError class="mt-2" :message="form.errors.location_published" :disabled="form.processing"/>
                                     </div>
                                     <div>
                                         <FormInputLabel what="year_published" msg="Godina izdavanja"/>
-                                        <input type="number" name="year_published" id="year_published" v-model="form.year_published" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                        <input type="number" name="year_published" id="year_published" v-model="form.year_published" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="">
                                         <InputError class="mt-2" :message="form.errors.year_published" :disabled="form.processing"/>
                                     </div>
                                 </div>
                                 <div class="mb-3 grid gap-2 md:grid-cols-2">
                                     <div>
                                         <FormInputLabel what="inventory_number" msg="Inventarni broj"/>
-                                        <input type="number" name="inventory_number" id="inventory_number" v-model="form.inventory_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                        <input type="number" name="inventory_number" id="inventory_number" v-model="form.inventory_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required>
                                         <InputError class="mt-2" :message="form.errors.inventory_number" :disabled="form.processing"/>
                                     </div>
                                     <div>
                                         <FormInputLabel what="number_of_units" msg="Broj jedinica"/>
-                                        <input type="number" name="number_of_units" id="number_of_units" v-model="form.number_of_units" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                                        <input type="number" name="number_of_units" id="number_of_units" v-model="form.number_of_units" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required>
                                         <InputError class="mt-2" :message="form.errors.number_of_units" :disabled="form.processing"/>
                                     </div>
                                 </div>
@@ -195,13 +195,13 @@ function changeHeight(value){
                             <!-- Desna kolona forme -->
                             <div ref="dynamicColumn">
                                 <!-- Spisak autora -->
-                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                                <table class="w-full text-sm text-left text-gray-500 mb-4">
                                     <tbody>
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                             Autori djela
                                         </thead>
-                                        <tr v-for="author in authorList" :key="author" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:bg-gray-200">
+                                        <tr v-for="author in authorList" :key="author" class="bg-white border-b">
+                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap hover:bg-gray-200">
                                                 <div class="flex">
                                                     <span>
                                                         <p class="inline">{{author}}</p>
@@ -221,7 +221,7 @@ function changeHeight(value){
                                         <SelectWithSearch what="autora" :content="authors" @item-selected="changeAuthorSelection"/>
                                         <div v-show="form.errors.authors || form.errors.newAuthors">
                                             <p class="text-sm text-red-600 mt-2">
-                                                Morate unijeti minimalno jednog autora!
+                                                {{ form.errors.authors }}
                                             </p>
                                         </div>
                                     </div>
@@ -230,13 +230,13 @@ function changeHeight(value){
                                     </div>
                                 </div>
                                 <!-- Spisak tagova -->
-                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                                <table class="w-full text-sm text-left text-gray-500 mb-4">
                                     <tbody>
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                             Ključne riječi
                                         </thead>
-                                        <tr v-for="keyword in keywordList" :key="keyword" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:bg-gray-200">
+                                        <tr v-for="keyword in keywordList" :key="keyword" class="bg-white border-b">
+                                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowraphover:bg-gray-200">
                                                 <div class="flex">
                                                     <span>
                                                         <p class="inline">{{keyword}}</p>
