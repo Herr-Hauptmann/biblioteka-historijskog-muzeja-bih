@@ -33,7 +33,7 @@ class BookController extends Controller
                 ->through(fn($book)=>[
                     'id' => $book->id,
                     'title' => $book->title,
-                    'year_published' => $book->year_published,
+                    'signature' => $book->signature,
                     'author' => $authorService->listAuthors($book->authors),
                     'inventory_number' => $book->inventory_number,
                     ]),
@@ -133,10 +133,9 @@ class BookController extends Controller
 
     public function edit($id){
         return Inertia::render('Books/BooksEdit',[
-            'book' => Book::findOrFail($id)
-                ->with('authors')
+            'book' => Book::with('authors')
                 ->with('keywords')
-                ->get(),
+                ->findOrFail($id),
             'authors' => Author::orderBy('name')->get()->map(fn($author)=>[
                 'id' => $author->id,
                 'name' => $author->name,

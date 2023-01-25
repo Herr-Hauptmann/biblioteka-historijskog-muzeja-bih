@@ -85,7 +85,7 @@ defineOptions({ layout: AuthenticatedLayout })
                                 </th>
                                 <th scope="col" class="py-3 px-6 hidden md:table-cell">
                                     <div class="flex items-center">
-                                        Godina
+                                        Signatura
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="ml-1 w-3 h-3"
                                                 aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                                                 <path
@@ -119,7 +119,7 @@ defineOptions({ layout: AuthenticatedLayout })
                                     {{ book.author }}
                                 </td>
                                 <td class="py-4 px-6 hidden md:table-cell">
-                                    {{ book.year_published }}
+                                    {{ book.signature }}
                                 </td>
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ book.inventory_number }}
