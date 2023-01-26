@@ -8,8 +8,12 @@ use Inertia\Inertia;
 
 use App\Models\Keyword;
 
+use App\Http\Services\BookService;
+use App\Http\Services\AuthorService;
+
 class KeywordController extends Controller
 {
+    private $perPage = 20;
     public function index(Request $request)
     {
         return Inertia::render('Keywords/KeywordsIndex',[
@@ -71,5 +75,32 @@ class KeywordController extends Controller
         $keywordTitle = $keyword->title;
         $keyword->delete();
         return redirect()->route("keywords.index")->with('message', 'Uspješno ste izbrisali ključnu riječ "'.$keywordTitle .'"!' );
+    }
+
+    public function booksWithKeyword($id, Request $request, AuthorService $authorService, BookService $bookService)
+    {
+        $path = '/keywords/'.$id.'/books/';
+        $keyword = Keyword::with('books.authors')->findOrFail($id);
+        $books = $bookService->paginate(
+            $bookService->sortByTitle($keyword->books), 
+            $this->perPage, 
+            $request->page, 
+            $path
+        );
+        foreach($books as $book)
+        {
+            $book['author'] = $authorService->listAuthors($book->authors);
+            unset($book['authors']);
+            unset($book["keywords"]);
+            unset($book['publisher']);
+            unset($book['location_published']);
+            unset($book['number_of_units']);
+            unset($book['year_published']);
+        }
+        return Inertia::render('Books/BooksIndex',
+        [
+            'books' => $books,
+            'what' => 's ključnom riječi '.$keyword->title,
+        ]);
     }
 }

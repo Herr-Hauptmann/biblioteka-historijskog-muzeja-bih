@@ -12,8 +12,6 @@ use Inertia\Inertia;
 use App\Http\Services\BookService;
 use App\Http\Services\AuthorService;
 
-
-
 class AuthorController extends Controller
 {
     private $perPage = 20;
@@ -56,8 +54,9 @@ class AuthorController extends Controller
     //Returns guest view of books from author
     public function show($id, Request $request, BookService $bookService, AuthorService $authorService)
     {
+        $path = '/authors/'.$id;
         $author = Author::with('books.authors')->findOrFail($id);
-        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $request->search);
+        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $path);
         foreach($books as $book)
         {
             $book['author'] = $authorService->listAuthors($book->authors);
@@ -102,9 +101,9 @@ class AuthorController extends Controller
     //Returns admin view of books from author
     public function booksOfAuthor(Request $request, $id, BookService $bookService, AuthorService $authorService)
     {
-        dd($id);
+        $path = '/authors/'.$id.'/books';
         $author = Author::with('books.authors')->findOrFail($id);
-        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $request->search);
+        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $path);
         foreach($books as $book)
         {
             $book['author'] = $authorService->listAuthors($book->authors);
@@ -119,7 +118,6 @@ class AuthorController extends Controller
         [
             'books' => $books,
             'what' => 'autora '.$author->name,
-            
         ]);
     }
 

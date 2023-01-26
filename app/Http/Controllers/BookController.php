@@ -62,9 +62,9 @@ class BookController extends Controller
     }
 
     public function search(Request $request, BookService $bookService){
-        
+        $path = '/books/search?search='.$request->search;
         return Inertia::render('Books/BooksList',[
-            'books' => $bookService->paginate($bookService->advancedSearch($request->search), $this->perPage, $request->page, $request->search),
+            'books' => $bookService->paginate($bookService->advancedSearch($request->search), $this->perPage, $request->page, $path),
             'filters' => $request->only(['search']),
             'path' => 'books.search'
         ]);
@@ -124,8 +124,10 @@ class BookController extends Controller
     public function show($id, BookService $bookService){
         return Inertia::render('Books/BooksShow',
             [
-                'book' => Book::with('authors')
-                            ->with('keywords')
+                'book' => Book::without('keywords.books')
+                ->without('authors.books')
+                ->with('authors')
+                ->with('keywords')
                             ->findOrFail($id),
                 'related' => $bookService->getRelated($id),
             ]

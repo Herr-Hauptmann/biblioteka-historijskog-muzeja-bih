@@ -200,14 +200,14 @@ class BookService{
         return $books;
     }
 
-    public function paginate($items, $perPage = 5, $page = null, $query, $options = [])
+    public function paginate($items, $perPage = 5, $page = null, $path, $options = [])
     {
         if($page = null)
             $page = 1;
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
         $paginator =  new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-        $paginator->withPath('/books/search?search='.$query);
+        $paginator->withPath($path);
         return $paginator;
     }
 

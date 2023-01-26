@@ -14,7 +14,7 @@ class BookSeeder extends Seeder
     public function run()
     {
         $books = Book::factory()
-            ->count(50)
+            ->count(5000)
             ->create();
         $authors = Author::all();
         $keywords = Keyword::all();
