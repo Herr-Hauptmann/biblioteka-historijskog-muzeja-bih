@@ -5,10 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Keyword;
@@ -68,7 +64,7 @@ class BookController extends Controller
     public function search(Request $request, BookService $bookService){
         
         return Inertia::render('Books/BooksList',[
-            'books' => $this->paginate($bookService->advancedSearch($request->search), $this->perPage, $request->page, $request->search),
+            'books' => $bookService->paginate($bookService->advancedSearch($request->search), $this->perPage, $request->page, $request->search),
             'filters' => $request->only(['search']),
             'path' => 'books.search'
         ]);
@@ -195,16 +191,5 @@ class BookController extends Controller
         $bookName = $book->title;
         $book->delete();
         return redirect()->route("books.index")->with('message', 'Uspješno ste obrisali knjigu "'.$bookName .'"!');
-    }
-
-    public function paginate($items, $perPage = 5, $page = null, $query, $options = [])
-    {
-        if($page = null)
-            $page = 1;
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        $paginator =  new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-        $paginator->withPath('/books/search?search='.$query);
-        return $paginator;
     }
 }

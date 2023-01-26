@@ -4,6 +4,9 @@ namespace App\Http\Services;
 
 use App\Http\Services\AuthorService;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\Author;
 use App\Models\Book;
@@ -195,5 +198,24 @@ class BookService{
             unset($book['number_of_units']);
         }
         return $books;
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $query, $options = [])
+    {
+        if($page = null)
+            $page = 1;
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        $paginator =  new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        $paginator->withPath('/books/search?search='.$query);
+        return $paginator;
+    }
+
+    public function sortByTitle($books){
+        $sorted = $books->sortBy(function($book)
+        {
+            return $book->title;
+        });
+        return $sorted;
     }
 }

@@ -99,7 +99,9 @@ defineOptions({ layout: AuthenticatedLayout })
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap dark:text-white">
-                                    {{ author.name }}
+                                    <Link :href="route('authors.books', author.id)">
+                                        {{ author.name }}
+                                    </Link>
                                 </th>
                                 <td class="py-4 px-6 text-right">
                                     <Link :href="route('authors.edit', author.id)"

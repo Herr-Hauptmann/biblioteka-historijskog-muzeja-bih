@@ -9,7 +9,8 @@ import Content from "@/Components/Content.vue"
 
 let props = defineProps({
     filters: Object,
-    books: Object
+    books: Object,
+    what: String
 });
 
 //Search
@@ -47,7 +48,10 @@ defineOptions({ layout: AuthenticatedLayout })
         <!-- Layout header -->
         <template v-slot:header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight my-auto">
+                <h2 v-if="what" class="font-semibold text-xl text-gray-800 leading-tight my-auto">
+                    Knjige {{ what }}
+                </h2>
+                <h2 v-else class="font-semibold text-xl text-gray-800 leading-tight my-auto">
                     Knjige
                 </h2>
                 <Link :href="route('books.create')">
@@ -65,7 +69,7 @@ defineOptions({ layout: AuthenticatedLayout })
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                     <!-- Search bar -->
-                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path"/>
+                    <SearchBar v-if="!what" :placeholder="placeholder" :filters="filters" :path="path"/>
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -113,7 +117,9 @@ defineOptions({ layout: AuthenticatedLayout })
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap dark:text-white">
-                                    {{ book.title }}
+                                    <Link :href="route('books.show', book.id)">
+                                        {{ book.title }}
+                                    </Link>
                                 </th>
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ book.author }}

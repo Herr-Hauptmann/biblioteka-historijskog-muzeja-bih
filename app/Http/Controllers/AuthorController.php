@@ -9,10 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
+use App\Http\Services\BookService;
+use App\Http\Services\AuthorService;
+
 
 
 class AuthorController extends Controller
 {
+    private $perPage = 20;
+
     public function index(Request $request)
     {
         return Inertia::render('Authors/AuthorsIndex',[
@@ -21,13 +26,14 @@ class AuthorController extends Controller
                     $query->where('name', 'like', '%'.$search.'%');
                 })
                 ->orderBy('name', 'asc')
-                ->paginate(20)
+                ->paginate($this->perPage)
                 ->withQueryString()
                 ->through(fn($author)=>[
                     'id' => $author->id,
                     'name' => $author->name,
                     ]),
             'filters' => $request->only(['search']),
+            'path' => 'authors.index',
         ]);
     }
 
@@ -47,7 +53,7 @@ class AuthorController extends Controller
         return redirect()->route('authors.index')->with('message', 'Uspješno ste dodali autora "'.$author->name .'"!' );
     }
 
-    
+    //Returns guest view of books from author
     public function show(Author $author)
     {
         //
@@ -77,4 +83,24 @@ class AuthorController extends Controller
         $author->delete();
         return redirect()->route("authors.index")->with('message', 'Uspješno ste izbrisali autora "'.$authorName .'"!' );
     }
+
+    //Returns admin view of books from author
+    public function booksOfAuthor(Request $request, $id, BookService $bookService, AuthorService $authorService)
+    {
+        $author = Author::with('books.authors')->findOrFail($id);
+        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $request->search);
+        foreach($books as $book)
+        {
+            $book['author'] = $authorService->listAuthors($book->authors);
+            unset($book['authors']);
+        }
+        return Inertia::render('Books/BooksIndex',
+        [
+            'books' => $books,
+            'path' => 'author.books',
+            'filters' => $request->only(['search']),
+            'what' => 'autora '.$author->name,
+        ]);
+    }
+
 }

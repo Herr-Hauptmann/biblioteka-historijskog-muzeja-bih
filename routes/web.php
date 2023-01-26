@@ -28,6 +28,7 @@ Route::get('/books/list', [BookController::class, 'list'])->name('books.list');
 Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
+Route::get('/authors/{id}/books', [AuthorController::class, 'booksOfAuthor'])->name('authors.books');
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 
 Route::middleware('auth')->group(function () {
