@@ -10,7 +10,8 @@ defineOptions({ layout: GuestLayout })
 let props = defineProps({
     filters: Object,
     books: Object,
-    path: String
+    path: String,
+    what: String
 });
 
 //Search
@@ -33,7 +34,7 @@ let paginationData = computed(() => {
             <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                 <!-- Search bar -->
                 <div class="py-5 sm:px-6 flex justify-between items-center">
-                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
+                    <SearchBar v-if="!what" :placeholder="placeholder" :filters="filters" :path="path" />
                     <BackButton />
                 </div>
                 
@@ -97,7 +98,7 @@ let paginationData = computed(() => {
                                 </Link>
                             </th>
                             <td class="py-4 px-6 hidden md:table-cell">
-                                {{ book.author }}
+                                    {{ book.author }}
                             </td>
                             <td class="py-4 px-6 hidden md:table-cell">
                                 {{ book.publisher }}

@@ -54,9 +54,24 @@ class AuthorController extends Controller
     }
 
     //Returns guest view of books from author
-    public function show(Author $author)
+    public function show($id, Request $request, BookService $bookService, AuthorService $authorService)
     {
-        //
+        $author = Author::with('books.authors')->findOrFail($id);
+        $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $request->search);
+        foreach($books as $book)
+        {
+            $book['author'] = $authorService->listAuthors($book->authors);
+            unset($book['authors']);
+            unset($book["keywords"]);
+            unset($book['inventory_number']);
+            unset($book['signature']);
+            unset($book['number_of_units']);
+        }
+        return Inertia::render('Books/BooksList',
+        [
+            'books' => $books,
+            'what' => 'autora '.$author->name,
+        ]);
     }
 
     public function edit(Author $author)
@@ -87,19 +102,24 @@ class AuthorController extends Controller
     //Returns admin view of books from author
     public function booksOfAuthor(Request $request, $id, BookService $bookService, AuthorService $authorService)
     {
+        dd($id);
         $author = Author::with('books.authors')->findOrFail($id);
         $books = $bookService->paginate($bookService->sortByTitle($author->books), $this->perPage, $request->page, $request->search);
         foreach($books as $book)
         {
             $book['author'] = $authorService->listAuthors($book->authors);
             unset($book['authors']);
+            unset($book["keywords"]);
+            unset($book['publisher']);
+            unset($book['location_published']);
+            unset($book['number_of_units']);
+            unset($book['year_published']);
         }
         return Inertia::render('Books/BooksIndex',
         [
             'books' => $books,
-            'path' => 'author.books',
-            'filters' => $request->only(['search']),
             'what' => 'autora '.$author->name,
+            
         ]);
     }
 
