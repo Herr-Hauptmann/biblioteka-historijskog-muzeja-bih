@@ -100,7 +100,7 @@ class KeywordController extends Controller
         return Inertia::render('Books/BooksIndex',
         [
             'books' => $books,
-            'what' => 's ključnom riječi '.$keyword->title,
+            'what' => 's ključnom riječi "'.$keyword->title.'"',
         ]);
     }
 }

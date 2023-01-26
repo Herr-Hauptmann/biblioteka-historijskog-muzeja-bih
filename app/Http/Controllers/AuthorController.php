@@ -117,7 +117,7 @@ class AuthorController extends Controller
         return Inertia::render('Books/BooksIndex',
         [
             'books' => $books,
-            'what' => 'autora '.$author->name,
+            'what' => 'autora "'.$author->name.'"',
         ]);
     }
 
