@@ -118,12 +118,10 @@ class BookService{
         foreach($relatedBooks as $related){
             if ($related->title != $book->title){
                 $found = Book::with('authors')->findOrFail($related->book_id);
-                $found["readableAuthors"] = $authorService->listAuthors($found->authors);
-                unset($found["authors"]);
                 array_push($relatedArray, $found);
             }
         }
-        return $relatedArray;
+        return $this->makeReadable($relatedArray);
     }
 
     private function makeReadable($books)
