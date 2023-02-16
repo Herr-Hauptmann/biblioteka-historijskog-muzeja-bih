@@ -11,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Keyword;
+use Illuminate\Support\Facades\DB;
 
 class BookService{
     //Function that scores how similar the two books are
@@ -73,33 +74,56 @@ class BookService{
         return false;
     }
     
-    public function getRelated($bookId){
-        $book = Book::findOrFail($bookId);
+    public function getRelated(Book $book){  
+        $authorService = new AuthorService();      
+        $relatedBooks = DB::select(DB::raw("
+        WITH keywords AS (
+            SELECT k.id, k.title 
+            FROM 
+            biblioteka.keywords k
+            INNER JOIN biblioteka.books_keywords bk ON bk.keyword_id = k.id 
+            WHERE bk.book_id = $book->id
+         ),
+         authors AS (
+            SELECT a.id, a.name
+            FROM biblioteka.authors a
+            INNER JOIN biblioteka.books_authors ba ON ba.author_id = a.id
+            WHERE ba.book_id = $book->id
+         ),
+         other_books_keywords AS (
+            SELECT b.id AS book_id, b.title, Count(b.id) AS numberOfAppearances
+            FROM keywords k
+            INNER JOIN biblioteka.books_keywords bk ON bk.keyword_id = k.id 
+            INNER JOIN biblioteka.books b ON b.id = bk.book_id 
+            GROUP BY b.id, b.title
+          ),
         
-        //Books from same authors
-        $authors = $book->authors()->get();
-        $relatedBooks = [];
-        foreach($authors as $author)
-        {
-            $authorBooks = $author->books()->get();
-            foreach($authorBooks as $bookFromAuthor)
-                if ($bookFromAuthor['id'] != $bookId && !$this->containsBook($bookFromAuthor['id'], $relatedBooks))
-                    array_push($relatedBooks, $bookFromAuthor);
+          other_books_authors AS (
+            SELECT b.id AS book_id, b.title, COUNT(b.id) AS numberOfAppearances
+            FROM authors a
+            INNER JOIN biblioteka.books_authors ba ON ba.author_id = a.id
+            INNER JOIN biblioteka.books b ON b.id = ba.book_id
+            GROUP BY b.id, b.title
+          )
+        
+          SELECT *
+          FROM 
+          other_books_authors ba
+          INNER JOIN other_books_keywords bk ON ba.book_id = bk.book_id 
+          ORDER BY (ba.numberOfAppearances + bk.numberOfAppearances) DESC
+          LIMIT 5;
+        "));
+        
+        $relatedArray =[];
+        foreach($relatedBooks as $related){
+            if ($related->title != $book->title){
+                $found = Book::with('authors')->findOrFail($related->book_id);
+                $found["readableAuthors"] = $authorService->listAuthors($found->authors);
+                unset($found["authors"]);
+                array_push($relatedArray, $found);
+            }
         }
-
-        //Books with same keywords
-        $keywords = $book->keywords()->get();
-        foreach($keywords as $keyword)
-        {
-            $keywordBooks = $keyword->books()->get();
-            foreach($keywordBooks as $bookWithKeyword)
-                if ($bookWithKeyword['id'] != $bookId && !$this->containsBook($bookWithKeyword['id'], $relatedBooks))
-                    array_push($relatedBooks, $bookWithKeyword);
-        }
-
-        $this->score($book, $relatedBooks);
-        $relatedBooks = array_slice($relatedBooks, 0, 4);
-        return $this->makeReadable($relatedBooks);
+        return $relatedArray;
     }
 
     private function makeReadable($books)

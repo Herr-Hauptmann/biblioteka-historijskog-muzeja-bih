@@ -122,14 +122,14 @@ class BookController extends Controller
     }
 
     public function show($id, BookService $bookService){
+        $book = Book::with('keywords.books')
+        ->with('authors.books')
+        ->findOrFail($id);
+        $related = $bookService->getRelated($book);
         return Inertia::render('Books/BooksShow',
             [
-                'book' => Book::without('keywords.books')
-                ->without('authors.books')
-                ->with('authors')
-                ->with('keywords')
-                            ->findOrFail($id),
-                'related' => $bookService->getRelated($id),
+                'book' => $book,
+                'related' => $related,
             ]
         );
     }
@@ -193,5 +193,9 @@ class BookController extends Controller
         $bookName = $book->title;
         $book->delete();
         return redirect()->route("books.index")->with('message', 'Uspješno ste obrisali knjigu "'.$bookName .'"!');
+    }
+
+    public function related($id, BookService $bookService){
+        return response()->json($bookService->getRelated($id));
     }
 }
