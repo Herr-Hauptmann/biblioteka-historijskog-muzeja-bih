@@ -31,6 +31,13 @@ class HomeController extends Controller
         ]);
     }
 
+    public function export(){
+        return Inertia::render('Impex/Export');
+    }
+    public function import(){
+        return Inertia::render('Impex/Import');
+    }
+
     public function about(){
         return Inertia::render('About',[
 

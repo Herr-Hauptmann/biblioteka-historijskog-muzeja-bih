@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Content from '@/Components/Content.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 //Layout
 defineOptions({ layout: AuthenticatedLayout })
@@ -19,8 +19,8 @@ const props = defineProps({
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="grid grid-cols-12 gap-3 mx-auto sm:px-6 lg:px-8">
+                <main class="col-span-10 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <div class="grid grid-cols-3 justify-items-center">
                             <div class="text-center content-center">
@@ -43,11 +43,16 @@ const props = defineProps({
                                   </svg>                                  
                                 <p>Broj ključnih riječi</p>
                                 <p>{{count.keywords}}</p>
-                            </div>
-                            
+                            </div>    
                         </div>
                     </div>
-                </div>
+                </main>
+                <aside class="col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <Link type="button" class="block w-full py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200" :href="route('export')">Spremanje podataka</Link>
+                        <Link type="button" class="block w-full py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200" :href="route('import')">Učitavanje podataka</Link>
+                    </div>
+                </aside>
             </div>
         </div>
     </Content>

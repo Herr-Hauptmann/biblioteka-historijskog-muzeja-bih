@@ -33,16 +33,16 @@ class BooksExport implements FromCollection, ShouldAutoSize, WithHeadings
         $bookService = new BookService();
 
         return Book::with('authors')
-                ->with('keywords')
-                ->get()
-                ->map(fn($book)=>[
-                    'id' => $book->id,
-                    'signature' => $book->signature,
-                    'authors' => $authorService->listAuthors($book->authors),
-                    'title' => $book->title,
-                    'publishing' => $bookService->getPublishing($book),
-                    'keywords' => $keywordService->listKeywords($book->keywords),
-                    'inventory_number' => $book->inventory_number,
-                ]);
+            ->with('keywords')
+            ->get()
+            ->map(fn($book)=>[
+                'id' => $book->id,
+                'signature' => $book->signature,
+                'authors' => $authorService->listAuthors($book->authors),
+                'title' => $book->title,
+                'publishing' => $bookService->getPublishing($book),
+                'keywords' => $keywordService->listKeywords($book->keywords),
+                'inventory_number' => $book->inventory_number,
+            ]);
     }
 }

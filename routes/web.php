@@ -15,11 +15,16 @@ use Inertia\Inertia;
 
 //Admin panel
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    //CRUD stuff
+    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::resource('books', BookController::class)->except(['show']);
-    Route::get('books/export/', [BookController::class, 'export'])->name('books.export');
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
-    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    
+    //Import and export data
+    Route::get('/dashboard/export', [HomeController::class, 'export'])->name('export');
+    Route::get('/dashboard/import', [HomeController::class, 'import'])->name('import');
+    Route::get('/export/books', [BookController::class, 'export'])->name('books.export');
 });
 
 //Public routes

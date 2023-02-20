@@ -201,12 +201,12 @@ class BookController extends Controller
 
     public function export(){
         return Excel::download(new BooksExport, 'books'.date('-Y-m-d-H:i').'.xlsx');
+        // redirect('/dashboard')->with('success', 'Knjige uspješno spašene!');
     }
 
     public function import() 
     {
         Excel::import(new UsersImport, 'books-2023-02-20-18_16.xlsx');
-        
         return redirect('/')->with('success', 'All good!');
     }
 }
