@@ -42,4 +42,12 @@ class KeywordService{
     public function updateBookKeywords($keywordIds, Book $book){
         $book->keywords()->sync($keywordIds);
     }
+
+    public function listKeywords($keywords){
+        $output = "";
+        foreach($keywords as $keyword){
+            $output.="".$keyword->title.", ";
+        }
+        return substr($output, 0, -2);
+    }
 }

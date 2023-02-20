@@ -16,6 +16,7 @@ use Inertia\Inertia;
 //Admin panel
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('books', BookController::class)->except(['show']);
+    Route::get('books/export/', [BookController::class, 'export'])->name('books.export');
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');

@@ -240,4 +240,15 @@ class BookService{
         });
         return $sorted;
     }
+
+    public function getPublishing($book){
+        $output = "";
+        if ($book->publisher != null)
+            $output = $output . $book->publisher . ",";
+        if ($book->location_published != null)
+            $output = $output . $book->location_published . ",";
+        if ($book->year_published != null)
+            $output = $output . $book->year_published;
+        return $output;
+    }
 }

@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BooksExport;
+
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Keyword;
@@ -195,7 +198,7 @@ class BookController extends Controller
         return redirect()->route("books.index")->with('message', 'Uspješno ste obrisali knjigu "'.$bookName .'"!');
     }
 
-    public function related($id, BookService $bookService){
-        return response()->json($bookService->getRelated($id));
+    public function export(){
+        return Excel::download(new BooksExport, 'books.xlsx');
     }
 }
