@@ -7,6 +7,7 @@ use Inertia\Inertia;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BooksExport;
+use App\Imports\BooksImport;
 
 use App\Models\Book;
 use App\Models\Author;
@@ -200,5 +201,12 @@ class BookController extends Controller
 
     public function export(){
         return Excel::download(new BooksExport, 'books'.date('-Y-m-d-H:i').'.xlsx');
+    }
+
+    public function import() 
+    {
+        Excel::import(new UsersImport, 'books-2023-02-20-18_16.xlsx');
+        
+        return redirect('/')->with('success', 'All good!');
     }
 }
