@@ -8,12 +8,24 @@ use App\Http\Services\KeywordService;
 use App\Http\Services\BookService;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class BooksExport implements FromCollection
+class BooksExport implements FromCollection, ShouldAutoSize, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
+    public function headings(): array
+    {
+        return [
+            'Redni broj',
+            'Signatura',
+            'Pisac',
+            'Naziv djela',
+            'Mjesto, izdavač, godina',
+            'Ključne riječi',
+            'Inventarni broj',
+        ];
+    }
+
     public function collection()
     {
         $authorService = new AuthorService();

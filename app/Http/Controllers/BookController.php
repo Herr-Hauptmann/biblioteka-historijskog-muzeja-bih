@@ -199,6 +199,6 @@ class BookController extends Controller
     }
 
     public function export(){
-        return Excel::download(new BooksExport, 'books.xlsx');
+        return Excel::download(new BooksExport, 'books'.date('-Y-m-d-H:i').'.xlsx');
     }
 }
