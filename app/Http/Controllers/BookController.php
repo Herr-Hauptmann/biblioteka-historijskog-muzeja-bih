@@ -204,8 +204,9 @@ class BookController extends Controller
         // redirect('/dashboard')->with('success', 'Knjige uspješno spašene!');
     }
 
-    public function import() 
+    public function import(Request $request) 
     {
+        dd($request);
         Excel::import(new UsersImport, 'books-2023-02-20-18_16.xlsx');
         return redirect('/')->with('success', 'All good!');
     }
