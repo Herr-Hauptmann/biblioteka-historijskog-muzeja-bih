@@ -52,6 +52,37 @@ class AuthorService{
         return substr($output, 0, -2);
     }
 
+    public function separateAuthors($authors)
+    {
+        //' i '
+        $authorsArray1 = explode(' i ', $authors);
+        //-
+        $authorsArray2 = [];
+        foreach($authorsArray1 as $authorString)
+        {
+            $temporaryArray = explode('-', $authorString);
+            $temporaryArray = $this->clearWhitespace($temporaryArray);
+            $authorsArray2 = array_merge($temporaryArray, $authorsArray2);
+        }
+        $authorsArray1 = $authorsArray2;
+        $authorsArray2=[];
+        //,
+        foreach($authorsArray1 as $authorString)
+        {
+            $temporaryArray = explode(',', $authorString);
+            $temporaryArray = $this->clearWhitespace($temporaryArray);
+            $authorsArray2 = array_merge($temporaryArray, $authorsArray2);
+        }
+        dd($authorsArray2);
+    }
 
-
+    private function clearWhitespace($stringArray){
+        $cleared = [];
+        foreach($stringArray as $string){
+            $string = ltrim($string);
+            $string = rtrim($string);
+            array_push($cleared, $string);
+        }
+        return $cleared;
+    }
 }
