@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('location_published')->nullable();
             $table->integer('year_published')->nullable();
             $table->integer('inventory_number')->unique();
-            $table->integer('number_of_units');
+            $table->integer('number_of_units')->default('1');
             $table->timestamps();
         });
     }

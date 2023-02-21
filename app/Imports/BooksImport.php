@@ -3,25 +3,21 @@
 namespace App\Imports;
 
 use App\Models\Book;
-use Maatwebsite\Excel\Concerns\ToModel;
 
-class BooksImport implements ToModel
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+class BooksImport implements ToModel, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
     public function model(array $row)
     {
         return new Book([
-            'id' => $row[0],
-            'signature' =>$row[1],
+            'signature' =>$row['signatura'],
             // 'authors' =>$row[2],
-            'title' =>$row[3],
+            'title' =>$row['naziv_djela'],
             // 'publishing' =>$row[4],
             // 'keywords' =>$row[5],
-            'inventory_number' => $row[6],
+            'inventory_number' => $row['inventarni_broj'],
         ]);
     }
 }

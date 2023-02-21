@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/dashboard/export', [HomeController::class, 'export'])->name('export');
     Route::get('/dashboard/import', [HomeController::class, 'import'])->name('import');
     Route::get('/export/books', [BookController::class, 'export'])->name('books.export');
-    Route::get('/import/books', [BookController::class, 'import'])->name('books.import');
+    Route::post('/import/books', [BookController::class, 'import'])->name('books.import');
 });
 
 //Public routes

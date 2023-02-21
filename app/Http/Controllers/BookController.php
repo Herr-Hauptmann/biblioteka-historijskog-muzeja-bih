@@ -206,8 +206,10 @@ class BookController extends Controller
 
     public function import(Request $request) 
     {
-        dd($request);
-        Excel::import(new UsersImport, 'books-2023-02-20-18_16.xlsx');
-        return redirect('/')->with('success', 'All good!');
+        $validated = $request->validate([
+            "sheet" => "required|file|mimes:xlsx",
+        ]);
+        Excel::import(new BooksImport, request()->file('sheet'));
+        return redirect('/dashboard')->with('flash', 'All good!');
     }
 }
