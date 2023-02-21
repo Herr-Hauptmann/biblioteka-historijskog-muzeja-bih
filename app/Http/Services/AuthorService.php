@@ -73,7 +73,7 @@ class AuthorService{
             $temporaryArray = $this->clearWhitespace($temporaryArray);
             $authorsArray2 = array_merge($temporaryArray, $authorsArray2);
         }
-        dd($authorsArray2);
+        return $authorsArray2;
     }
 
     private function clearWhitespace($stringArray){
@@ -84,5 +84,19 @@ class AuthorService{
             array_push($cleared, $string);
         }
         return $cleared;
+    }
+
+    public function getOrCreateAuthorIDs($authors){
+        $authorObjects = [];
+
+        foreach($authors as $authorName)
+        {
+            $author = Author::where('name', '=', $authorName)->first();
+            if ($author == null){
+                $author = $this->createAuthor($authorName);
+            }
+            array_push($authorObjects, $author);
+        }
+        return $this->createAuthorsFromArray([], $authorObjects);
     }
 }
