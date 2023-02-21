@@ -50,4 +50,36 @@ class KeywordService{
         }
         return substr($output, 0, -2);
     }
+
+    public function separateKeywords($keywords)
+    {
+        $separatedKeywords = explode(',', $keywords);
+        return $this->clearWhitespace($separatedKeywords);
+    }
+
+    private function clearWhitespace($keywordArray){
+        $cleared = [];
+        foreach($keywordArray as $string){
+            $string = ltrim($string);
+            $string = rtrim($string);
+            array_push($cleared, $string);
+        }
+        return $cleared;
+    }
+
+    public function getOrCreateKeywordIDs($keywords){
+        $keywordObjects = [];
+
+        foreach($keywords as $keywordName)
+        {
+            if ($keywordName == "")
+                continue;
+            $keyword = Keyword::where('title', '=', $keywordName)->first();
+            if ($keyword == null){
+                $keyword = $this->createKeyword($keywordName);
+            }
+            array_push($keywordObjects, $keyword);
+        }
+        return $this->createKeywordsFromArray([], $keywordObjects);
+    }
 }

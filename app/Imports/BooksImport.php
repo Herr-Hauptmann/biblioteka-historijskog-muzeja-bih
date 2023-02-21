@@ -17,7 +17,7 @@ class BooksImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         $authorService = new AuthorService();
-        $kewyordService = new KeywordService();
+        $keywordService = new KeywordService();
         foreach ($rows as $row)
         {
             $book = Book::create([
@@ -29,9 +29,11 @@ class BooksImport implements ToCollection, WithHeadingRow
                 'inventory_number' => $row['inventarni_broj'],
             ]);
             $authors = $authorService->separateAuthors($row['pisac']);
-            // $authors = $kewyordService->separateKeywords($row['kljucne_rijeci']);
+            $keywords = $keywordService->separateKeywords($row['kljucne_rijeci']);
             $authorIds = $authorService->getOrCreateAuthorIDs($authors);
+            $keywordIds = $keywordService->getOrCreateKeywordIDs($keywords);
             $authorService->addAuthorsToBook($authorIds, $book);
+            $keywordService->addKeywordsToBook($keywordIds, $book);
         }
     }
 }

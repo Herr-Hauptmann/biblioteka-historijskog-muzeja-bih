@@ -91,6 +91,8 @@ class AuthorService{
 
         foreach($authors as $authorName)
         {
+            if ($authorName == "")
+                continue;
             $author = Author::where('name', '=', $authorName)->first();
             if ($author == null){
                 $author = $this->createAuthor($authorName);
