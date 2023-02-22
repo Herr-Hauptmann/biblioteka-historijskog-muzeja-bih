@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\KeywordController;
+use App\Http\Controllers\PublicationController;
 
 // Middleware
 use Illuminate\Foundation\Application;
@@ -20,6 +21,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('books', BookController::class)->except(['show']);
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
+    Route::resource('publications', PublicationController::class)->except(['show']);
     
     //Import and export data
     Route::get('/dashboard/export', [HomeController::class, 'export'])->name('export');
@@ -29,15 +31,27 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 });
 
 //Public routes
+
+//Home routes
 Route::get('/', [HomeController::class, 'index'])->name('home'); 
 Route::get('/about', [HomeController::class, 'about'])->name('about'); 
+
+//Books routes
 Route::get('/books/list', [BookController::class, 'list'])->name('books.list');
 Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
+Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
+
+//Keywords routes
 Route::get('/keywords/{id}/books', [KeywordController::class, 'booksWithKeyword'])->name('keywords.books');
 Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords.show');
-Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
+
+//Authors routes
 Route::get('/authors/{id}/books', [AuthorController::class, 'booksOfAuthor'])->name('authors.books');
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
+
+//Publications routes
+Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');
+Route::get('/publications/{id}', [PublicationController::class, 'show'])->name('publications.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

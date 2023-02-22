@@ -14,7 +14,11 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        //
+        return 'radi';
+    }
+    public function list()
+    {
+        return 'radi';
     }
 
     /**
@@ -46,7 +50,7 @@ class PublicationController extends Controller
      */
     public function show(Publication $publication)
     {
-        //
+        return 'radi';
     }
 
     /**
