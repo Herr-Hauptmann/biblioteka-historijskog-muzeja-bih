@@ -39,8 +39,6 @@ class BookService{
         usort($relatedBooks, fn($a, $b) => $a->points < $b->points);
     }
 
-    
-
     private function countSameIds($firstArray, $secondArray){
         $counter = 0;
         foreach($firstArray as $firstItem)
@@ -250,5 +248,45 @@ class BookService{
         if ($book->year_published != null)
             $output = $output . $book->year_published;
         return $output;
+    }
+
+    public function parsePublishingInfo($string){
+        $publishingInfo = [
+            'location_published' => null,
+            'publisher' => null,
+            'year_published' => null
+        ];
+        $infoArray = explode(',', $string);
+        $infoArray = $this->clearWhitespace($infoArray);
+
+        switch(sizeof($infoArray))
+        {
+            case 2: 
+            {
+                $publishingInfo['location_published'] = $infoArray[0];
+                $publishingInfo['year_published'] = $infoArray[1];
+            }
+            break;
+            case 3: 
+            {
+                $publishingInfo['location_published'] = $infoArray[0];
+                $publishingInfo['publisher'] = $infoArray[1];
+                $publishingInfo['year_published'] = $infoArray[2];
+            }
+            break;
+        }
+        if ($publishingInfo['year_published'] == 0)
+            $publishingInfo['year_published'] = null;
+        return $publishingInfo;
+    }
+
+    private function clearWhitespace($array){
+        $cleared = [];
+        foreach($array as $string){
+            $string = ltrim($string);
+            $string = rtrim($string);
+            array_push($cleared, $string);
+        }
+        return $cleared;
     }
 }

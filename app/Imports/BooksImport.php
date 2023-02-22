@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 use App\Http\Services\AuthorService;
 use App\Http\Services\KeywordService;
+use App\Http\Services\BookService;
 
 class BooksImport implements ToCollection, WithHeadingRow
 {
@@ -18,14 +19,16 @@ class BooksImport implements ToCollection, WithHeadingRow
     {
         $authorService = new AuthorService();
         $keywordService = new KeywordService();
+        $bookService = new BookService();
         foreach ($rows as $row)
         {
+            $publishingInfo = $bookService->parsePublishingInfo($row['mjesto_izdavac_godina']);
             $book = Book::create([
                 'signature' =>$row['signatura'],
-                // 'authors' =>$row[2],
                 'title' =>$row['naziv_djela'],
-                // 'publishing' =>$row[4],
-                // 'keywords' =>$row[5],
+                'publisher' =>$publishingInfo['publisher'],
+                'location_published' =>$publishingInfo['location_published'],
+                'year_published' =>$publishingInfo['year_published'],
                 'inventory_number' => $row['inventarni_broj'],
             ]);
             $authors = $authorService->separateAuthors($row['pisac']);
