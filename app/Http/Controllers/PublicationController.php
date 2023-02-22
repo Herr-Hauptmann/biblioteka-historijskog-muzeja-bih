@@ -4,17 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Publication;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Inertia\Inertia;
 
 class PublicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $perPage = 25;
+
+    public function index(Request $request)
     {
-        return 'radi';
+        return Inertia::render('Publications/PublicationsIndex',[
+            'publications' => Publication::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('title', 'like', '%'.$search.'%')->orWhere('description', 'like', '%'.$search.'%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->perPage)
+                ->withQueryString()
+                ->through(fn($publication)=>[
+                    'id' => $publication->id,
+                    'title' => $publication->title,
+                    'description' => $publication->description,
+                    'created_at' => $publication->created_at->format('d.m.Y.'),
+                ]),
+            'filters' => $request->only(['search']),
+        ]);
     }
     public function list()
     {
