@@ -9,11 +9,6 @@ use App\Models\Keyword;
 
 class KeywordSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         Keyword::factory()

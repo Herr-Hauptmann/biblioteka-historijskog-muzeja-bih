@@ -9,11 +9,6 @@ use App\Models\Author;
 
 class AuthorSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         Author::factory()
