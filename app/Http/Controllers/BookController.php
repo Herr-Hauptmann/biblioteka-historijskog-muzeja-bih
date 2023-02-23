@@ -210,6 +210,6 @@ class BookController extends Controller
             "sheet" => "required|file|mimes:xlsx",
         ]);
         Excel::import(new BooksImport, request()->file('sheet'));
-        return redirect('/dashboard')->with('flash', 'All good!');
+        return redirect('/dashboard')->with('message', 'Učitavanje podataka uspiješno!');
     }
 }
