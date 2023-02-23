@@ -6,6 +6,7 @@ use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class PublicationController extends Controller
 {
@@ -42,7 +43,18 @@ class PublicationController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+        $validatedRequest = $request->validate([
+            "title" => "required|max:255",
+            "description" => "required",
+            "publication" => "required|file|mimes:pdf",
+        ]);
+        $path = $request->file('publication')->storeAs('publications', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i'));
+        Publication::create([
+            "title" => $validatedRequest["title"],
+            "description" => $validatedRequest["description"],
+            "file_path" => $path,
+        ]);
+        return redirect()->route("publications.index")->with('message', 'Uspješno ste kreirali publikaciju "'.$validatedRequest["title"] .'"!');
     }
 
     /**

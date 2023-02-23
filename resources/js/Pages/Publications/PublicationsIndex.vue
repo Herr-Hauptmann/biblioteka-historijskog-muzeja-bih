@@ -64,7 +64,7 @@ defineOptions({ layout: AuthenticatedLayout })
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
                     <!-- Search bar -->
-                    <SearchBar v-if="!what" :placeholder="placeholder" :filters="filters" :path="path"/>
+                    <SearchBar :placeholder="placeholder" :filters="filters" :path="path"/>
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">

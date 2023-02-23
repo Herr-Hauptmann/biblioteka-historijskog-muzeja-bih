@@ -21,7 +21,6 @@ const submit = () => {
 
 let width = computed(()=>{
     let value = "width: " + form.progress.percentage + '%';
-    console.log(value);
     return value;
 });
 </script>
@@ -58,11 +57,11 @@ let width = computed(()=>{
                                         {{ form.progress.percentage }}%
                                     </div >
                                 </div>
-                                <InputError class="mt-2" :message="form.errors.name" />
+                                <InputError class="mt-2" :message="form.errors.publication" />
                             </div>
                         </div>      
 
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kreiraj autora</button>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Kreiraj publikaciju</button>
                     </form>
                 </div>
             </div>
