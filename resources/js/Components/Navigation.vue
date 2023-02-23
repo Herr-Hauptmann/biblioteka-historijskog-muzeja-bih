@@ -37,6 +37,9 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('keywords.index')" :active="route().current('keywords.index')">
                             Ključne riječi
                         </NavLink>
+                        <NavLink :href="route('publications.index')" :active="route().current('publications.index')">
+                            Virtuelna biblioteka
+                        </NavLink>
                     </div>
                 </div>
 
@@ -128,6 +131,9 @@ const showingNavigationDropdown = ref(false);
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('keywords.index')" :active="route().current('keywords.index')">
                     Ključne riječi
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('publications.index')" :active="route().current('publications.index')">
+                    Virtuelna biblioteka
                 </ResponsiveNavLink>
             </div>
 
