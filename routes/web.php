@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
     Route::resource('publications', PublicationController::class)->except(['show']);
+    Route::get('publications/{publication}/download', [PublicationController::class, 'download'])->name('publications.download');
     
     //Import and export data
     Route::get('/dashboard/export', [HomeController::class, 'export'])->name('export');

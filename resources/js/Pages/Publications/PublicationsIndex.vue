@@ -88,9 +88,9 @@ defineOptions({ layout: AuthenticatedLayout })
                                 class="bg-white border-b hover:bg-gray-200">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap">
-                                    <Link :href="route('publications.show', publication.id)">
+                                    <a target="_blank" :href="route('publications.show', publication.id)">
                                         {{ publication.title }}
-                                    </Link>
+                                    </a>
                                 </th>
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ publication.description }}

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Vite;
 
 class PublicationController extends Controller
 {
@@ -48,7 +50,7 @@ class PublicationController extends Controller
             "description" => "required",
             "publication" => "required|file|mimes:pdf",
         ]);
-        $path = $request->file('publication')->storeAs('publications', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i'));
+        $path = $request->file('publication')->storeAs('publications', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.pdf');
         Publication::create([
             "title" => $validatedRequest["title"],
             "description" => $validatedRequest["description"],
@@ -57,48 +59,63 @@ class PublicationController extends Controller
         return redirect()->route("publications.index")->with('message', 'Uspješno ste kreirali publikaciju "'.$validatedRequest["title"] .'"!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Publication  $publication
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Publication $publication)
-    {
-        return 'radi';
+    public function download(Publication $publication){
+        $path = $publication->file_path;
+        $slug = Str::slug($publication->title).'.pdf';
+        $headers = [
+            'Content-Type' => 'application/pdf',
+         ];
+
+        return Storage::download($path, $slug, $headers);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Publication  $publication
-     * @return \Illuminate\Http\Response
-     */
+    public function show($publication)
+    {
+        $publication = Publication::findOrFail($publication);
+        $file =  Storage::path($publication->file_path);
+        return response()->file($file);
+    }
+
     public function edit(Publication $publication)
     {
-        //
+        $publication['file_name'] = Str::slug($publication->title).'.pdf';
+        return Inertia::render('Publications/PublicationsEdit',[
+            'publication' => $publication,
+            'pdf_icon' => Vite::asset('resources/images/pdf_icon.png'),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Publication  $publication
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Publication $publication)
     {
-        //
+        $validatedRequest = $request->validate([
+            "title" => "required|max:255",
+            "description" => "required",
+            "publication" => "file|mimes:pdf|nullable",
+        ]);
+
+        $path = $publication->file_path;
+        //Proccess the new file
+        if ($validatedRequest['publication'] != null)
+        {
+            //Delete old
+            Storage::delete($path);
+            //Upload new
+            $path = $request->file('publication')->storeAs('publications', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.pdf');
+        }
+
+        $publication->title = $validatedRequest["title"];
+        $publication->description = $validatedRequest["description"];
+        $publication->file_path = $path;
+        $publication->save();
+        
+        return redirect()->route("publications.index")->with('message', 'Uspješno ste kreirali publikaciju "'.$validatedRequest["title"] .'"!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Publication  $publication
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Publication $publication)
     {
-        //
+        Storage::delete($publication->file_path);
+        $title = $publication->title;
+        $publication->delete();
+        return redirect()->route("publications.index")->with('message', 'Uspješno ste izbrisali publikaciju "'.$title .'"!');
     }
 }
