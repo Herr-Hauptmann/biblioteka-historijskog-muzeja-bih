@@ -1,4 +1,5 @@
 <script setup>
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 
 defineOptions({ layout: GuestLayout })
@@ -18,6 +19,7 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head title="O biblioteci" />
     <div class="relative overflow-hidden bg-white">
         <div class="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-16 lg:pb-48">
             <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
@@ -103,8 +105,8 @@ const props = defineProps({
                         </div>
                     </div>
 
-                    <a href="#"
-                        class="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700">{{button}}</a>
+                    <Link :href="route('books.list')"
+                        class="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700">{{button}}</Link>
                 </div>
             </div>
         </div>
