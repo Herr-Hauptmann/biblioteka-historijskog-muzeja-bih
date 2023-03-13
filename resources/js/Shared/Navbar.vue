@@ -198,13 +198,13 @@ const resources = [
   { 
     name: 'Pošalji upit', 
     description: 'Postavite nam pitanje', 
-    href: route('faq'), 
+    href: "#", 
     icon: QuestionMarkCircleIcon
   },
   {
     name: 'FAQ',
     description: 'Odgovori na često postavljena pitanja',
-    href: '#',
+    href: route('faq'),
     icon: LightBulbIcon,
   },
   {

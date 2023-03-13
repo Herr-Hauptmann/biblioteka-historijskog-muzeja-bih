@@ -44,6 +44,8 @@ class HomeController extends Controller
     }
 
     public function faq(){
-        return Inertia::render('Faq');
+        return Inertia::render('Faq',[
+            'photo_url' => Vite::asset('resources/images/about/slika1.JPG'),
+        ]);
     }
 }
