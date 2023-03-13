@@ -3,6 +3,7 @@
 // Kontroleri
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\KeywordController;
@@ -25,8 +26,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('publications/{publication}/download', [PublicationController::class, 'download'])->name('publications.download');
     
     //Import and export data
-    Route::get('/dashboard/export', [HomeController::class, 'export'])->name('export');
-    Route::get('/dashboard/import', [HomeController::class, 'import'])->name('import');
+    Route::get('/dashboard/export', [AdminController::class, 'export'])->name('export');
+    Route::get('/dashboard/import', [AdminController::class, 'import'])->name('import');
     Route::get('/export/books', [BookController::class, 'export'])->name('books.export');
     Route::post('/import/books', [BookController::class, 'import'])->name('books.import');
 });
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 //Home routes
 Route::get('/', [HomeController::class, 'index'])->name('home'); 
 Route::get('/about', [HomeController::class, 'about'])->name('about'); 
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq'); 
 
 //Books routes
 Route::get('/books/list', [BookController::class, 'list'])->name('books.list');

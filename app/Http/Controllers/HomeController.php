@@ -31,13 +31,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function export(){
-        return Inertia::render('Impex/Export');
-    }
-    public function import(){
-        return Inertia::render('Impex/Import');
-    }
-
     public function about(){
         return Inertia::render('About',[
             'photo1_url' => Vite::asset('resources/images/about/slika1.JPG'),
@@ -48,5 +41,9 @@ class HomeController extends Controller
             'photo6_url' => Vite::asset('resources/images/about/slika6.jpg'),
             'photo7_url' => Vite::asset('resources/images/about/slika7.jpg'),
         ]);
+    }
+
+    public function faq(){
+        return Inertia::render('Faq');
     }
 }
