@@ -40,6 +40,9 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('publications.index')" :active="route().current('publications.index')">
                             Virtuelna biblioteka
                         </NavLink>
+                        <NavLink :href="route('news.index')" :active="route().current('news.index')">
+                            Priče iz biblioteke
+                        </NavLink>
                     </div>
                 </div>
 
@@ -134,6 +137,9 @@ const showingNavigationDropdown = ref(false);
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('publications.index')" :active="route().current('publications.index')">
                     Virtuelna biblioteka
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('news.index')" :active="route().current('news.index')">
+                    Priče iz biblioteke
                 </ResponsiveNavLink>
             </div>
 

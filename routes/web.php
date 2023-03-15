@@ -54,13 +54,14 @@ Route::get('/keywords/{id}', [KeywordController::class, 'show'])->name('keywords
 Route::get('/authors/{id}/books', [AuthorController::class, 'booksOfAuthor'])->name('authors.books');
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 
+//News routes
+Route::get('/news/list', [NewsController::class, 'list'])->name('news.list');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+
 //Publications routes
 Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');
 Route::get('/publications/{id}', [PublicationController::class, 'show'])->name('publications.show');
 
-//News routes
-Route::get('/news/list', [PublicationController::class, 'list'])->name('news.list');
-Route::get('/news/{id}', [PublicationController::class, 'show'])->name('news.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
