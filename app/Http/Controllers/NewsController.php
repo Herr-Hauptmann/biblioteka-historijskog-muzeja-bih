@@ -13,21 +13,36 @@ use Illuminate\Support\Facades\Vite;
 
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $perPage = 20;
+
+    public function index(Request $request)
     {
-        return Inertia::render('News/NewsIndex');
+        return Inertia::render('News/NewsIndex',[
+            'news' => News::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhere('article', 'like', '%'.$search.'%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->perPage)
+                ->withQueryString()
+                ->through(fn($news)=>[
+                    'id' => $news->id,
+                    'title' => $news->title,
+                    'description' => $news->description,
+                    'created_at' => $news->created_at->format('d.m.Y.'),
+                ]),
+            'filters' => $request->only(['search']),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function list()
+    {
+
+    }
+
     public function create()
     {
         //
