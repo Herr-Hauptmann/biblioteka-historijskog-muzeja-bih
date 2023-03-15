@@ -8,6 +8,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\NewsController;
 
 // Middleware
 use Illuminate\Foundation\Application;
@@ -23,6 +24,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
     Route::resource('publications', PublicationController::class)->except(['show']);
+    Route::resource('news', NewsController::class)->except(['show']);
     Route::get('publications/{publication}/download', [PublicationController::class, 'download'])->name('publications.download');
     
     //Import and export data

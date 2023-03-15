@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             KeywordSeeder::class,
             // //Very important for book seeder to be after keyword and author seeder
             BookSeeder::class,
-            PublicationSeeder::class
+            PublicationSeeder::class,
+            NewsSeeder::class
         ]);
 
     }
