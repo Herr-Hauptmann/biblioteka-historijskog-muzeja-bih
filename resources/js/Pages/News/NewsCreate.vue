@@ -6,6 +6,8 @@ import Content from "@/Components/Content.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
 import { Head } from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3"
+import { reactive, ref } from '@vue/reactivity'
+import * as editor from '@ckeditor/ckeditor5-build-classic'
 
 defineOptions({ layout: AuthenticatedLayout })
 
@@ -24,6 +26,8 @@ let width = computed(()=>{
     let value = "width: " + form.progress.percentage + '%';
     return value;
 });
+
+const editor_config = {removePlugins: [ 'ImageUpload', 'EasyImage'],};
 </script>
 
 <template>
@@ -64,7 +68,11 @@ let width = computed(()=>{
                             </div>
                             <div>
                                 <FormInputLabel what="article" msg="Sadržaj priče"/>
-                                <div ref="ckbox" />
+                                <ckeditor
+                                v-model="form.article"
+                                :editor="editor"
+                                :config="editor_config"
+                                ></ckeditor>
                             </div>
                         </div>      
 
@@ -75,3 +83,11 @@ let width = computed(()=>{
         </div>
     </Content>
 </template>
+
+<style scoped>
+
+h1{
+    color:red !important;
+}
+
+</style>

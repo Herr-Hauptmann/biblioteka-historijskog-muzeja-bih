@@ -22,6 +22,8 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^36.0.1",
+        "@ckeditor/ckeditor5-vue": "^4.0.1",
         "@headlessui/vue": "^1.7.4",
         "@heroicons/vue": "^2.0.13",
         "@inertiajs/inertia": "^0.11.1",
