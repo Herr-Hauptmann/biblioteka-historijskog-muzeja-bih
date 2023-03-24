@@ -56,7 +56,21 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $validatedRequest = $request->validate([
+            "title" => "required|max:255",
+            "description" => "required",
+            "article" => "required|max:10000",
+            "image" => "required|image",
+        ]);
+        $type = $validatedRequest['image']->extension();
+        $path = $validatedRequest['image']->storeAs('news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
+        News::create([
+            "title" => $validatedRequest["title"],
+            "description" => $validatedRequest["description"],
+            'article' => $validatedRequest["article"],
+            "image_path" => $path,
+        ]);
+        return redirect()->route("news.index")->with('message', 'Uspješno ste kreirali vijest "'.$validatedRequest["title"] .'"!');
     }
 
     /**
