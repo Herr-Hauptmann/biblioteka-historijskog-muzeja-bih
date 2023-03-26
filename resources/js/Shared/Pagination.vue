@@ -11,6 +11,7 @@ defineProps({
     <!-- Just for phones -->
     <div class="flex flex-1 justify-between sm:hidden">
       <Component :is="(data.links[0].url==null)? 'span' : Link" :href="data.links[0].url" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Prethodna</Component>
+      <p class="text-sm text-gray-700 pt-2">{{data.current_page}}</p>
       <Component :is="(data.links[data.links.length-1].url) ? Link : 'span'" :href="data.links[data.links.length-1].url" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Sljedeća</Component>
     </div>
     <!-- Doesn't show on phones -->
@@ -18,13 +19,9 @@ defineProps({
       <div>
         <p class="text-sm text-gray-700">
           Prikazuje se od
-          {{  }}
           <span class="font-medium">{{data.from}}</span>
-          {{  }}
           do
-          {{  }}
           <span class="font-medium">{{data.to}}</span>
-          {{  }}
           od
           {{ ' ' }}
           <span class="font-medium">{{data.total}}</span>
