@@ -41,7 +41,7 @@
                       <h3 class="text-base font-medium text-gray-500">Priče iz biblioteke</h3>
                       <ul role="list" class="mt-4 space-y-4">
                         <li v-for="post in recentPosts" :key="post.id" class="truncate text-base">
-                          <a :href="post.href" class="font-medium text-gray-900 hover:text-gray-700">{{ post.name }}</a>
+                          <a :href="route('news.show', post.id)" class="font-medium text-gray-900 hover:text-gray-700">{{ post.title }}</a>
                         </li>
                       </ul>
                     </div>
@@ -135,6 +135,7 @@
 
 <script setup>
 import {Link} from '@inertiajs/inertia-vue3';
+import {ref} from 'vue';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
 import {
   ArrowPathIcon,
@@ -145,8 +146,6 @@ import {
   ChartBarIcon,
   CursorArrowRaysIcon,
   QuestionMarkCircleIcon,
-  PhoneIcon,
-  PlayIcon,
   LightBulbIcon,
   Squares2X2Icon,
   UserIcon,
@@ -184,43 +183,52 @@ const solutions = [
     icon: ArrowPathIcon,
   },
 ]
-const callsToAction = [
-  { name: 'Watch Demo', href: '#', icon: PlayIcon },
-  { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-]
+
 const resources = [
-  {
-    name: 'Pridruži se',
-    description: 'Postanite član naše biblioteke',
-    href: '#',
-    icon: PencilIcon,
-  },
-  { 
-    name: 'Pošalji upit', 
-    description: 'Postavite nam pitanje', 
-    href: "#", 
-    icon: QuestionMarkCircleIcon
-  },
+  // {
+  //   name: 'Pridruži se',
+  //   description: 'Postanite član naše biblioteke',
+  //   href: '#',
+  //   icon: PencilIcon,
+  // },
+  // { 
+  //   name: 'Pošalji upit', 
+  //   description: 'Postavite nam pitanje', 
+  //   href: "#", 
+  //   icon: QuestionMarkCircleIcon
+  // },
   {
     name: 'FAQ',
     description: 'Odgovori na često postavljena pitanja',
     href: route('faq'),
     icon: LightBulbIcon,
   },
-  {
-    name: 'Doniraj knjigu',
-    description: 'Doprinesite našoj biblioteci',
-    href: '#',
-    icon: BookOpenIcon,
-  },
-]
-const recentPosts = [
-  
-  { id: 1, name: 'Lorem ipsum dolor sit amet.', href: '#' },
-  { id: 2, name: 'Lorem ipsum dolor sit amet.', href: '#' },
-  { id: 3, name: 'Lorem ipsum dolor sit amet.', href: '#' },
+  // {
+  //   name: 'Doniraj knjigu',
+  //   description: 'Doprinesite našoj biblioteci',
+  //   href: '#',
+  //   icon: BookOpenIcon,
+  // },
 ]
 
+//Most recent news
+const recentPosts = ref([]);
+const load = async() =>{
+  try{
+    let data = await fetch(route("news.latest"))
+    if (!data.ok){
+      throw Error('News data not available')
+    }
+    recentPosts.value = await data.json()
+  }
+  catch(err){
+    console.log(err.message)
+  }
+}
+load()
+
+
+//Show when user is logged in
 const admin = [
   {
     name: 'Kontrolna ploča',

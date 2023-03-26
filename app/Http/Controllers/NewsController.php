@@ -37,6 +37,11 @@ class NewsController extends Controller
         ]);
     }
 
+    public function latest()
+    {
+        $latest = News::latest()->take(3)->get(['id','title']);
+        return response()->json($latest);
+    }
 
     public function list()
     {
@@ -48,12 +53,6 @@ class NewsController extends Controller
         return Inertia::render('News/NewsCreate');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
@@ -73,46 +72,23 @@ class NewsController extends Controller
         return redirect()->route("news.index")->with('message', 'Uspješno ste kreirali vijest "'.$validatedRequest["title"] .'"!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
-    public function show(News $news)
+    public function show($id)
     {
-        dd($news);
+        return Inertia::render('News/NewsShow', [
+            'news' => News::findOrFail($id),
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function edit(News $news)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, News $news)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(News $news)
     {
         //
