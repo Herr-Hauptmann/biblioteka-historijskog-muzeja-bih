@@ -62,7 +62,7 @@ class NewsController extends Controller
             "image" => "required|image",
         ]);
         $type = $validatedRequest['image']->extension();
-        $path = $validatedRequest['image']->storeAs('news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
+        $path = $validatedRequest['image']->storeAs('public/news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
         News::create([
             "title" => $validatedRequest["title"],
             "description" => $validatedRequest["description"],
@@ -74,8 +74,11 @@ class NewsController extends Controller
 
     public function show($id)
     {
+        $news = News::findOrFail($id);
+        $path = Storage::url($news->image_path);
         return Inertia::render('News/NewsShow', [
-            'news' => News::findOrFail($id),
+            'news' => $news,
+            'image' => $path,
         ]);
     }
 
