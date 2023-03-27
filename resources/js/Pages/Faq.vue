@@ -43,10 +43,10 @@ const questions = [
 
 <template>
     <Head title="Pitanja" />
-    <div class="container min-h-screen">
-        <div class="grid grid-cols-2">
-            <div>
-                <img :src="photo_url" alt="slika" class="h-screen">
+    <div class="container min-h-screen mx-auto">
+        <div class="grid md:grid-cols-2">
+            <div class="flex justify-center pt-9">
+                <img :src="photo_url" alt="slika" class="h-48 md:h-screen rounded-lg">
             </div>
             <div class="w-full px-4 pt-16">
                 <div class="mx-auto w-full max-w-xl rounded-2xl bg-white p-2">
