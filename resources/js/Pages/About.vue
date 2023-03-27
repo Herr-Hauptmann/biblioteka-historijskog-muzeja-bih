@@ -21,8 +21,18 @@ const props = defineProps({
 <template>
     <Head title="O biblioteci" />
     <div class="relative overflow-hidden bg-white">
-        <div class="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-16 lg:pb-48">
+        <div class="pt-16 pb-12 lg:pb-80 sm:pt-24 sm:pb-40 lg:pt-16 lg:pb-48">
             <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+                <div class="pb-12 md:hidden grid grid-cols-2"> 
+                    <div class="h-64 w-44 overflow-hidden rounded-lg justify-self-center">
+                        <img :src="photo3_url" alt="Slika 2"
+                            class="h-full object-cover object-center">
+                    </div>
+                    <div class="h-64 w-44 overflow-hidden rounded-lg justify-self-center">
+                        <img :src="photo2_url" alt="Slika 2"
+                            class="h-full object-cover object-center">
+                    </div>
+                </div>
                 <div class="sm:max-w-lg">
                     <h1 class="font text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ title }}</h1>
                     <p class="mt-4 text-xl text-gray-500">
@@ -58,8 +68,22 @@ const props = defineProps({
                         prema
                         potrebama muzeja i savremenog društva.
                     </p>
+                    <div class="flex justify-center pt-3 md:block">
+                        <Link :href="route('books.list')"
+                        class="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700">{{button}}</Link>
+                    </div>
+                    <div class="py-12 md:hidden grid grid-cols-2">
+                        <div class="h-64 w-44 overflow-hidden rounded-lg justify-self-center">
+                            <img :src="photo5_url" alt="Slika 2"
+                                class="h-full object-cover object-center">
+                        </div>
+                        <div class="h-64 w-44 overflow-hidden rounded-lg justify-self-center">
+                            <img :src="photo6_url" alt="Slika 2"
+                                class="h-full object-cover object-center">
+                        </div>
+                    </div>
                 </div>
-                <div>
+                <div class="hidden md:block">
                     <div class="mt-10">
                         <!-- Decorative image grid -->
                         <div aria-hidden="true"
@@ -104,9 +128,6 @@ const props = defineProps({
                             </div>
                         </div>
                     </div>
-
-                    <Link :href="route('books.list')"
-                        class="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700">{{button}}</Link>
                 </div>
             </div>
         </div>
