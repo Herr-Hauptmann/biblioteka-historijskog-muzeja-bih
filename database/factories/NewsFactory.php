@@ -15,7 +15,7 @@ class NewsFactory extends Factory
     public function definition()
     {
         $filePath = Storage::path('public/news');
-        $imagePath = $this->faker->image($dir = $filePath, $width = 640, $height = 480);
+        $imagePath = $this->faker->image($dir = $filePath, $width = 1200, $height = 630);
         $imagePath = str_replace($filePath.'\\', 'news/', $imagePath);
         $article = "<h1>".$this->faker->realText(50)."</h1>";
         $paragraphs = $this->faker->paragraphs(rand(2, 6));
