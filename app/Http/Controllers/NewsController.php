@@ -53,9 +53,26 @@ class NewsController extends Controller
         return response()->json($latest);
     }
 
-    public function list()
+    public function list(Request $request)
     {
-
+        return Inertia::render('News/NewsList',[
+            'news' => News::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhere('article', 'like', '%'.$search.'%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(15)
+                ->withQueryString()
+                ->through(fn($news)=>[
+                    'id' => $news->id,
+                    'title' => $news->title,
+                    'description' => $news->description,
+                    'image_path' => Storage::url($news->image_path),
+                ]),
+            'filters' => $request->only(['search']),
+        ]);
     }
 
     public function create()

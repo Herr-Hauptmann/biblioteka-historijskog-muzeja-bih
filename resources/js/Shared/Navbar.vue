@@ -46,10 +46,10 @@
                       </ul>
                     </div>
                     <div class="mt-5 text-sm">
-                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                      <Link :href="route('news.list')" class="font-medium text-indigo-600 hover:text-indigo-500">
                         Pogledaj sve priče...
                         <span aria-hidden="true"> &rarr;</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -112,8 +112,9 @@
           </div>
           <div class="space-y-6 pb-6 px-5">
             <div class="">
-              <h3 class="text-base font-medium text-gray-500 pb-3">Priče iz biblioteke</h3>
+              <h3 class="text-base font-medium text-gray-500 pb-3 mt-2">Priče iz biblioteke</h3>
               <Link v-for="item in recentPosts" :key="item.title" :href="route('news.show', item.id)"  class="block pb-3 text-base font-medium text-gray-900 hover:text-gray-700">{{ item.title }}</Link>
+              <Link :href="route('news.list')" class="block pb-3 font-bold text-gray-500 hover:text-gray-700">Pregledaj sve priče...</Link>
             </div>
             <div>
               <Link :href="route('login')" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Admin</Link>
