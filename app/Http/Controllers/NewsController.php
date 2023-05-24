@@ -90,16 +90,47 @@ class NewsController extends Controller
 
     public function edit(News $news)
     {
-        //
+        return Inertia::render('Publications/NewsEdit',[
+            'news' => $news,
+            'image_path' => Storage::url($news->image_path),
+        ]);
     }
 
     public function update(Request $request, News $news)
     {
-        //
+        dd($request);
+        $validatedRequest = $request->validate([
+            "title" => "required|max:255",
+            "description" => "required",
+            "article" => "required|max:10000",
+            "image" => "image|nullable",
+        ]);
+
+        $path = $news->image_path;
+        //Proccess the new file
+        if ($validatedRequest['image'] != null)
+        {
+            //Delete old
+            Storage::delete('public/news'.$path);
+            //Upload new
+            $type = $validatedRequest['image']->extension();
+            $path = $validatedRequest['image']->storeAs('public/news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
+        }
+
+        $news->title = $validatedRequest["title"];
+        $news->description = $validatedRequest["description"];
+        $news->article = $validatedRequest["article"];
+        $news->file_path = $path;
+        $news->save();
+        
+        return redirect()->route("news.index")->with('message', 'Uspješno ste izmijenili vijest "'.$validatedRequest["title"] .'"!');
     }
 
     public function destroy(News $news)
     {
-        //
+        Storage::delete('public/'.$news->image_path);
+        $title = $news->title;
+        $news->delete();
+        return redirect()->route("news.index")->with('message', 'Uspješno ste izbrisali vijest "'.$title .'"!');
     }
 }
