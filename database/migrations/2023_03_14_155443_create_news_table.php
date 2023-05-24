@@ -13,6 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
+        //Delete files if migrations were not downed correctly
+        $files = Storage::disk('local')->allFiles('news');
+        Storage::delete($files);
+
+        //Create the table
         Storage::makeDirectory("public/news");
         Schema::create('news', function (Blueprint $table) {
             $table->id();
@@ -24,11 +29,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('news');
