@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/news/latest', [NewsController::class, 'latest'])->name('news.latest');
+Route::get('/news/landing', [NewsController::class, 'landing'])->name('news.landing');

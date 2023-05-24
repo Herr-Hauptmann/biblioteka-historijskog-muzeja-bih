@@ -43,6 +43,16 @@ class NewsController extends Controller
         return response()->json($latest);
     }
 
+    public function landing()
+    {
+        $latest = News::latest()->take(4)->get(['id','title', 'image_path', 'description']);
+        foreach($latest as $article)
+        {
+            $article['image_path'] = Storage::url($article->image_path);
+        }
+        return response()->json($latest);
+    }
+
     public function list()
     {
 
