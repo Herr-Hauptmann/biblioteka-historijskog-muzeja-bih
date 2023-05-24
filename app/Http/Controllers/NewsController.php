@@ -76,9 +76,15 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         $path = Storage::url($news->image_path);
+        $latest =  News::latest()->take(3)->get(['id','title', 'image_path', 'description']);
+        foreach($latest as $article)
+        {
+            $article['image_path'] = Storage::url($article->image_path);
+        }
         return Inertia::render('News/NewsShow', [
             'news' => $news,
             'image' => $path,
+            'latest' => $latest,
         ]);
     }
 

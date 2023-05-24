@@ -77,7 +77,7 @@ console.log(props.related);
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Ostali naslovi relevantni za naslov "{{book.title}}"</h3>
             </div>
-            <div class="border-t border-gray-200 py-3 md:flex justify-items-center">
+            <div class="border-t border-gray-200 py-3 md:flex justify-center">
                 <Card class="my-3" v-for="relevantBook in related" 
                 :key="relevantBook.id" 
                 :title="relevantBook.title" 
