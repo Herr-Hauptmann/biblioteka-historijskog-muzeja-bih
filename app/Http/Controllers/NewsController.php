@@ -90,7 +90,7 @@ class NewsController extends Controller
 
     public function edit(News $news)
     {
-        return Inertia::render('Publications/NewsEdit',[
+        return Inertia::render('News/NewsEdit',[
             'news' => $news,
             'image_path' => Storage::url($news->image_path),
         ]);
@@ -98,7 +98,6 @@ class NewsController extends Controller
 
     public function update(Request $request, News $news)
     {
-        dd($request);
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "description" => "required",
@@ -111,7 +110,7 @@ class NewsController extends Controller
         if ($validatedRequest['image'] != null)
         {
             //Delete old
-            Storage::delete('public/news'.$path);
+            Storage::delete('public/'.$news->image_path);
             //Upload new
             $type = $validatedRequest['image']->extension();
             $path = $validatedRequest['image']->storeAs('public/news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
@@ -120,7 +119,7 @@ class NewsController extends Controller
         $news->title = $validatedRequest["title"];
         $news->description = $validatedRequest["description"];
         $news->article = $validatedRequest["article"];
-        $news->file_path = $path;
+        $news->image_path = $path;
         $news->save();
         
         return redirect()->route("news.index")->with('message', 'Uspješno ste izmijenili vijest "'.$validatedRequest["title"] .'"!');
