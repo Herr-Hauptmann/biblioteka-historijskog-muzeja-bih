@@ -8,13 +8,13 @@ use Illuminate\Filesystem\Filesystem;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
+        //Delete files if migrations were not downed correctly
+        $files = Storage::disk('local')->allFiles('publications');
+        Storage::delete($files);
+
+        //Create table
         Storage::disk('local')->makeDirectory('publications');
         Schema::create('publications', function (Blueprint $table) {
             $table->id();

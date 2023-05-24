@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         //Delete files if migrations were not downed correctly
-        $files = Storage::disk('local')->allFiles('news');
+        $files = Storage::disk('local')->allFiles('public/news');
         Storage::delete($files);
 
         //Create the table
