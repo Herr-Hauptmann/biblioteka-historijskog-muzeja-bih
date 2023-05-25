@@ -33,9 +33,25 @@ class PublicationController extends Controller
             'filters' => $request->only(['search']),
         ]);
     }
-    public function list()
+    public function list(Request $request)
     {
-        return 'radi';
+        return Inertia::render('Publications/PublicationsList',[
+            'publications' => Publication::query()
+                ->when($request->input('search'), function ($query, $search){
+                    $query->where('title', 'like', '%'.$search.'%')->orWhere('description', 'like', '%'.$search.'%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(15)
+                ->withQueryString()
+                ->through(fn($publication)=>[
+                    'id' => $publication->id,
+                    'title' => $publication->title,
+                    'description' => $publication->description,
+                    'created_at' => $publication->created_at->format('d.m.Y.'),
+                ]),
+            'filters' => $request->only(['search']),
+            'pdf_icon' => Vite::asset('resources/images/histmuz-pdf-bg.png'),
+        ]);
     }
 
     public function landing()
