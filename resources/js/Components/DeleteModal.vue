@@ -28,7 +28,7 @@ let destroy = function (id) {
 
 <template>
     <!-- MODAL -->
-    <TransitionRoot appear :show="deleteInfo.isOpen" as="template">
+    <TransitionRoot v-if="deleteInfo" appear :show="deleteInfo.isOpen" as="template">
         <Dialog as="div" @close="setIsOpen(false)" class="relative z-10">
             <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
                 leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
