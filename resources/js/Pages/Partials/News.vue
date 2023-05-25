@@ -25,7 +25,7 @@ load()
         <div class="container mx-auto px-7 my-4">
             <h2 class="text-6xl mt-12 mb-5">Priče iz biblioteke</h2>
             <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto pb-6">
-                <div class="border-t border-gray-200 py-3 md:flex justify-center">
+                <div class="py-3 md:flex justify-center px-2">
                     <NewsCard class="m-3" v-for="article in news" :key="article.id" :title="article.title" :image="article.image_path"
                     :description="article.description" :link="route('news.show', article.id)" />
                 </div>
