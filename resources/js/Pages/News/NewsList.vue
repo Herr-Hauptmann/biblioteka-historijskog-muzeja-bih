@@ -21,21 +21,6 @@ let paginationData = computed(() => {
     delete pag.data;
     return pag;
 });
-
-//DELETE
-let deleteInfo = reactive({
-    id: null,
-    deleteMessage: 'priču iz biblioteke s naslovom ',
-    deleteRoute: 'news.destroy',
-    isOpen: false,
-})
-
-function processDelete(newsTitle, newsId) {
-    deleteInfo.id = newsId;
-    deleteInfo.deleteMessage = 'priču iz biblioteke s naslovom "' + newsTitle + '"';
-    deleteInfo.isOpen = true
-}
-
 defineOptions({ layout: GuestLayout })
 </script>
 
