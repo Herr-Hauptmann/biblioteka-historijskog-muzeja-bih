@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import NewsCard from "@/Components/NewsCard.vue"
+import NewsCard from "@/Components/ImageCard.vue"
 import { Head } from "@inertiajs/inertia-vue3";
 defineOptions({ layout: GuestLayout });
 

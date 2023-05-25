@@ -4,7 +4,7 @@ import Pagination from "@/Shared/Pagination.vue"
 import { computed, reactive } from "vue"
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue"
-import NewsCard from "@/Components/NewsCard.vue"
+import NewsCard from "@/Components/ImageCard.vue"
 
 
 let props = defineProps({
