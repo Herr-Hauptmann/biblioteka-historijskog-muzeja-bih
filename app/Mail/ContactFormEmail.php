@@ -50,6 +50,7 @@ class ContactFormEmail extends Mailable
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'question' => $this->question,
+                'ref' => 'mailto:'.$this->email.'?subject=Odgovor%20na%20upit',
             ]
         );
     }
