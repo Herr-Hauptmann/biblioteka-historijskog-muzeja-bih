@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\EmailController;
 
 // Middleware
 use Illuminate\Foundation\Application;
@@ -69,5 +70,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+//Email routes
+Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('email.send');
+Route::get('/success', [EmailController::class, 'success'])->name('email.success');
+Route::get('/error', [EmailController::class, 'error'])->name('email.error');
 
 require __DIR__.'/auth.php';
