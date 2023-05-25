@@ -170,7 +170,7 @@ const solutions = [
   { 
     name: 'Pošalji upit', 
     description: 'Postavite nam pitanje', 
-    href: "#", 
+    href: route('contact'), 
     icon: QuestionMarkCircleIcon
   },
   {
@@ -198,7 +198,7 @@ const resources = [
   { 
     name: 'Pošalji upit', 
     description: 'Postavite nam pitanje', 
-    href: "#", 
+    href: route('contact'), 
     icon: QuestionMarkCircleIcon
   },
   {

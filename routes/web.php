@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 Route::get('/', [HomeController::class, 'index'])->name('home'); 
 Route::get('/about', [HomeController::class, 'about'])->name('about'); 
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq'); 
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact'); 
 
 //Books routes
 Route::get('/books/list', [BookController::class, 'list'])->name('books.list');

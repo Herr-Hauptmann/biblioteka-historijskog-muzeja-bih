@@ -22,7 +22,7 @@ import {Link} from "@inertiajs/inertia-vue3"
                     <Link :href="route('faq')" class="mr-4 hover:underline md:mr-6 ">FAQ</Link>
                 </li>
                 <li>
-                    <Link :href="route('home')" class="hover:underline">Kontakt</Link>
+                    <Link :href="route('contact')" class="hover:underline">Kontakt</Link>
                 </li>
             </ul>
         </div>

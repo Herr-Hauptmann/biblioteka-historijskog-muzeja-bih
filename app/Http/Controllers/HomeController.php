@@ -48,4 +48,8 @@ class HomeController extends Controller
             'photo_url' => Vite::asset('resources/images/about/slika1-min.JPG'),
         ]);
     }
+    
+    public function contact(){
+        return Inertia::render('Contact');
+    }
 }
