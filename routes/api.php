@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PublicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/news/latest', [NewsController::class, 'latest'])->name('news.latest');
 Route::get('/news/landing', [NewsController::class, 'landing'])->name('news.landing');
+
+Route::get('/publications/landing', [PublicationController::class, 'landing'])->name('publications.landing');

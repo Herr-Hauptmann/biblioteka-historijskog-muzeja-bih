@@ -38,6 +38,20 @@ class PublicationController extends Controller
         return 'radi';
     }
 
+    public function landing()
+    {
+        $latest['data'] = Publication::latest()->take(4)->get(['id','title', 'description']);
+        $latest['image_path'] = Vite::asset('resources/images/histmuz-pdf-bg.png');
+        return response()->json($latest);
+    }
+    
+    public function show($id)
+    {
+        return Inertia::render('Publications/PublicationsShow',[
+            'id' => $id,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Publications/PublicationsCreate');
@@ -69,7 +83,7 @@ class PublicationController extends Controller
         return Storage::download($path, $slug, $headers);
     }
 
-    public function show($publication)
+    public function get($publication)
     {
         $publication = Publication::findOrFail($publication);
         $file =  Storage::path($publication->file_path);

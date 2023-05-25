@@ -60,8 +60,8 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 //Publications routes
 Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');
+Route::get('/publications/get/{id}', [PublicationController::class, 'get'])->name('publications.get');
 Route::get('/publications/{id}', [PublicationController::class, 'show'])->name('publications.show');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
