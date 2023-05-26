@@ -33,11 +33,11 @@ class HomeController extends Controller
 
     public function about(){
         return Inertia::render('About',[
-            'photo1_url' => Vite::asset('resources/images/slika1-min.JPG'),
-            'photo2_url' => Vite::asset('resources/images/slika2-min.JPG'),
-            'photo3_url' => Vite::asset('resources/images/slika3-min.JPG'),
-            'photo4_url' => Vite::asset('resources/images/slika4-min.JPG'),
-            'photo5_url' => Vite::asset('resources/images/slika5-min.JPG'),
+            'photo1_url' => Vite::asset('resources/images/slika1-min.jpg'),
+            'photo2_url' => Vite::asset('resources/images/slika2-min.jpg'),
+            'photo3_url' => Vite::asset('resources/images/slika3-min.jpg'),
+            'photo4_url' => Vite::asset('resources/images/slika4-min.jpg'),
+            'photo5_url' => Vite::asset('resources/images/slika5-min.jpg'),
             'photo6_url' => Vite::asset('resources/images/slika6-min.jpg'),
             'photo7_url' => Vite::asset('resources/images/slika7-min.jpg'),
         ]);
@@ -45,7 +45,7 @@ class HomeController extends Controller
 
     public function faq(){
         return Inertia::render('Faq',[
-            'photo_url' => Vite::asset('resources/images/slika1-min.JPG'),
+            'photo_url' => Vite::asset('resources/images/slika1-min.jpg'),
         ]);
     }
     
