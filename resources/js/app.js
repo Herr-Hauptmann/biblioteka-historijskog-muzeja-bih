@@ -1,6 +1,7 @@
 import '../css/app.css';
 import 'flowbite';
 import.meta.glob([ '../images/**', ]);
+import.meta.glob([ '../images/about/**', ]);
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
