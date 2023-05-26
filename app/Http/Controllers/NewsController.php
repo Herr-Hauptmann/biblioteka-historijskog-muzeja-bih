@@ -90,6 +90,7 @@ class NewsController extends Controller
         ]);
         $type = $validatedRequest['image']->extension();
         $path = $validatedRequest['image']->storeAs('public/news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
+        $path = str_replace("/home/eestecsa/biblioteka/storage/app/public/", "", $path);
         News::create([
             "title" => $validatedRequest["title"],
             "description" => $validatedRequest["description"],
@@ -141,6 +142,7 @@ class NewsController extends Controller
             //Upload new
             $type = $validatedRequest['image']->extension();
             $path = $validatedRequest['image']->storeAs('public/news', substr(Str::slug($validatedRequest["title"], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$type);
+            $path = str_replace("/home/eestecsa/biblioteka/storage/app/public/", "", $path);
         }
 
         $news->title = $validatedRequest["title"];
