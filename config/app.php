@@ -209,6 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Vite' => \Illuminate\Support\Facades\Vite::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
