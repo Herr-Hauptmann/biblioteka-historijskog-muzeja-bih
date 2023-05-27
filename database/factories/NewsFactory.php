@@ -17,6 +17,7 @@ class NewsFactory extends Factory
         $filePath = Storage::path('public/news');
         $imagePath = $this->faker->image($dir = $filePath, $width = 1200, $height = 630);
         $imagePath = str_replace($filePath.'\\', 'news/', $imagePath);
+        $imagePath = str_replace("/home/eestecsa/biblioteka/storage/app/public/", "", $imagePath);
         $article = "<h1>".$this->faker->realText(50)."</h1>";
         $paragraphs = $this->faker->paragraphs(rand(2, 6));
         foreach ($paragraphs as $para) {
