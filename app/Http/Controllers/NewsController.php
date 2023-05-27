@@ -77,7 +77,9 @@ class NewsController extends Controller
 
     public function create()
     {
-        return Inertia::render('News/NewsCreate');
+        return Inertia::render('News/NewsCreate', [
+            "apikey" => env('TINY_API_KEY'),
+        ]);
     }
 
     public function store(Request $request)
@@ -121,6 +123,7 @@ class NewsController extends Controller
         return Inertia::render('News/NewsEdit',[
             'news' => $news,
             'image_path' => Storage::url($news->image_path),
+            "apikey" => env('TINY_API_KEY'),
         ]);
     }
 

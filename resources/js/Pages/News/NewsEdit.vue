@@ -7,13 +7,14 @@ import FormInputLabel from "@/Components/FormInputLabel.vue"
 import { Head } from '@inertiajs/inertia-vue3'
 import {useForm } from "@inertiajs/inertia-vue3"
 import { reactive, ref } from '@vue/reactivity'
-import * as editor from '@ckeditor/ckeditor5-build-classic'
+import Editor from '@tinymce/tinymce-vue'
 
 defineOptions({ layout: AuthenticatedLayout })
 
 const props = defineProps({
     news: Object,
     image_path: String,
+    apikey:String,
 })
 
 let form = useForm({
@@ -32,8 +33,6 @@ let width = computed(()=>{
     let value = "width: " + form.progress.percentage + '%';
     return value;
 });
-
-const editor_config = {removePlugins: [ 'ImageUpload', 'EasyImage'],};
 </script>
 
 <template>
@@ -78,11 +77,9 @@ const editor_config = {removePlugins: [ 'ImageUpload', 'EasyImage'],};
                             </div>
                             <div>
                                 <FormInputLabel what="article" msg="Sadržaj priče"/>
-                                <ckeditor
-                                v-model="form.article"
-                                :editor="editor"
-                                :config="editor_config"
-                                ></ckeditor>
+                                <Editor v-model="form.article" :api-key="apikey" :init="{
+                                    plugins: 'lists link image table code wordcount'
+                                }" />
                             </div>
                         </div>      
 
