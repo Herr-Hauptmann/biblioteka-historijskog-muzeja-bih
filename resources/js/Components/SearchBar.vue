@@ -22,7 +22,7 @@ watch(search, debounce (function (value){
 </script>
 
 <template>
-    <div class="p-4 bg-white dark:bg-gray-900">
+    <div class="p-2 md:p-4 bg-white dark:bg-gray-900">
         <label for="table-search" class="sr-only">Pretraga</label>
         <div class="relative mt-1">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

@@ -34,7 +34,7 @@ let paginationData = computed(() => {
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg m-1">
                 <!-- Search bar -->
-                <div class="py-2 md:py-5 sm:px-6 flex justify-between items-center">
+                <div class="py-1 md:py-5 sm:px-6 flex justify-between items-center">
                     <SearchBar v-if="!what" :placeholder="placeholder" :filters="filters" :path="path" />
                     <BackButton />
                 </div>
@@ -88,7 +88,7 @@ let paginationData = computed(() => {
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ book.location_published }}
                                 </td>
-                                <td class="py-4 px-6 hidden md:table-cell">
+                                <td class="py-4 px-6">
                                     {{ book.year_published }}
                                 </td>
 
