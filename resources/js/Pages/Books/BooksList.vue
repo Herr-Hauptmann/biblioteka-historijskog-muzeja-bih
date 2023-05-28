@@ -63,7 +63,7 @@ let paginationData = computed(() => {
                                     </div>
                                 </th>
                                 <th>
-                                    <div class="flex items-center">
+                                    <div class="flex items-center text-center">
                                         Godina izdavanja
                                     </div>
                                 </th>
@@ -88,7 +88,7 @@ let paginationData = computed(() => {
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ book.location_published }}
                                 </td>
-                                <td class="py-4 px-6">
+                                <td class="py-4 px-6 text-center">
                                     {{ book.year_published }}
                                 </td>
 
