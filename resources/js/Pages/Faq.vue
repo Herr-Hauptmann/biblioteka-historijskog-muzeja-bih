@@ -55,11 +55,11 @@ const questions = [
                     </h2>
                     <Disclosure v-for="question in questions" :key="question.title" as="div" class="mt-2" v-slot="{ open }">
                         <DisclosureButton
-                            class="flex w-full justify-between rounded-lg bg-grey-100 px-4 py-2 text-left text-sm font-medium text-grey-900 hover:bg-slate-700 hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-grey-500 focus-visible:ring-opacity-75">
+                            class="flex w-full justify-between rounded-lg bg-grey-100 px-4 py-2 text-left text-lg font-medium text-grey-900 hover:bg-slate-700 hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-grey-500 focus-visible:ring-opacity-75">
                             <span>{{question.title}}</span>
                             <ChevronUpIcon :class="open ? 'rotate-180 transform' : ''" class="h-5 w-5 text-grey-500" />
                         </DisclosureButton>
-                        <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
+                        <DisclosurePanel class="px-4 pt-4 pb-2 text-lg text-gray-500">
                             {{question.answer}}
                         </DisclosurePanel>
                     </Disclosure>
