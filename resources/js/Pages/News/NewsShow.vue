@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import NewsCard from "@/Components/ImageCard.vue"
 import { Head } from "@inertiajs/inertia-vue3";
@@ -9,6 +10,51 @@ let props = defineProps({
     image: String,
     latest: Object,
 });
+
+//Add font styles to article
+onMounted(() => {
+    let naslovi = document.querySelectorAll('h1');
+    naslovi.forEach(element => {
+        element.classList.add("text-6xl");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+        
+    });
+    naslovi = document.querySelectorAll('h2');
+    naslovi.forEach(element => {
+        element.classList.add("text-5xl");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+    });
+
+    naslovi = document.querySelectorAll('h3');
+    naslovi.forEach(element => {
+        element.classList.add("text-4xl");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+    });
+
+    naslovi = document.querySelectorAll('h4');
+    naslovi.forEach(element => {
+        element.classList.add("text-2xl");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+    });
+
+    naslovi = document.querySelectorAll('h5');
+    naslovi.forEach(element => {
+        element.classList.add("text-xl");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+    });
+
+    naslovi = document.querySelectorAll('h6');
+    naslovi.forEach(element => {
+        element.classList.add("text-lg");
+        element.classList.add("font-bold");
+        element.classList.add("tracking-tight");
+    });
+})
 
 </script>
 
