@@ -5,6 +5,7 @@ import { computed, reactive } from "vue"
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import ImageCard from "@/Components/ImageCard.vue"
+import SearchAlert from '@/Components/SearchAlert.vue'
 
 
 let props = defineProps({
@@ -15,7 +16,7 @@ let props = defineProps({
 
 //Search
 const placeholder = "Pretraži publikacije"
-const path = "publication.list"
+const path = "publications.list"
 
 let paginationData = computed(() => {
     let pag = JSON.parse(JSON.stringify(props.publications));
@@ -35,15 +36,16 @@ defineOptions({ layout: GuestLayout })
                 <!-- Search bar -->
                 <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
                 <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto pb-6">
-                    <div class="border-t border-gray-200 py-3 md:flex justify-center">
+                    <div v-if="publications.total" class="border-t border-gray-200 py-3 md:flex justify-center">
                         <div class="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
                             <ImageCard class="m-3" v-for="publication in publications.data" :key="publication.id" :title="publication.title"
                                 :image="pdf_icon" :description="publication.description"
                                 :link="route('publications.show', publication.id)" />
                         </div>
                     </div>
+                    <SearchAlert v-else :filter="filters.search"/>
                 </div>
-                <Pagination :data="paginationData" />
+                <Pagination v-if="publications.total" :data="paginationData" />
             </div>
         </div>
     </div>

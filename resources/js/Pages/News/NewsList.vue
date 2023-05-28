@@ -5,6 +5,7 @@ import { computed, reactive } from "vue"
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import NewsCard from "@/Components/ImageCard.vue"
+import SearchAlert from '@/Components/SearchAlert.vue'
 
 
 let props = defineProps({
@@ -33,15 +34,16 @@ defineOptions({ layout: GuestLayout })
                 <!-- Search bar -->
                 <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
                 <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto pb-6">
-                    <div class="border-t border-gray-200 py-3 md:flex justify-center">
+                    <div v-if="news.total" class="border-t border-gray-200 py-3 md:flex justify-center">
                         <div class="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
                             <NewsCard class="m-3" v-for="article in news.data" :key="article.id" :title="article.title"
                                 :image="article.image_path" :description="article.description"
                                 :link="route('news.show', article.id)" />
                         </div>
                     </div>
+                    <SearchAlert v-else :filter="filters.search"/>
                 </div>
-                <Pagination :data="paginationData" />
+                <Pagination v-if="news.total" :data="paginationData" />
             </div>
         </div>
     </div>
