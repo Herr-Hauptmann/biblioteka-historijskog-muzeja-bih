@@ -133,6 +133,7 @@ import {ref} from 'vue';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
 import {
   MagnifyingGlassIcon,
+  BookOpenIcon,
   Bars3Icon,
   XMarkIcon,
   InformationCircleIcon,
@@ -161,6 +162,18 @@ const solutions = [
     href: route('about'), 
     icon: InformationCircleIcon
   },
+  {
+    name: 'Vortuelna biblioteka',
+    description: 'Pogledajte online sadržaj biblioteke',
+    href: route('publications.list'),
+    icon: BookOpenIcon,
+  },
+  {
+    name: 'FAQ',
+    description: 'Odgovori na često postavljena pitanja',
+    href: route('faq'),
+    icon: LightBulbIcon,
+  },
   // {
   //   name: 'Pridruži se',
   //   description: 'Postanite član naše biblioteke',
@@ -173,18 +186,7 @@ const solutions = [
     href: route('contact'), 
     icon: QuestionMarkCircleIcon
   },
-  {
-    name: 'FAQ',
-    description: 'Odgovori na često postavljena pitanja',
-    href: route('faq'),
-    icon: LightBulbIcon,
-  },
-  // {
-  //   name: 'Doniraj knjigu',
-  //   description: 'Doprinesite našoj biblioteci',
-  //   href: '#',
-  //   icon: BookOpenIcon,
-  // },
+  
 ]
 
 //Full size navbar content
@@ -195,11 +197,11 @@ const resources = [
   //   href: '#',
   //   icon: PencilIcon,
   // },
-  { 
-    name: 'Pošalji upit', 
-    description: 'Postavite nam pitanje', 
-    href: route('contact'), 
-    icon: QuestionMarkCircleIcon
+  {
+    name: 'Virtuelna biblioteka',
+    description: 'Pogledajte online sadržaj biblioteke',
+    href: route('publications.list'),
+    icon: BookOpenIcon,
   },
   {
     name: 'FAQ',
@@ -207,12 +209,14 @@ const resources = [
     href: route('faq'),
     icon: LightBulbIcon,
   },
-  // {
-  //   name: 'Doniraj knjigu',
-  //   description: 'Doprinesite našoj biblioteci',
-  //   href: '#',
-  //   icon: BookOpenIcon,
-  // },
+  { 
+    name: 'Pošalji upit', 
+    description: 'Postavite nam pitanje', 
+    href: route('contact'), 
+    icon: QuestionMarkCircleIcon
+  },
+  
+  
 ]
 
 //Most recent news
