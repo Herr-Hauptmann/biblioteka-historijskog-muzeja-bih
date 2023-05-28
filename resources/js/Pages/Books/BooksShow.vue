@@ -36,13 +36,10 @@ console.log(props.related);
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">
                                 <li v-for="author in book.authors" class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                                    <div class="flex w-0 flex-1 items-center">
+                                    <Link :href="route('authors.show', author.id)" class="flex w-0 flex-1 items-center">
                                         <UserIcon class="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                        <span class="ml-2 w-0 flex-1 truncate">{{author.name}}</span>
-                                    </div>
-                                    <div class="ml-4 flex-shrink-0">
-                                        <Link :href="route('authors.show', author.id)" class="font-medium text-indigo-600 hover:text-indigo-500">Pregledaj ostala djela autora</Link>
-                                    </div>
+                                        <span class="ml-2 w-0 flex-1 truncate font-medium text-indigo-600 hover:text-indigo-500">{{author.name}}</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </dd>
