@@ -15,7 +15,7 @@ let props = defineProps({
 
 //Search
 const placeholder = "Pretraži publikacije"
-const path = "publication.index"
+const path = "publication.list"
 
 let paginationData = computed(() => {
     let pag = JSON.parse(JSON.stringify(props.publications));
