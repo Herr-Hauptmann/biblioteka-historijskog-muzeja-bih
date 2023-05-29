@@ -51,7 +51,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'flash' => [
                 'message' => Session::get('message')
-            ]
+            ],
+            'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
         ]);
     }
 }

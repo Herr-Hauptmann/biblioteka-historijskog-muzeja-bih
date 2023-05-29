@@ -1,5 +1,8 @@
 <script setup>
 import {useForm } from "@inertiajs/inertia-vue3"
+import { useReCaptcha } from "vue-recaptcha-v3"
+import InputError from "@/Components/InputError.vue"
+import { onUpdated } from 'vue'
 
 let form = useForm({
   name: '',
@@ -8,11 +11,27 @@ let form = useForm({
   email: '',
   phone: '',
   message: '',
+  captcha_token : null,
 })
+
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
+    const recaptcha = async () => {
+      await recaptchaLoaded()
+      form.captcha_token = await executeRecaptcha('login')
+      submit();
+    }
 
 const submit = () => {
   form.post(route('email.send'))
 }
+
+onUpdated(() => {
+    console.log(form)
+    if (form.hasErrors)
+    {
+        document.getElementById('contactForm').scrollIntoView();
+    }
+})
 
 </script>
 
@@ -61,53 +80,59 @@ const submit = () => {
                 </div>
             </div>
             <div>
-                <form @submit.prevent="submit" class="mx-auto mt-16 max-w-xl sm:mt-20">
+                <form @submit.prevent="recaptcha" class="mx-auto mt-16 max-w-xl sm:mt-20" id="contactForm">
                     <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                         <div>
                             <label for="first-name" class="block text-sm font-semibold leading-6 text-gray-900">Ime</label>
                             <div class="mt-2.5">
-                                <input type="text" v-model="form.name" id="first-name" autocomplete="given-name"
+                                <input type="text" v-model="form.name" id="first-name" autocomplete="given-name" required
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.name" />
+                                </div>
                         </div>
                         <div>
                             <label for="last-name" class="block text-sm font-semibold leading-6 text-gray-900">Prezime</label>
                             <div class="mt-2.5">
-                                <input type="text" v-model="form.lastname" id="last-name" autocomplete="family-name"
+                                <input type="text" v-model="form.lastname" id="last-name" autocomplete="family-name" required
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.lastname" />
+                                </div>
                         </div>
                         <div class="sm:col-span-2">
                             <label for="company" class="block text-sm font-semibold leading-6 text-gray-900">Institucija</label>
                             <div class="mt-2.5">
                                 <input type="text" v-model="form.institution" name="company" id="company" autocomplete="organization"
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.institution" />
+                                </div>
                         </div>
                         <div class="sm:col-span-2">
                             <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email adresa</label>
                             <div class="mt-2.5">
-                                <input type="email" v-model="form.email" name="email" id="email" autocomplete="email"
+                                <input type="email" v-model="form.email" name="email" id="email" autocomplete="email" required
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.email" />
+                                </div>
                         </div>
                         <div class="sm:col-span-2">
                             <label for="phone-number" class="block text-sm font-semibold leading-6 text-gray-900">Broj telefona</label>
                             <div class="relative mt-2.5">
-                                <input type="tel" v-model="form.phone" name="phone-number" id="phone-number" autocomplete="tel"
+                                <input type="tel" v-model="form.phone" name="phone-number" id="phone-number" autocomplete="tel" required
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" message="Molimo da koristite +387xxxxxxxx ili 06x/xxx-xxx format" v-if="form.errors.phone" />
+                                </div>
                         </div>
                         <div class="sm:col-span-2">
                             <label for="message" class="block text-sm font-semibold leading-6 text-gray-900">Sadržaj poruke</label>
                             <div class="mt-2.5">
                                 <textarea v-model="form.message" name="message" id="message" rows="4"
                                     class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.message" />
+                                </div>
                         </div>
                     </div>
                     <div class="mt-10">
-                        <button type="submit"
+                        <button type="submit" preserve-scroll
                             class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Pošalji poruku</button>
                     </div>
                 </form>
@@ -116,4 +141,6 @@ const submit = () => {
     </div>
 </template>
 
-<style scoped></style>
+<style>
+
+</style>

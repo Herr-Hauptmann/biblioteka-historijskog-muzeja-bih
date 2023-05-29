@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\Recaptcha;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailNotify;
 use Inertia\Inertia;
@@ -14,6 +15,15 @@ class EmailController extends Controller
 {
     public function sendEmail(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'name' => ['required', 'max:50'],
+            'lastname' => ['required', 'max:50'],
+            'institution' => ['nullable', 'max:50'],
+            'email' => ['required', 'max:100','email'],
+            'phone' => ['required', 'regex:/[0-9+\/-]/', 'max:13'],
+            'message' => ['required', 'max:2000'],
+            'captcha_token'  => [new Recaptcha],
+        ]);
         $reveiverEmailAddress = "tarik.horoz@gmail.com";
         if (Mail::to($reveiverEmailAddress)->send(new ContactFormEmail($request))) {
             return redirect()->route("email.success");

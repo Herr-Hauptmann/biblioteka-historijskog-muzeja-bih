@@ -32,4 +32,8 @@ import Footer from "@/Shared/Footer.vue";
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
 }
+
+.grecaptcha-badge { 
+    visibility: hidden;
+}
 </style>
