@@ -13,13 +13,13 @@ This thesis describes the development of a web application for the Library of th
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/your-laravel-project.git
+   git clone https://github.com/Herr-Hauptmann/biblioteka-historijskog-muzeja-bih
    ```
 
 2. **Navigate to the project directory**
 
    ```bash
-   cd your-laravel-project
+   cd biblioteka-historijskog-muzeja-bih
    ```
 
 3. **Install dependencies**
@@ -56,19 +56,26 @@ This thesis describes the development of a web application for the Library of th
 
 8. **Run the database migrations (optional)**
 
-   If your project uses database migrations, run the following command:
+   Run the following commands to start the migrations and seed the database:
 
    ```bash
    php artisan migrate
+   php artisan db:seed
    ```
 
-9. **Start the Laravel development server**
+9. **Compile assets with Vite**
+
+   ```bash
+   npm run dev
+   ```
+
+10. **Start the Laravel development server**
 
    ```bash
    php artisan serve
    ```
 
-   Your Laravel project should now be accessible at `http://localhost:8000`.
+   The project should now be accessible at `http://localhost:8000`.
 
 ## Usage
 
