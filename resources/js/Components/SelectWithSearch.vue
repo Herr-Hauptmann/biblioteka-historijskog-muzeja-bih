@@ -15,7 +15,7 @@ const props = defineProps({
     what: String,
 })
 
-let selected = ref(props.content[0])
+let selected = ref(null)
 let query = ref('')
 
 const queryItem = computed(() => {
@@ -23,8 +23,8 @@ const queryItem = computed(() => {
   })
 
 let filteredPeople = computed(() =>
-  query.value === ''
-    ? props.content
+  query.value.length <= 2
+    ? []
     : props.content.filter((item) =>
         item.name
           .toLowerCase()
@@ -40,11 +40,9 @@ watch(selected, ()=>{
 })
 
 let addBackground = function(){
-  document.getElementById("create").parentElement.parentElement.classList.add('hover');
   document.getElementById("create").parentElement.classList.add('hover');
 }
 let removeBackground = function(){
-  document.getElementById("create").parentElement.parentElement.classList.remove('hover');
   document.getElementById("create").parentElement.classList.remove('hover');
 }
 </script>
@@ -79,8 +77,8 @@ let removeBackground = function(){
               class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
               <div
-                v-if="filteredPeople.length === 0 && query !== ''"
-                class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                v-if="query !== ''"
+                class="relative cursor-default select-none py-2 px-4 text-gray-700 rounded-none"
               >
               <ComboboxOption v-if="queryItem" :value="queryItem" id="create" @mouseover="addBackground" @mouseleave="removeBackground">
                 Kreiraj {{ what }}: "{{ query }}"
@@ -95,7 +93,7 @@ let removeBackground = function(){
                 v-slot="{ selected, active }"
               >
                 <li
-                  class="relative cursor-default select-none py-2 pl-10 pr-4"
+                  class="relative cursor-default select-none py-2 px-4"
                   :class="{
                     'bg-teal-600 text-white': active,
                     'text-gray-900': !active,
