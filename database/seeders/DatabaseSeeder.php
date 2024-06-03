@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
         $this->call([
-            AuthorSeeder::class,
-            KeywordSeeder::class,
+            // AuthorSeeder::class,
+            // KeywordSeeder::class,
             // //Very important for book seeder to be after keyword and author seeder
-            BookSeeder::class,
-            PublicationSeeder::class,
-            NewsSeeder::class
+            // BookSeeder::class,
+            // PublicationSeeder::class,
+            // NewsSeeder::class
         ]);
 
     }
