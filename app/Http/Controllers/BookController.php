@@ -204,11 +204,12 @@ class BookController extends Controller
         // redirect('/dashboard')->with('success', 'Knjige uspješno spašene!');
     }
 
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $validated = $request->validate([
-            "sheet" => "required|file|mimes:xlsx",
+         "sheet" => "required|file|mimes:xlsx",
         ]);
+    
         Excel::import(new BooksImport, request()->file('sheet'));
         return redirect('/dashboard')->with('message', 'Učitavanje podataka uspiješno!');
     }

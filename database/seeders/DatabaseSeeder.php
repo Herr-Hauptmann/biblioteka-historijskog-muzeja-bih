@@ -23,6 +23,5 @@ class DatabaseSeeder extends Seeder
             // PublicationSeeder::class,
             // NewsSeeder::class
         ]);
-
     }
 }
