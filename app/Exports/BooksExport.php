@@ -21,7 +21,7 @@ class BooksExport implements FromQuery, WithChunkReading, WithHeadings, ShouldAu
 
     public function chunkSize(): int
     {
-        return 1000; // Adjust the chunk size as necessary
+        return 5000; // Adjust the chunk size as necessary
     }
 
     public function headings(): array
