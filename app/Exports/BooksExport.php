@@ -9,11 +9,23 @@ use App\Http\Services\BookService;
 
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class BooksExport implements FromQuery, WithChunkReading, WithHeadings, ShouldAutoSize
+class BooksExport implements FromQuery, WithChunkReading, WithMapping, WithHeadings, ShouldAutoSize
 {
+    protected $authorService;
+    protected $keywordService;
+    protected $bookService;
+
+    public function __construct()
+    {
+        $this->authorService = new AuthorService();
+        $this->keywordService = new KeywordService();
+        $this->bookService = new BookService();
+    }
+
     public function query()
     {
         return Book::query()->with('authors', 'keywords');
@@ -21,7 +33,7 @@ class BooksExport implements FromQuery, WithChunkReading, WithHeadings, ShouldAu
 
     public function chunkSize(): int
     {
-        return 5000; // Adjust the chunk size as necessary
+        return 1000; // Adjust the chunk size as necessary
     }
 
     public function headings(): array
@@ -39,18 +51,14 @@ class BooksExport implements FromQuery, WithChunkReading, WithHeadings, ShouldAu
 
     public function map($book): array
     {
-        $authorService = new AuthorService();
-        $keywordService = new KeywordService();
-        $bookService = new BookService();
-
         return [
-            'id' => $book->id,
-            'signature' => $book->signature,
-            'authors' => $authorService->listAuthors($book->authors),
-            'title' => $book->title,
-            'publishing' => $bookService->getPublishing($book),
-            'keywords' => $keywordService->listKeywords($book->keywords),
-            'inventory_number' => $book->inventory_number,
+            'redni_broj' => $book->id,
+            'signatura' => $book->signature,
+            'pisac' => $this->authorService->listAuthors($book->authors),
+            'naziv_djela' => $book->title,
+            'mjesto_izdavac_godina' => $this->bookService->getPublishing($book),
+            'kljucne_rijeci' => $this->keywordService->listKeywords($book->keywords),
+            'inventarni_broj' => $book->inventory_number,
         ];
     }
 }
