@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 import NewsCard from "@/Components/ImageCard.vue"
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineOptions({ layout: GuestLayout });
 
 let props = defineProps({

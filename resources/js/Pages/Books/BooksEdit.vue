@@ -2,8 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import InputError from "@/Components/InputError.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
-import { Head } from '@inertiajs/inertia-vue3'
-import {useForm } from "@inertiajs/inertia-vue3"
+import { Head } from '@inertiajs/vue3'
+import {useForm } from "@inertiajs/vue3"
 import SelectWithSearch from "@/Components/SelectWithSearch.vue"
 import { ref, onMounted } from 'vue'
 import { XMarkIcon } from "@heroicons/vue/24/solid"

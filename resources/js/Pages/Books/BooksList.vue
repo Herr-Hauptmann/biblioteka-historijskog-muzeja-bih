@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 import Pagination from "@/Shared/Pagination.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue"

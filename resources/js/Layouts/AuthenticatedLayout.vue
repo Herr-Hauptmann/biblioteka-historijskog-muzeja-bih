@@ -1,6 +1,6 @@
 <script setup>
 import Navigation from "@/Components/Navigation.vue";
-import { usePage } from '@inertiajs/inertia-vue3' 
+import { usePage } from '@inertiajs/vue3' 
 import { ref, watch } from 'vue'
 import SuccessAlert from "@/Components/SuccessAlert.vue"
 
