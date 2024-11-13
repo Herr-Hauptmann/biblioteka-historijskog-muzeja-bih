@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import debounce from 'lodash/debounce';
-import {Inertia} from "@inertiajs/inertia";
+import {router} from "@inertiajs/vue3";
 
 let props = defineProps({
     placeholder: String,
@@ -11,7 +11,7 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, debounce (function (value){
-    Inertia.get(route(props.path), {
+    router.get(route(props.path), {
         search: value
     }, {
         preserveState: true,

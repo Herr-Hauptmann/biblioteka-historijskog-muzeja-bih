@@ -50,7 +50,7 @@ class HandleInertiaRequests extends Middleware
                 'logoSmall' => Vite::asset('resources/images/logo-head.png'),
             ],
             'flash' => [
-                'message' => Session::get('message')
+                'message' => fn () => Session::get('message') ?? null,
             ],
             'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
         ]);
