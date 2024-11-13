@@ -1,6 +1,6 @@
 <script setup>
 import ImageCard from "@/Components/ImageCard.vue"
-import {Link} from "@inertiajs/inertia-vue3"
+import {Link} from "@inertiajs/vue3"
 import {ref} from 'vue'
 
 const publications = ref([]);

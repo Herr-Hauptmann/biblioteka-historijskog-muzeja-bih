@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from "vue"
-import {useForm } from "@inertiajs/inertia-vue3"
+import {useForm } from "@inertiajs/vue3"
 const mobileMenuOpen = ref(false)
 
 const props = defineProps({

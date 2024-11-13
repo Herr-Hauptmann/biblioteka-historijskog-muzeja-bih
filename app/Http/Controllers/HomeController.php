@@ -16,7 +16,8 @@ class HomeController extends Controller
     public function index(){
         return Inertia::render('Home',
             [
-                'background_photo_url' => Vite::asset('resources/images/background.jpg')
+                'background_photo_url' => Vite::asset('resources/images/background.jpg'),
+                'recaptcha_site_key' => env('RECAPTCHA_SITE_KEY'),
             ]
         );
     }

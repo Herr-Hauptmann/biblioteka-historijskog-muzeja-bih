@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
+use Tighten\Ziggy\Ziggy;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Session;
 
@@ -50,7 +50,7 @@ class HandleInertiaRequests extends Middleware
                 'logoSmall' => Vite::asset('resources/images/logo-head.png'),
             ],
             'flash' => [
-                'message' => Session::get('message')
+                'message' => fn () => Session::get('message') ?? null,
             ],
             'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
         ]);

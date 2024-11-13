@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/vue3';
 import Landing from './Partials/Landing.vue'
 import News from './Partials/News.vue'
 import Publications from './Partials/Publications.vue'
