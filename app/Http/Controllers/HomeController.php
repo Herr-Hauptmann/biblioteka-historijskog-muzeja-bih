@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use Inertia\Inertia;
-use URL;
-use Illuminate\Support\Facades\Vite;
+
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Vite;
+
 
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Keyword;
-
 
 class HomeController extends Controller
 {
@@ -17,7 +17,7 @@ class HomeController extends Controller
         return Inertia::render('Home',
             [
                 'background_photo_url' => Vite::asset('resources/images/background.jpg'),
-                'recaptcha_site_key' => env('RECAPTCHA_SITE_KEY'),
+                'recaptcha_site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
             ]
         );
     }

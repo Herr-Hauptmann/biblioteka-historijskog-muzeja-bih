@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 // Kontroleri
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
@@ -10,12 +12,6 @@ use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EmailController;
-
-// Middleware
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Vite;
-use Inertia\Inertia;
 
 //Admin panel
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
@@ -59,6 +55,7 @@ Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.sh
 //News routes
 Route::get('/news/list', [NewsController::class, 'list'])->name('news.list');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+
 
 //Publications routes
 Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');

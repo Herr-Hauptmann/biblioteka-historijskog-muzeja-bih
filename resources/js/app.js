@@ -1,12 +1,10 @@
 import '../css/app.css';
-import 'flowbite';
-import.meta.glob([ '../images/**', ]);
+import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';

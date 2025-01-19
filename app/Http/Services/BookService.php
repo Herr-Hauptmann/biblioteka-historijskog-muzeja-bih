@@ -72,9 +72,8 @@ class BookService{
         return false;
     }
     
-    public function getRelated(Book $book){  
-        $authorService = new AuthorService();      
-        $relatedBooks = DB::select(DB::raw("
+    public function getRelated(Book $book){       
+        $relatedBooks = DB::select("
         WITH keywords AS (
             SELECT k.id, k.title 
             FROM 
@@ -110,7 +109,7 @@ class BookService{
           INNER JOIN other_books_keywords bk ON ba.book_id = bk.book_id 
           ORDER BY (ba.numberOfAppearances + bk.numberOfAppearances) DESC
           LIMIT 5;
-        "));
+        ");
         
         $relatedArray =[];
         foreach($relatedBooks as $related){

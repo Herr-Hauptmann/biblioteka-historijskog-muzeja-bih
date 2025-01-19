@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 use App\Models\Keyword;
 
 use App\Http\Services\BookService;
 use App\Http\Services\AuthorService;
+
 
 class KeywordController extends Controller
 {

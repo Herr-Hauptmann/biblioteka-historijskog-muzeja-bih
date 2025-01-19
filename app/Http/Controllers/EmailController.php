@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Rules\Recaptcha;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MailNotify;
-use Inertia\Inertia;
-use Redirect;
 
 use App\Mail\ContactFormEmail;
 

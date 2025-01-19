@@ -19,11 +19,8 @@ class HandleInertiaRequests extends Middleware
 
     /**
      * Determine the current asset version.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
      */
-    public function version(Request $request)
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -31,20 +28,19 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed[]
+     * @return array<string, mixed>
      */
-    public function share(Request $request)
+    public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
+        return [
+            ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
+            'ziggy' => fn () => [
+                ...(new Ziggy)->toArray(),
+                'location' => $request->url(),
+            ],
             'images' => [
                 'logo' => Vite::asset('resources/images/logo.png'),
                 'logoSmall' => Vite::asset('resources/images/logo-head.png'),
@@ -53,6 +49,6 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => Session::get('message') ?? null,
             ],
             'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
-        ]);
+        ];
     }
 }

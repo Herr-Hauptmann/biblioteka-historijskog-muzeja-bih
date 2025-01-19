@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -125,17 +125,19 @@ class BookController extends Controller
         return redirect()->route("books.index")->with('message', 'Uspješno ste kreirali knjigu "'.$book->title .'"!');
     }
 
-    public function show($id, BookService $bookService){
-        $book = Book::with('keywords.books')
-        ->with('authors.books')
-        ->findOrFail($id);
+    public function show($id, BookService $bookService)
+    {
+        // Load the book with necessary relationships
+        $book = Book::with(['keywords', 'authors'])->findOrFail($id);
+
+        // Get related books using the service
         $related = $bookService->getRelated($book);
-        return Inertia::render('Books/BooksShow',
-            [
-                'book' => $book,
-                'related' => $related,
-            ]
-        );
+
+        // Render the page with book and related data
+        return Inertia::render('Books/BooksShow', [
+            'book' => $book,
+            'related' => $related,
+        ]);
     }
 
     public function edit($id){
