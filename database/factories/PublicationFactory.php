@@ -8,14 +8,14 @@ use Illuminate\Http\File;
 
 class PublicationFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         $documentName = 'example'.$this->faker->unique()->randomNumber($nbDigits = NULL, $strict = false).'.pdf';
         $path = Storage::putFileAs('publications/', new File('resources/docs/example.pdf'), $documentName);
         return [
             'title' => $this->faker->unique()->bs,
             'description' => $this->faker->sentence($nbWords = 10, $variableNbWords = true),
-            'file_path' => 'publications/'.$documentName,
+            'file_path' => 'public/publications/'.$documentName,
         ];
     }
 }

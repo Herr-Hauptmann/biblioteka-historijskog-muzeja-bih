@@ -3,12 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    public function run() : void
     {
         User::create([
             'name' => 'Administrator',
@@ -18,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // AuthorSeeder::class,
             // KeywordSeeder::class,
-            // //Very important for book seeder to be after keyword and author seeder
+            //Very important for book seeder to be after keyword and author seeder
             // BookSeeder::class,
             // PublicationSeeder::class,
             // NewsSeeder::class

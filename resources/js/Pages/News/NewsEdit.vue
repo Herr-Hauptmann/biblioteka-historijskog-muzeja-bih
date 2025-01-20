@@ -4,8 +4,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import InputError from "@/Components/InputError.vue"
 import Content from "@/Components/Content.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
-import { Head } from '@inertiajs/inertia-vue3'
-import {useForm } from "@inertiajs/inertia-vue3"
+import { Head } from '@inertiajs/vue3'
+import {useForm } from "@inertiajs/vue3"
 import { reactive, ref } from '@vue/reactivity'
 import Editor from '@tinymce/tinymce-vue'
 

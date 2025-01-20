@@ -1,7 +1,7 @@
 <script setup>
 import Navigation from "@/Components/Navigation.vue";
-import { usePage } from '@inertiajs/inertia-vue3' 
-import { ref, watch } from 'vue'
+import { usePage } from '@inertiajs/vue3' 
+import { ref, computed, watch } from 'vue'
 import SuccessAlert from "@/Components/SuccessAlert.vue"
 
 const isOpen = ref(false)
@@ -10,11 +10,15 @@ function closeModal() {
   isOpen.value = false
 }
 
-watch(() => usePage().props.value.flash.message , (newValue, oldValue) => {
-  if (newValue != null)
-    isOpen.value = true
-  setTimeout(()=>isOpen.value = false, 2000)
-})
+watch(
+  () => usePage().props.flash?.message,
+  (newValue) => {
+    if (newValue) {
+      isOpen.value = true;
+      setTimeout(() => isOpen.value = false, 2000);
+    }
+  }
+);
 </script>
 
 <template>

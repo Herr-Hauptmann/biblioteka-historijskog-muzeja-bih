@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
-use App\Models\Book;
-
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 use App\Http\Services\BookService;
@@ -120,5 +117,4 @@ class AuthorController extends Controller
             'what' => 'autora "'.$author->name.'"',
         ]);
     }
-
 }

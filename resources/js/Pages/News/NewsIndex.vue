@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import Pagination from "@/Shared/Pagination.vue";
 import { computed, reactive } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
@@ -66,7 +66,7 @@ defineOptions({ layout: AuthenticatedLayout })
                     <SearchBar :placeholder="placeholder" :filters="filters" :path="path" />
                     <!-- Table -->
                     <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="py-3 px-6 max-w-18">
                                     Naslov
@@ -99,7 +99,7 @@ defineOptions({ layout: AuthenticatedLayout })
                                 <td class="py-4 px-6 text-right">
                                     <Link :href="route('news.edit', article.id)"
                                         class="font-medium text-blue-600 hover:underline px-2">Uredi</Link>
-                                    <a href="#" @click="processDelete(article.title, article.id)"
+                                    <a href="javascript:void(0)" @click="processDelete(article.title, article.id)"
                                         class="font-medium text-red-600 hover:underline px-2">Obriši
                                     </a>
                                 </td>

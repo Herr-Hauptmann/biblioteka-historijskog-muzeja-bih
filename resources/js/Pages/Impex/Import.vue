@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import Content from '@/Components/Content.vue'
-import { Head, useForm  } from '@inertiajs/inertia-vue3'
+import { Head, useForm  } from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue"
 
 //Layout

@@ -1,7 +1,7 @@
 <script setup>
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import { UserIcon } from '@heroicons/vue/20/solid'
-import {Link} from "@inertiajs/inertia-vue3"
+import {Link} from "@inertiajs/vue3"
 import Card from "@/Components/Card.vue"
 import BackButton from "@/Components/BackButton.vue"
 defineOptions({ layout: GuestLayout })

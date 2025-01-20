@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -91,7 +91,7 @@ class BookController extends Controller
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "year_published" => "nullable|integer|min:1800|max:".date('Y'),
-            "inventory_number" => "required|integer|min:0|unique:books",
+            "inventory_number" => "required|max:255|unique:books",
             "signature" => "required|string|unique:books|max:255",
             "number_of_units" => "required|integer|min:0",
             "publisher" => "nullable|string|max:255",
@@ -125,17 +125,19 @@ class BookController extends Controller
         return redirect()->route("books.index")->with('message', 'Uspješno ste kreirali knjigu "'.$book->title .'"!');
     }
 
-    public function show($id, BookService $bookService){
-        $book = Book::with('keywords.books')
-        ->with('authors.books')
-        ->findOrFail($id);
+    public function show($id, BookService $bookService)
+    {
+        // Load the book with necessary relationships
+        $book = Book::with(['keywords', 'authors'])->findOrFail($id);
+
+        // Get related books using the service
         $related = $bookService->getRelated($book);
-        return Inertia::render('Books/BooksShow',
-            [
-                'book' => $book,
-                'related' => $related,
-            ]
-        );
+
+        // Render the page with book and related data
+        return Inertia::render('Books/BooksShow', [
+            'book' => $book,
+            'related' => $related,
+        ]);
     }
 
     public function edit($id){
@@ -158,7 +160,7 @@ class BookController extends Controller
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "year_published" => "nullable|integer|min:1500|max:".date('Y'),
-            "inventory_number" => "required|integer|min:0",
+            "inventory_number" => "required|max:255",
             "signature" => "required|string|max:255",
             "number_of_units" => "required|integer|min:0",
             "publisher" => "nullable|string|max:255",

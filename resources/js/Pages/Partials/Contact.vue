@@ -1,5 +1,5 @@
 <script setup>
-import {useForm } from "@inertiajs/inertia-vue3"
+import {useForm } from "@inertiajs/vue3"
 import { useReCaptcha } from "vue-recaptcha-v3"
 import InputError from "@/Components/InputError.vue"
 import { onUpdated } from 'vue'

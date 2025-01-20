@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from "vue"
-import {useForm } from "@inertiajs/inertia-vue3"
+import {useForm } from "@inertiajs/vue3"
 const mobileMenuOpen = ref(false)
 
 const props = defineProps({
@@ -71,7 +71,7 @@ const submit = () => {
                       >
                         <svg
                           aria-hidden="true"
-                          class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                          class="w-5 h-5 text-gray-500"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg"
@@ -98,12 +98,12 @@ const submit = () => {
                           w-full
                           pl-10
                           p-2.5
-                          dark:bg-gray-700
-                          dark:border-gray-600
-                          dark:placeholder-gray-400
-                          dark:text-white
-                          dark:focus:ring-blue-500
-                          dark:focus:border-blue-500
+                         
+                         
+                         
+                         
+                         
+                         
                         "
                         placeholder="Pretraži biblioteku"
                         required
@@ -122,9 +122,9 @@ const submit = () => {
                         border border-blue-700
                         hover:bg-blue-800
                         focus:ring-4 focus:outline-none focus:ring-blue-300
-                        dark:bg-blue-600
-                        dark:hover:bg-blue-700
-                        dark:focus:ring-blue-800
+                       
+                       
+                       
                       "
                     >
                       <svg
@@ -167,6 +167,13 @@ const submit = () => {
     -webkit-user-select: none;
     -webkit-user-drag: none;
     user-select: none;
+  }
+}
+
+@media (max-width: 639px)
+{
+  .background {
+    background-image: none !important;
   }
 }
 </style>

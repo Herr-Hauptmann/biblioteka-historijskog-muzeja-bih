@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 import Pagination from "@/Shared/Pagination.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue"
@@ -72,9 +72,9 @@ let paginationData = computed(() => {
                         <tbody>
 
                             <tr v-for="book in books.data" :key="book.id"
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200">
+                                class="bg-white border-b hover:bg-gray-200">
                                 <th scope="row"
-                                    class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap dark:text-white">
+                                    class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap">
                                     <Link :href="route('books.show', book.id)">
                                     {{ book.title }}
                                     </Link>

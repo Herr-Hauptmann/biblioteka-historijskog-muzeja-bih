@@ -4,8 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import InputError from "@/Components/InputError.vue"
 import Content from "@/Components/Content.vue"
 import FormInputLabel from "@/Components/FormInputLabel.vue"
-import { Head } from '@inertiajs/inertia-vue3'
-import {useForm } from "@inertiajs/inertia-vue3"
+import { Head, useForm } from '@inertiajs/vue3'
 
 defineOptions({ layout: AuthenticatedLayout })
 
