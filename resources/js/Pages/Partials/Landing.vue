@@ -169,4 +169,11 @@ const submit = () => {
     user-select: none;
   }
 }
+
+@media (max-width: 639px)
+{
+  .background {
+    background-image: none !important;
+  }
+}
 </style>
