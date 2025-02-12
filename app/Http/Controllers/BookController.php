@@ -24,9 +24,11 @@ class BookController extends Controller
     public function index(Request $request, AuthorService $authorService){
         return Inertia::render('Books/BooksIndex',[
             'books' => Book::query()
-                ->when($request->input('search'), function ($query, $search){
-                    $query->where('title', 'like', '%'.$search.'%');
-                })
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('title', 'like', '%'.$search.'%')
+                      ->orWhere('signature', 'like', '%'.$search.'%')
+                      ->orWhere('inventory_number', 'like', '%'.$search.'%');
+                })            
                 ->with('authors')
                 ->orderBy('title', 'asc')
                 ->paginate($this->perPage)
