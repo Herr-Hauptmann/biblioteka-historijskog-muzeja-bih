@@ -24,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('books', function (Blueprint $table) {
-            //
+            // Re-add unique constraints in case of rollback
+            $table->unique('signature');
+            $table->unique('inventory_number');
         });
     }
 };
