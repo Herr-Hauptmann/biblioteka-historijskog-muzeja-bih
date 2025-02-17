@@ -1,0 +1,1 @@
+import{c as e,o,t as a}from"./app-DaDC-hvW.js";const r=["for"],m={__name:"FormInputLabel",props:{what:String,msg:String},setup(t){return(s,n)=>(o(),e("label",{for:t.what,class:"block mb-2 text-sm font-medium text-gray-900"},a(t.msg),9,r))}};export{m as _};

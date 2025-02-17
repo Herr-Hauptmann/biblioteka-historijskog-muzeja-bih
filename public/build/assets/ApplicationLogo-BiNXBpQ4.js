@@ -1,1 +1,0 @@
-import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as r,o as s}from"./app-B3F6_HyN.js";const c={},n=["src"];function t(o,i){return s(),r("img",{src:o.$page.props.images.logo,alt:"Historijski muzej Bosne i Hercegovine"},null,8,n)}const _=e(c,[["render",t]]);export{_ as A};
