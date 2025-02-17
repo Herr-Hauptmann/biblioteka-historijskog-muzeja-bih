@@ -22,8 +22,8 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         return Inertia::render('Auth/Register',[
-            'logo_url' => Vite::asset('resources/images/logo.png'),
-            'small_logo_url' => Vite::asset('resources/images/logo-head.png'),
+            'logo_url' => asset('images/logo.png'),
+            'small_logo_url' => asset('images/logo-head.png'),
         ]);}
 
     /**

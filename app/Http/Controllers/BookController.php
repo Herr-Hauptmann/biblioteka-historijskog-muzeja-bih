@@ -36,7 +36,7 @@ class BookController extends Controller
                     'title' => $book->title,
                     'signature' => $book->signature,
                     'author' => $authorService->listAuthors($book->authors),
-                    "inventory_number" => "required|max:255|unique:books",
+                    'inventory_number' => $book->inventory_number,
                     ]),
             'filters' => $request->only(['search']),
         ]);
@@ -91,7 +91,7 @@ class BookController extends Controller
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "year_published" => "nullable|integer|min:1800|max:".date('Y'),
-            "inventory_number" => "required|integer|min:0|unique:books",
+            "inventory_number" => "required|max:255|unique:books",
             "signature" => "required|string|unique:books|max:255",
             "number_of_units" => "required|integer|min:0",
             "publisher" => "nullable|string|max:255",

@@ -22,8 +22,8 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
-            'logo_url' => Vite::asset('resources/images/logo.png'),
-            'small_logo_url' => Vite::asset('resources/images/logo-head.png'),
+            'logo_url' => asset('images/logo.png'),
+            'small_logo_url' => asset('images/logo-head.png'),
         ]);
     }
 

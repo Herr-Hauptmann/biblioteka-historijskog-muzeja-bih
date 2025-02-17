@@ -49,14 +49,14 @@ class PublicationController extends Controller
                     'created_at' => $publication->created_at->format('d.m.Y.'),
                 ]),
             'filters' => $request->only(['search']),
-            'pdf_icon' => Vite::asset('resources/images/histmuz-pdf-bg.png'),
+            'pdf_icon' => asset('images/histmuz-pdf-bg.png'),
         ]);
     }
 
     public function landing()
     {
         $latest['data'] = Publication::latest()->take(4)->get(['id','title', 'description']);
-        $latest['image_path'] = Vite::asset('resources/images/histmuz-pdf-bg.png');
+        $latest['image_path'] = asset('images/histmuz-pdf-bg.png');
         return response()->json($latest);
     }
     
@@ -110,7 +110,7 @@ class PublicationController extends Controller
         $publication['file_name'] = Str::slug($publication->title).'.pdf';
         return Inertia::render('Publications/PublicationsEdit',[
             'publication' => $publication,
-            'pdf_icon' => Vite::asset('resources/images/pdf_icon.png'),
+            'pdf_icon' => asset('images/pdf_icon.png'),
         ]);
     }
 
