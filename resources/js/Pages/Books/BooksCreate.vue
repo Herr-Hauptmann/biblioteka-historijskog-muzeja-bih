@@ -22,7 +22,7 @@ let props = defineProps({
 let form = useForm({
   title: '',
   year_published: null,
-  inventory_number: null,
+  inventory_number: '',
   signature: '',
   number_of_units: null,
   publisher: '',
@@ -167,7 +167,7 @@ function changeHeight(value){
                                 <div class="mb-3 grid gap-2 md:grid-cols-2">
                                     <div>
                                         <FormInputLabel what="inventory_number" msg="Inventarni broj"/>
-                                        <input type="number" name="inventory_number" id="inventory_number" v-model="form.inventory_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required>
+                                        <input type="text" name="inventory_number" id="inventory_number" v-model="form.inventory_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required>
                                         <InputError class="mt-2" :message="form.errors.inventory_number" :disabled="form.processing"/>
                                     </div>
                                     <div>
