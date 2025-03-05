@@ -91,8 +91,8 @@ class BookController extends Controller
         $validatedRequest = $request->validate([
             "title" => "required|max:255",
             "year_published" => "nullable|integer|min:1800|max:".date('Y'),
-            "inventory_number" => "required|max:255|unique:books",
-            "signature" => "required|string|unique:books|max:255",
+            "inventory_number" => "required|max:255",
+            "signature" => "required|string|max:255",
             "number_of_units" => "required|integer|min:0",
             "publisher" => "nullable|string|max:255",
             "location_published" => "nullable|string|max:255",
