@@ -38,7 +38,7 @@ const showingNavigationDropdown = ref(false);
                             Ključne riječi
                         </NavLink>
                         <NavLink :href="route('publications.index')" :active="route().current('publications.index')">
-                            Virtuelna biblioteka
+                            Zbornik radova HMBiH
                         </NavLink>
                         <NavLink :href="route('news.index')" :active="route().current('news.index')">
                             Priče iz biblioteke
@@ -136,7 +136,7 @@ const showingNavigationDropdown = ref(false);
                     Ključne riječi
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('publications.index')" :active="route().current('publications.index')">
-                    Virtuelna biblioteka
+                    Zbornik radova HMBiH
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('news.index')" :active="route().current('news.index')">
                     Priče iz biblioteke

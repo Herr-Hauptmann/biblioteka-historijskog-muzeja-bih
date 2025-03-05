@@ -22,7 +22,7 @@ load()
 <template>
     <div class="container mx-auto">
         <div class="container mx-auto px-7 my-4">
-            <h2 class="text-6xl mt-12 mb-5">Virtuelna biblioteka</h2>
+            <h2 class="text-6xl mt-12 mb-5">Zbornik radova HMBiH</h2>
             <div class="overflow-hidden bg-white shadow sm:rounded-lg mx-auto pb-6">
                 <div class="border-gray-200 py-3 md:flex justify-center">
                     <ImageCard class="m-3" v-for="article in publications.data" :key="article.id" :title="article.title" :image="publications.image_path"

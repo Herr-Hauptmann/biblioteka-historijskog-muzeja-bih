@@ -28,7 +28,7 @@ defineOptions({ layout: GuestLayout })
 </script>
 
 <template>
-    <Head title="Virtuelna biblioteka" />
+    <Head title="Zbornik radova HMBiH" />
     <!-- Main content -->
     <div class="pb-12 pt-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

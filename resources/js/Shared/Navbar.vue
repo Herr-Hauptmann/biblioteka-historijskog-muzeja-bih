@@ -198,7 +198,7 @@ const resources = [
   //   icon: PencilIcon,
   // },
   {
-    name: 'Virtuelna biblioteka',
+    name: 'Zbornik radova HMBiH',
     description: 'Pogledajte online sadržaj biblioteke',
     href: route('publications.list'),
     icon: BookOpenIcon,
