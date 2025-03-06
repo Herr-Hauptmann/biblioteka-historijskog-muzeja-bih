@@ -163,7 +163,7 @@ const solutions = [
     icon: InformationCircleIcon
   },
   {
-    name: 'Vortuelna biblioteka',
+    name: ' Zbornik radova HMBiH',
     description: 'Pogledajte online sadržaj biblioteke',
     href: route('publications.list'),
     icon: BookOpenIcon,
