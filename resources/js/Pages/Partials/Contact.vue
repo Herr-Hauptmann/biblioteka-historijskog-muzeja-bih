@@ -26,7 +26,6 @@ const submit = () => {
 }
 
 onUpdated(() => {
-    console.log(form)
     if (form.hasErrors)
     {
         document.getElementById('contactForm').scrollIntoView();

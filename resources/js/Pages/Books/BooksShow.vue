@@ -5,7 +5,7 @@ import {Link} from "@inertiajs/vue3"
 import Card from "@/Components/Card.vue"
 import BackButton from "@/Components/BackButton.vue"
 defineOptions({ layout: GuestLayout })
-const props = defineProps({
+defineProps({
     book: Object,
     related: Object
 })
@@ -15,7 +15,6 @@ const links = [
         url: route('books.index')
     },
 ]
-console.log(props.related);
 </script>
 
 <template>

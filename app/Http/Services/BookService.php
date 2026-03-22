@@ -72,44 +72,44 @@ class BookService{
         return false;
     }
     
-    public function getRelated(Book $book){       
-        $relatedBooks = DB::select("
+    public function getRelated(Book $book){
+        $relatedBooks = DB::select('
         WITH keywords AS (
-            SELECT k.id, k.title 
-            FROM 
-            biblioteka.keywords k
-            INNER JOIN biblioteka.books_keywords bk ON bk.keyword_id = k.id 
-            WHERE bk.book_id = $book->id
+            SELECT k.id, k.title
+            FROM
+            keywords k
+            INNER JOIN books_keywords bk ON bk.keyword_id = k.id
+            WHERE bk.book_id = ?
          ),
          authors AS (
             SELECT a.id, a.name
-            FROM biblioteka.authors a
-            INNER JOIN biblioteka.books_authors ba ON ba.author_id = a.id
-            WHERE ba.book_id = $book->id
+            FROM authors a
+            INNER JOIN books_authors ba ON ba.author_id = a.id
+            WHERE ba.book_id = ?
          ),
          other_books_keywords AS (
             SELECT b.id AS book_id, b.title, Count(b.id) AS numberOfAppearances
             FROM keywords k
-            INNER JOIN biblioteka.books_keywords bk ON bk.keyword_id = k.id 
-            INNER JOIN biblioteka.books b ON b.id = bk.book_id 
+            INNER JOIN books_keywords bk ON bk.keyword_id = k.id
+            INNER JOIN books b ON b.id = bk.book_id
             GROUP BY b.id, b.title
           ),
-        
+
           other_books_authors AS (
             SELECT b.id AS book_id, b.title, COUNT(b.id) AS numberOfAppearances
             FROM authors a
-            INNER JOIN biblioteka.books_authors ba ON ba.author_id = a.id
-            INNER JOIN biblioteka.books b ON b.id = ba.book_id
+            INNER JOIN books_authors ba ON ba.author_id = a.id
+            INNER JOIN books b ON b.id = ba.book_id
             GROUP BY b.id, b.title
           )
-        
+
           SELECT *
-          FROM 
+          FROM
           other_books_authors ba
-          INNER JOIN other_books_keywords bk ON ba.book_id = bk.book_id 
+          INNER JOIN other_books_keywords bk ON ba.book_id = bk.book_id
           ORDER BY (ba.numberOfAppearances + bk.numberOfAppearances) DESC
           LIMIT 5;
-        ");
+        ', [$book->id, $book->id]);
         
         $relatedArray =[];
         foreach($relatedBooks as $related){
