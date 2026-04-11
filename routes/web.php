@@ -10,6 +10,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\AnthologyController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EmailController;
 
@@ -21,8 +22,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('authors', AuthorController::class)->except(['show']);
     Route::resource('keywords', KeywordController::class)->except(['show']);
     Route::resource('publications', PublicationController::class)->except(['show']);
+    Route::get('anthologies/book-info/edit', [AnthologyController::class, 'editBookInfo'])->name('anthologies.book-info.edit');
+    Route::put('anthologies/book-info', [AnthologyController::class, 'updateBookInfo'])->name('anthologies.book-info.update');
+    Route::resource('anthologies', AnthologyController::class)->except(['show']);
     Route::resource('news', NewsController::class)->except(['show']);
     Route::get('publications/{publication}/download', [PublicationController::class, 'download'])->name('publications.download');
+    Route::get('anthologies/{anthology}/download', [AnthologyController::class, 'download'])->name('anthologies.download');
     
     //Import and export data
     Route::get('/dashboard/export', [AdminController::class, 'export'])->name('export');
@@ -61,6 +66,11 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');
 Route::get('/publications/get/{id}', [PublicationController::class, 'get'])->name('publications.get');
 Route::get('/publications/{id}', [PublicationController::class, 'show'])->name('publications.show');
+
+//Anthologies routes
+Route::get('/anthologies/list', [AnthologyController::class, 'list'])->name('anthologies.list');
+Route::get('/anthologies/get/{id}', [AnthologyController::class, 'get'])->name('anthologies.get');
+Route::get('/anthologies/{id}', [AnthologyController::class, 'show'])->name('anthologies.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

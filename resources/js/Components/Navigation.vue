@@ -37,6 +37,9 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('keywords.index')" :active="route().current('keywords.index')">
                             Ključne riječi
                         </NavLink>
+                        <NavLink :href="route('anthologies.index')" :active="route().current('anthologies.index')">
+                            Zbornik radova Historijskog muzeja BiH
+                        </NavLink>
                         <NavLink :href="route('publications.index')" :active="route().current('publications.index')">
                             Virtuelna biblioteka
                         </NavLink>
@@ -134,6 +137,9 @@ const showingNavigationDropdown = ref(false);
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('keywords.index')" :active="route().current('keywords.index')">
                     Ključne riječi
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('anthologies.index')" :active="route().current('anthologies.index')">
+                    Zbornik radova Historijskog muzeja BiH
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('publications.index')" :active="route().current('publications.index')">
                     Virtuelna biblioteka
