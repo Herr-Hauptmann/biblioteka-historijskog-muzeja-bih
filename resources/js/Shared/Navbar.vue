@@ -163,7 +163,13 @@ const solutions = [
     icon: InformationCircleIcon
   },
   {
-    name: ' Zbornik radova HMBiH',
+    name: 'Zbornik radova Historijskog muzeja BiH',
+    description: 'Pregledajte brojeve zbornika u PDF formatu',
+    href: route('anthologies.list'),
+    icon: BookOpenIcon,
+  },
+  {
+    name: 'Virtuelna biblioteka',
     description: 'Pogledajte online sadržaj biblioteke',
     href: route('publications.list'),
     icon: BookOpenIcon,
@@ -198,7 +204,13 @@ const resources = [
   //   icon: PencilIcon,
   // },
   {
-    name: 'Zbornik radova HMBiH',
+    name: 'Zbornik radova Historijskog muzeja BiH',
+    description: 'Pregledajte brojeve zbornika u PDF formatu',
+    href: route('anthologies.list'),
+    icon: BookOpenIcon,
+  },
+  {
+    name: 'Virtuelna biblioteka',
     description: 'Pogledajte online sadržaj biblioteke',
     href: route('publications.list'),
     icon: BookOpenIcon,

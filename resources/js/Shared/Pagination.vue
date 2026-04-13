@@ -36,8 +36,19 @@ defineProps({
             <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
           </Component>
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-          <div v-for="link in data.links" :key="link.label">
-              <Link v-if="(link.label!='Prethodna' && link.label !='Sljedeća')" :href="link.url" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20" :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600' : link.active}">{{link.label}}</Link>
+          <div v-for="(link, index) in data.links" :key="index">
+              <template v-if="index > 0 && index < data.links.length - 1">
+                <Link
+                  v-if="link.url"
+                  :href="link.url"
+                  class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+                  :class="{ 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': link.active }"
+                >{{ link.label }}</Link>
+                <span
+                  v-else
+                  class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-400"
+                >{{ link.label }}</span>
+              </template>
           </div>
           <Component :is="(data.links[data.links.length-1].url) ? Link : 'span'" :href="data.links[data.links.length-1].url" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
             <span class="sr-only">Next</span>
