@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Vite;
 
 class AnthologyController extends Controller
 {
@@ -52,7 +51,7 @@ class AnthologyController extends Controller
                     'created_at' => $anthology->created_at->format('d.m.Y.'),
                 ]),
             'filters' => $request->only(['search']),
-            'pdf_icon' => Vite::asset('resources/images/histmuz-pdf-bg.png'),
+            'pdf_icon' => asset('images/histmuz-pdf-bg.png'),
             'bookInfo' => $this->bookInfoArray(),
         ]);
     }
@@ -60,7 +59,7 @@ class AnthologyController extends Controller
     public function landing()
     {
         $latest['data'] = Anthology::latest()->take(4)->get(['id', 'title', 'description']);
-        $latest['image_path'] = Vite::asset('resources/images/histmuz-pdf-bg.png');
+        $latest['image_path'] = asset('images/histmuz-pdf-bg.png');
         $latest['book_info'] = $this->bookInfoArray();
 
         return response()->json($latest);
@@ -149,7 +148,7 @@ class AnthologyController extends Controller
 
         return Inertia::render('Anthologies/AnthologiesEdit', [
             'anthology' => $anthology,
-            'pdf_icon' => Vite::asset('resources/images/pdf_icon.png'),
+            'pdf_icon' => asset('images/pdf_icon.png'),
         ]);
     }
 
