@@ -169,7 +169,7 @@ const solutions = [
     icon: BookOpenIcon,
   },
   {
-    name: 'Vortuelna biblioteka',
+    name: 'Virtuelna biblioteka',
     description: 'Pogledajte online sadržaj biblioteke',
     href: route('publications.list'),
     icon: BookOpenIcon,
