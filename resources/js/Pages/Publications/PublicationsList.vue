@@ -39,7 +39,7 @@ defineOptions({ layout: GuestLayout })
                     <div v-if="publications.total" class="border-t border-gray-200 py-3 md:flex justify-center">
                         <div class="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
                             <ImageCard class="m-3" v-for="publication in publications.data" :key="publication.id" :title="publication.title"
-                                :image="pdf_icon" :description="publication.description"
+                                :image="publication.cover_image || pdf_icon" :description="publication.description"
                                 :link="route('publications.show', publication.id)" />
                         </div>
                     </div>

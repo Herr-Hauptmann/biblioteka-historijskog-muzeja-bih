@@ -28,6 +28,7 @@ class AnthologyController extends Controller
                     'title' => $anthology->title,
                     'description' => $anthology->description,
                     'created_at' => $anthology->created_at->format('d.m.Y.'),
+                    'cover_image' => $this->coverImageUrl($anthology->cover_image_path, $anthology->id),
                 ]),
             'filters' => $request->only(['search']),
             'bookInfo' => $this->bookInfoArray(),
@@ -49,6 +50,7 @@ class AnthologyController extends Controller
                     'title' => $anthology->title,
                     'description' => $anthology->description,
                     'created_at' => $anthology->created_at->format('d.m.Y.'),
+                    'cover_image' => $this->coverImageUrl($anthology->cover_image_path, $anthology->id),
                 ]),
             'filters' => $request->only(['search']),
             'pdf_icon' => asset('images/histmuz-pdf-bg.png'),
@@ -58,7 +60,13 @@ class AnthologyController extends Controller
 
     public function landing()
     {
-        $latest['data'] = Anthology::latest()->take(4)->get(['id', 'title', 'description']);
+        $latest['data'] = Anthology::latest()->take(4)->get(['id', 'title', 'description', 'cover_image_path'])
+            ->map(fn ($anthology) => [
+                'id' => $anthology->id,
+                'title' => $anthology->title,
+                'description' => $anthology->description,
+                'cover_image' => $this->coverImageUrl($anthology->cover_image_path, $anthology->id),
+            ]);
         $latest['image_path'] = asset('images/histmuz-pdf-bg.png');
         $latest['book_info'] = $this->bookInfoArray();
 
@@ -112,12 +120,21 @@ class AnthologyController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'anthology' => 'required|file|mimes:pdf',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|dimensions:width=600,height=600',
         ]);
         $path = $request->file('anthology')->storeAs('anthologies', substr(Str::slug($validatedRequest['title'], '-'), 0, 21).date('-Y-m-d-H-i').'.pdf');
+        $coverImagePath = null;
+        if ($request->hasFile('cover_image')) {
+            $coverImagePath = $request->file('cover_image')->storeAs(
+                'cover-images/anthologies',
+                substr(Str::slug($validatedRequest['title'], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$request->file('cover_image')->getClientOriginalExtension()
+            );
+        }
         Anthology::create([
             'title' => $validatedRequest['title'],
             'description' => $validatedRequest['description'],
             'file_path' => $path,
+            'cover_image_path' => $coverImagePath,
         ]);
 
         return redirect()->route('anthologies.index')->with('message', 'Uspješno ste dodali broj zbornika radova Historijskog muzeja BiH pod naslovom "'.$validatedRequest['title'].'"!');
@@ -142,13 +159,37 @@ class AnthologyController extends Controller
         return response()->file($file);
     }
 
+    public function cover(Anthology $anthology)
+    {
+        $path = $anthology->cover_image_path;
+        if (empty($path)) {
+            abort(404);
+        }
+
+        if (Storage::exists($path)) {
+            return response()->file(Storage::path($path));
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            return response()->file(Storage::disk('public')->path($path));
+        }
+
+        if (Str::startsWith($path, 'images/') && file_exists(public_path($path))) {
+            return response()->file(public_path($path));
+        }
+
+        abort(404);
+    }
+
     public function edit(Anthology $anthology)
     {
         $anthology['file_name'] = Str::slug($anthology->title).'.pdf';
+        $anthology['cover_image'] = $this->coverImageUrl($anthology->cover_image_path);
 
         return Inertia::render('Anthologies/AnthologiesEdit', [
             'anthology' => $anthology,
             'pdf_icon' => asset('images/pdf_icon.png'),
+            'default_cover' => asset('images/histmuz-pdf-bg.png'),
         ]);
     }
 
@@ -158,17 +199,36 @@ class AnthologyController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'anthology' => 'file|mimes:pdf|nullable',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|dimensions:width=600,height=600',
         ]);
 
         $path = $anthology->file_path;
+        $coverImagePath = $anthology->cover_image_path;
         if ($validatedRequest['anthology'] != null) {
             Storage::delete($path);
             $path = $request->file('anthology')->storeAs('anthologies', substr(Str::slug($validatedRequest['title'], '-'), 0, 21).date('-Y-m-d-H-i').'.pdf');
+        }
+        if ($request->hasFile('cover_image')) {
+            if ($coverImagePath) {
+                if (Storage::exists($coverImagePath)) {
+                    Storage::delete($coverImagePath);
+                } elseif (Storage::disk('public')->exists($coverImagePath)) {
+                    Storage::disk('public')->delete($coverImagePath);
+                } elseif (Str::startsWith($coverImagePath, 'images/') && file_exists(public_path($coverImagePath))) {
+                    unlink(public_path($coverImagePath));
+                }
+            }
+
+            $coverImagePath = $request->file('cover_image')->storeAs(
+                'cover-images/anthologies',
+                substr(Str::slug($validatedRequest['title'], '-'), 0, 21).date('-Y-m-d-H-i').'.'.$request->file('cover_image')->getClientOriginalExtension()
+            );
         }
 
         $anthology->title = $validatedRequest['title'];
         $anthology->description = $validatedRequest['description'];
         $anthology->file_path = $path;
+        $anthology->cover_image_path = $coverImagePath;
         $anthology->save();
 
         return redirect()->route('anthologies.index')->with('message', 'Uspješno ste ažurirali broj zbornika radova Historijskog muzeja BiH pod naslovom "'.$validatedRequest['title'].'"!');
@@ -177,6 +237,15 @@ class AnthologyController extends Controller
     public function destroy(Anthology $anthology)
     {
         Storage::delete($anthology->file_path);
+        if ($anthology->cover_image_path) {
+            if (Storage::exists($anthology->cover_image_path)) {
+                Storage::delete($anthology->cover_image_path);
+            } elseif (Storage::disk('public')->exists($anthology->cover_image_path)) {
+                Storage::disk('public')->delete($anthology->cover_image_path);
+            } elseif (Str::startsWith($anthology->cover_image_path, 'images/') && file_exists(public_path($anthology->cover_image_path))) {
+                unlink(public_path($anthology->cover_image_path));
+            }
+        }
         $title = $anthology->title;
         $anthology->delete();
 
@@ -210,5 +279,19 @@ class AnthologyController extends Controller
             'editor_in_chief' => $b->editor_in_chief,
             'managing_editor' => $b->managing_editor,
         ];
+    }
+
+    private function coverImageUrl(?string $coverImagePath, int $anthologyId): string
+    {
+        if (!empty($coverImagePath)) {
+            if (Storage::exists($coverImagePath) || Storage::disk('public')->exists($coverImagePath)) {
+                return route('anthologies.cover', ['anthology' => $anthologyId]);
+            }
+            if (Str::startsWith($coverImagePath, 'images/') && file_exists(public_path($coverImagePath))) {
+                return asset($coverImagePath);
+            }
+        }
+
+        return asset('images/histmuz-pdf-bg.png');
     }
 }

@@ -73,12 +73,12 @@ defineOptions({ layout: AuthenticatedLayout })
         <div class="pb-12 pt-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <AnthologyBookInfoDisplay v-if="bookInfo" :book-info="bookInfo" />
-                <div class="bg-white overflow-x-auto relative shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-hidden relative shadow-sm sm:rounded-lg">
                     <SearchBar :placeholder="placeholder" :filters="filters" :path="path"/>
-                    <table class="table-fixed md:table-auto w-full text-sm text-left text-gray-500">
+                    <table class="table-fixed w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
-                                <th scope="col" class="py-3 px-6 max-w-18">
+                                <th scope="col" class="py-3 px-6 w-[65%] md:w-auto">
                                     Naslov
                                 </th>
                                 <th scope="col" class="py-3 px-6 hidden md:table-cell">
@@ -96,7 +96,7 @@ defineOptions({ layout: AuthenticatedLayout })
                             <tr v-for="anthology in anthologies.data" :key="anthology.id"
                                 class="bg-white border-b hover:bg-gray-200">
                                 <th scope="row"
-                                    class="py-4 px-6 font-medium text-gray-900 md:whitespace-nowrap">
+                                    class="py-4 px-6 font-medium text-gray-900 whitespace-normal break-words">
                                     <a target="_blank" :href="route('anthologies.show', anthology.id)">
                                         {{ anthology.title }}
                                     </a>
@@ -107,7 +107,7 @@ defineOptions({ layout: AuthenticatedLayout })
                                 <td class="py-4 px-6 hidden md:table-cell">
                                     {{ anthology.created_at }}
                                 </td>
-                                <td class="py-4 px-6 text-right">
+                                <td class="py-4 px-6 text-right whitespace-nowrap">
                                     <Link :href="route('anthologies.edit', anthology.id)"
                                         class="font-medium text-blue-600 hover:underline px-2">Uredi</Link>
                                     <a href="javascript:void(0)"  @click="processDelete(anthology.title, anthology.id)"

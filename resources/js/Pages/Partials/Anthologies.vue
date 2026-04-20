@@ -122,7 +122,7 @@ load()
                         :key="article.id"
                         class="m-3"
                         :title="article.title"
-                        :image="anthologies.image_path"
+                        :image="article.cover_image || anthologies.image_path"
                         :description="article.description"
                         :link="route('anthologies.show', article.id)"
                     />

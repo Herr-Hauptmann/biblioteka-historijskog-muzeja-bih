@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import InputError from "@/Components/InputError.vue"
 import Content from "@/Components/Content.vue"
@@ -11,7 +11,8 @@ defineOptions({ layout: AuthenticatedLayout })
 
 const props = defineProps({
     anthology: Object,
-    pdf_icon: String
+    pdf_icon: String,
+    default_cover: String,
 })
 
 let form = useForm({
@@ -19,6 +20,7 @@ let form = useForm({
     title: props.anthology.title,
     description: props.anthology.description,
     anthology: null,
+    cover_image: null,
 })
 
 const submit = () => {
@@ -43,9 +45,6 @@ const toggleUpload = () => {
     showUpload.value = !showUpload.value;
 }
 
-watch(form, () => {
-    console.log(form);
-})
 </script>
 
 <template>
@@ -105,6 +104,15 @@ watch(form, () => {
                                         @click="toggleUpload()">Izmijeni datoteku</button>
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.anthology" />
+                            </div>
+                            <div>
+                                <FormInputLabel what="cover_image" msg="Naslovna slika (600x600)" />
+                                <div class="flex flex-col gap-3">
+                                    <img class="h-24 w-24 rounded object-cover border border-gray-200" :src="anthology.cover_image || default_cover" alt="Naslovna slika broja zbornika">
+                                    <input name="cover_image" @input="form.cover_image = $event.target.files[0]" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" aria-describedby="cover_image_help" id="cover_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                                    <p class="mt-1 text-sm text-gray-500" id="cover_image_help">Dozvoljene su samo slike dimenzija 600x600 px.</p>
+                                </div>
+                                <InputError class="mt-2" :message="form.errors.cover_image" />
                             </div>
                         </div>
 

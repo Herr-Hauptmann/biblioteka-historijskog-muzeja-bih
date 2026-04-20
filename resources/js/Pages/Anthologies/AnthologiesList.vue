@@ -92,7 +92,7 @@ defineOptions({ layout: GuestLayout })
                         >
                             <div class="relative aspect-[5/3] overflow-hidden bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300">
                                 <img
-                                    :src="pdf_icon"
+                                    :src="anthology.cover_image || pdf_icon"
                                     alt=""
                                     class="h-full w-full object-cover object-center opacity-95 transition duration-500 ease-out group-hover:scale-[1.04] group-hover:opacity-100"
                                 >

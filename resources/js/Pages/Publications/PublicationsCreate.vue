@@ -12,6 +12,7 @@ let form = useForm({
   title: '',
   description: '',
   publication: null,
+  cover_image: null,
 })
 
 const submit = () => {
@@ -57,6 +58,12 @@ let width = computed(()=>{
                                     </div >
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.publication" />
+                            </div>
+                            <div>
+                                <FormInputLabel what="cover_image" msg="Naslovna slika (600x600)" />
+                                <input name="cover_image" @input="form.cover_image = $event.target.files[0]" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" aria-describedby="cover_image_help" id="cover_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                                <p class="mt-1 text-sm text-gray-500" id="cover_image_help">Opcionalno. Ako ne postavite sliku, koristi se postojeća podrazumijevana naslovnica.</p>
+                                <InputError class="mt-2" :message="form.errors.cover_image" />
                             </div>
                         </div>      
 

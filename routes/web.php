@@ -65,11 +65,13 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 //Publications routes
 Route::get('/publications/list', [PublicationController::class, 'list'])->name('publications.list');
 Route::get('/publications/get/{id}', [PublicationController::class, 'get'])->name('publications.get');
+Route::get('/publications/{publication}/cover', [PublicationController::class, 'cover'])->name('publications.cover');
 Route::get('/publications/{id}', [PublicationController::class, 'show'])->name('publications.show');
 
 //Anthologies routes
 Route::get('/anthologies/list', [AnthologyController::class, 'list'])->name('anthologies.list');
 Route::get('/anthologies/get/{id}', [AnthologyController::class, 'get'])->name('anthologies.get');
+Route::get('/anthologies/{anthology}/cover', [AnthologyController::class, 'cover'])->name('anthologies.cover');
 Route::get('/anthologies/{id}', [AnthologyController::class, 'show'])->name('anthologies.show');
 
 Route::middleware('auth')->group(function () {
