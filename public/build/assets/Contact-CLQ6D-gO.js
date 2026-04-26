@@ -1,1 +1,0 @@
-import{_ as o}from"./GuestLayout-C9g64K8D.js";import t from"./Contact-COI9M76Y.js";import{o as r,k as a}from"./app-LKkNhLpY.js";import"./portal-QMEqjtXy.js";import"./keyboard-y95dMhbH.js";import"./use-resolve-button-type-BxSEEaHs.js";import"./InputError-B_UL06lW.js";const l=Object.assign({layout:o},{__name:"Contact",setup(m){return(_,c)=>(r(),a(t))}});export{l as default};
