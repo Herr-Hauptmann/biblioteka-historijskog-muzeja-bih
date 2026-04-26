@@ -41,7 +41,10 @@ defineOptions({ layout: GuestLayout })
                     Zbornik radova Historijskog muzeja BiH
                 </h1>
                 <p class="mt-4 text-base leading-relaxed text-slate-600">
-                    Digitalne sekcije zbornika u PDF formatu. Koristite pretragu ili otvorite željeni broj.
+                    Zbornik radova Historijskog muzeja Bosne i Hercegovine je naučna i stručna publikacija posvećena historiji, muzeologiji i kulturno-historijskom naslijeđu. Pokrenut je 1975. godine i predstavljao je važnu platformu za razvoj muzeološke i historiografske misli u Bosni i Hercegovini.
+                </p>
+                <p class="mt-4 text-base leading-relaxed text-slate-600">
+                    Nakon dužeg prekida, Zbornik je ponovo pokrenut 2017. godine s ciljem da odgovori na savremene izazove interpretacije prošlosti i uloge muzeja u društvu. Danas djeluje kao otvoren prostor za dijalog, istraživanje i razmjenu znanja.
                 </p>
             </header>
 
